@@ -1,8 +1,7 @@
-from modules.domain.settings import SettingsManager
+from modules.settings.settings_manager import SettingsManager
 
 sm = SettingsManager()
-sm.read_settings("settings.json")
-print(sm.settings)
-
-sm2 = SettingsManager()
-print(sm.settings)
+if sm.read_settings():
+    print(sm.settings)
+else:
+    print("OOPS")

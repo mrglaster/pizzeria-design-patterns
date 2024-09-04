@@ -1,5 +1,9 @@
 {
   "organization_name": "Horns & hooves inc.",
-  "inn": "22813371422",
-  "director_name": "Ivanov A.I."
+  "inn": "123456789009",
+  "director_name": "Ivanov A.I.",
+  "bank_account": "00000000000",
+  "correspondent_account":  "00000000000",
+  "bik": "123456789",
+  "property_type": "55555"
 }
