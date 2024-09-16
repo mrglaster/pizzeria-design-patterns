@@ -1,0 +1,2 @@
+class RestrictionPropertyNotFound(Exception):
+    pass

@@ -1,7 +1,2 @@
-from modules.settings.settings_manager import SettingsManager
-
-sm = SettingsManager()
-if sm.read_settings():
-    print(sm.settings)
-else:
-    print("OOPS")
+from modules.configuration.length_restricions_configuration import LengthRestrictionsLoader
+from modules.managers.settings_manager import SettingsManager

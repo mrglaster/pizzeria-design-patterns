@@ -1,0 +1,11 @@
+{
+        "inn": 12,
+        "bank_account": 11,
+        "correspondent_account": 11,
+        "bik": 9,
+        "property_type": 5,
+        "organization_name": -1,
+        "director_name": -1,
+        "abstract_name": 50,
+        "nomenclature_full_name": 255
+}

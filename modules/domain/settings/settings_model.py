@@ -1,10 +1,12 @@
-from modules.settings.settings_validator import SettingsValidator
+from __future__ import annotations
+from modules.domain.base.abstract_reference import AbstractReference
+from modules.validation.data_validator import DataValidator
 
 
-class Settings:
+class Settings(AbstractReference):
     """
     The `Settings` class encapsulates the configuration details such as organization name,
-    INN (taxpayer identification number), director name, bank account details, and property type.
+    INN (taxpayer identification number), director name, bank bank_account details, and property type.
     It provides getter and setter methods for each field, ensuring that the data is validated
     according to specified rules before being stored.
 
@@ -12,11 +14,11 @@ class Settings:
         __organization_name (str): Name of the organization.
         __inn (str): Taxpayer Identification Number (INN).
         __director_name (str): Name of the director.
-        __bank_account (str): Bank account number.
-        __correspondent_account (str): Correspondent account number.
+        __bank_account (str): Bank bank_account number.
+        __correspondent_account (str): Correspondent bank_account number.
         __bik (str): Bank Identifier Code (BIK).
         __property_type (str): Type of property.
-        __validator (SettingsValidator): Validator instance for validating field data.
+        __validator (DataValidator): Validator instance for validating field data.
     """
 
     __organization_name = ""
@@ -26,7 +28,6 @@ class Settings:
     __correspondent_account = ""
     __bik = ""
     __property_type = ""
-    __validator = SettingsValidator()
 
     @property
     def organization_name(self):
@@ -36,7 +37,7 @@ class Settings:
     @organization_name.setter
     def organization_name(self, value: str):
         """Sets and validates the name of the organization."""
-        self.__validator.validate_field("organization_name", str, value)
+        DataValidator.check_class_field("organization_name", str, value)
         self.__organization_name = value
 
     @property
@@ -47,7 +48,7 @@ class Settings:
     @inn.setter
     def inn(self, value):
         """Sets and validates the INN."""
-        self.__validator.validate_field("inn", str, value)
+        DataValidator.check_class_field("inn", str, value)
         self.__inn = value
 
     @property
@@ -58,29 +59,29 @@ class Settings:
     @director_name.setter
     def director_name(self, value):
         """Sets and validates the name of the director."""
-        self.__validator.validate_field(value, str, value)
+        DataValidator.check_class_field("director_name", str, value)
         self.__director_name = value
 
     @property
     def bank_account(self):
-        """Gets the bank account number."""
+        """Gets the bank bank_account number."""
         return self.__bank_account
 
     @bank_account.setter
     def bank_account(self, value):
-        """Sets and validates the bank account number."""
-        self.__validator.validate_field("bank_account", str, value)
+        """Sets and validates the bank bank_account number."""
+        DataValidator.check_class_field("bank_account", str, value)
         self.__bank_account = value
 
     @property
     def correspondent_account(self):
-        """Gets the correspondent account number."""
+        """Gets the correspondent bank_account number."""
         return self.__correspondent_account
 
     @correspondent_account.setter
     def correspondent_account(self, value):
-        """Sets and validates the correspondent account number."""
-        self.__validator.validate_field("correspondent_account", str, value)
+        """Sets and validates the correspondent bank_account number."""
+        DataValidator.check_class_field("correspondent_account", str, value)
         self.__correspondent_account = value
 
     @property
@@ -91,7 +92,7 @@ class Settings:
     @bik.setter
     def bik(self, value):
         """Sets and validates the BIK."""
-        self.__validator.validate_field("bik", str, value)
+        DataValidator.check_class_field("bik", str, value)
         self.__bik = value
 
     @property
@@ -102,7 +103,7 @@ class Settings:
     @property_type.setter
     def property_type(self, value):
         """Sets and validates the property type."""
-        self.__validator.validate_field("property_type", str, value)
+        DataValidator.check_class_field("property_type", str, value)
         self.__property_type = value
 
     def get_prop_count(self):
@@ -127,3 +128,20 @@ class Settings:
             result += f"{key.replace('_Settings__', '')} : {class_dict[key]} "
         result += ")"
         return result
+
+    def __eq__(self, other):
+        try:
+            assert isinstance(other, Settings)
+            assert self.__organization_name == other.__organization_name
+            assert self.__inn == other.__inn
+            assert self.__director_name == other.__director_name
+            assert self.__bank_account == other.__bank_account
+            assert self.__correspondent_account == other.__correspondent_account
+            assert self.__bik == other.__bik
+            assert self.__property_type == other.__property_type
+            return True
+        except:
+            return False
+
+    def __ne__(self, other):
+        return self != other

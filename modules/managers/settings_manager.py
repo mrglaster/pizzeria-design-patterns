@@ -2,7 +2,7 @@ import json
 import os
 import logging
 
-from modules.settings.settings_model import Settings
+from modules.domain.settings.settings_model import Settings
 
 
 class SettingsManager:
