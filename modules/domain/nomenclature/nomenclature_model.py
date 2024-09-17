@@ -1,7 +1,7 @@
 from modules.domain.base.abstract_reference import AbstractReference
 from modules.domain.measures.measurment_unit_model import MeasurementUnit
 from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
-from modules.validation.data_validator import DataValidator
+from modules.service.util.validation.data_validator import DataValidator
 
 
 class Nomenclature(AbstractReference):

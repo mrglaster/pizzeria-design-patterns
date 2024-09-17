@@ -1,6 +1,6 @@
 from __future__ import annotations
 from modules.domain.base.abstract_reference import AbstractReference
-from modules.validation.data_validator import DataValidator
+from modules.service.util.validation.data_validator import DataValidator
 
 
 class Settings(AbstractReference):

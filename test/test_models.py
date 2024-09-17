@@ -6,7 +6,7 @@ from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGro
 from modules.domain.nomenclature.nomenclature_model import Nomenclature
 from modules.domain.organization.organization_model import Organization
 from modules.exception.bad_argument_exception import BadArgumentException
-from modules.managers.settings_manager import SettingsManager
+from modules.service.managers.settings_manager import SettingsManager
 
 
 class TestUtils(unittest.TestCase):
