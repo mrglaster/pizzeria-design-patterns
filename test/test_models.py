@@ -1,6 +1,5 @@
 import os
 import unittest
-
 from modules.domain.measures.measurment_unit_model import MeasurementUnit
 from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
 from modules.domain.nomenclature.nomenclature_model import Nomenclature
@@ -71,7 +70,6 @@ class TestUtils(unittest.TestCase):
         file_path = file_path.replace("test/", "")
         settings_manager.read_settings(file_path)
         settings = settings_manager.settings
-        print(settings)
         org = Organization(settings)
         assert org.name == settings.organization_name
         assert org.inn == settings.inn

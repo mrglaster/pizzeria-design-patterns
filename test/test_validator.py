@@ -1,7 +1,7 @@
 import unittest
 
 from modules.exception.bad_argument_exception import BadArgumentException
-from modules.service.util.validation.data_validator import DataValidator
+from modules.validation.data_validator import DataValidator
 
 
 class TestUtils(unittest.TestCase):

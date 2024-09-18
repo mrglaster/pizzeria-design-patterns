@@ -1,6 +1,6 @@
 from modules.domain.base.abstract_reference import AbstractReference
 from modules.domain.settings.settings_model import Settings
-from modules.service.util.validation.data_validator import DataValidator
+from modules.validation.data_validator import DataValidator
 
 
 class Organization(AbstractReference):

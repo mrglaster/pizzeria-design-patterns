@@ -1,7 +1,7 @@
 import uuid
 from abc import abstractmethod, ABC
 
-from modules.service.util.validation.data_validator import DataValidator
+from modules.validation.data_validator import DataValidator
 
 
 class AbstractReference(ABC):

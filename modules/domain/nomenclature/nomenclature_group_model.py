@@ -9,3 +9,15 @@ class NomenclatureGroup(AbstractReference):
 
     def __ne__(self, other):
         return not self == other
+
+    @staticmethod
+    def default_group_source():
+        item = NomenclatureGroup()
+        item.name = "сырьё"
+        return item
+
+    @staticmethod
+    def default_group_production(self):
+        item = NomenclatureGroup()
+        item.name = "Заморозка"
+        return item

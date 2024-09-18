@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from modules.service.util.validation.data_validator import DataValidator
+from modules.validation.data_validator import DataValidator
 
 
 class AbstractLogic(ABC):
