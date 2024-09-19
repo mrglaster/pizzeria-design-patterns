@@ -15,6 +15,8 @@ class Nomenclature(AbstractReference):
         super().__init__(name, self.__full_name_property_name)
         DataValidator.validate_field_type(nomenclature_group, NomenclatureGroup)
         DataValidator.validate_field_type(measurement_unit, MeasurementUnit)
+        if full_name is None:
+            full_name = self.__full_name_property_name
         DataValidator.check_class_field(self.__full_name_property_name, str, full_name)
         self.__nomenclature_group = nomenclature_group
         self.__measurement_unit = measurement_unit

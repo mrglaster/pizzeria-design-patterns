@@ -1,19 +1,42 @@
-from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
-from modules.repository.data_repository import DataRepository
-from modules.service.base.abstract_logic import AbstractLogic
-from modules.validation.data_validator import DataValidator
+import os
+from modules.repository.measurment_unit_repository import MeasurementUnitRepository
+from modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
+from modules.repository.nomenclature_repository import NomenclatureRepository
+from modules.repository.recipe_repository import RecipeRepository
 
 
-class StartService(AbstractLogic):
-    __repository: DataRepository = None
+class StartService:
 
-    def __init__(self, repository: DataRepository):
-        super().__init__()
-        DataValidator.validate_field_type(repository, DataRepository)
-        self.__repository = repository
+    def __create_measurement_units(self):
+        path_base = os.path.join(os.getcwd(), 'data')
+        path_base = path_base.replace('test/', '')
+        MeasurementUnitRepository.load_units_from_json(os.path.join(path_base, 'units_data.json'))
+
+    def __create_nomenclature_items(self):
+        # Create example nomenclature items
+        flour_group = NomenclatureGroupRepository.find_group_by_name("ингредиент")
+        flour_unit = MeasurementUnitRepository.create_new_measurement_unit("г")
+        NomenclatureRepository.create_nomenclature("Пшеничная мука", flour_group, flour_unit)
 
     def __create_nomenclature_groups(self):
-        self.__repository.data[DataRepository.group_key()] = NomenclatureGroup.default_group_source(), NomenclatureGroup.default_group_production()
+        NomenclatureGroupRepository.create_new_group("ингредиент")
+        NomenclatureGroupRepository.create_new_group("блюдо")
+        NomenclatureGroupRepository.create_new_group("рецепт")
+
+    def __create_recipes(self):
+        path_base = os.path.join(os.getcwd(), 'docs')
+        path_base = path_base.replace('test/', '')
+        RecipeRepository.load_recipe_from_file(os.path.join(path_base, 'receipt1.md'))
+        RecipeRepository.load_recipe_from_file(os.path.join(path_base, 'receipt2.md'))
 
     def create(self):
         self.__create_nomenclature_groups()
+        self.__create_measurement_units()
+        self.__create_nomenclature_items()
+        self.__create_recipes()
+
+    def clear(self):
+        MeasurementUnitRepository.clear()
+        NomenclatureGroupRepository.clear()
+        NomenclatureRepository.clear()
+        RecipeRepository.clear()

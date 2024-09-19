@@ -56,7 +56,8 @@ class TestUtils(unittest.TestCase):
         ingridients = NomenclatureGroup("Ингридиенты")
         equipments = NomenclatureGroup("Оборудование")
 
-        sausage = Nomenclature("Колбаса", ingridients, kg_unit, "a"*100)
+        sausage = Nomenc
+        lature("Колбаса", ingridients, kg_unit, "a"*100)
         cooker = Nomenclature("Плита", equipments, kg_unit, "b"*100)
 
         assert sausage.nomenclature_group == ingridients
