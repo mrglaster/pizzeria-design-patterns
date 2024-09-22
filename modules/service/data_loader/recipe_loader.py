@@ -5,15 +5,13 @@ from modules.repository.measurment_unit_repository import MeasurementUnitReposit
 from modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from modules.repository.nomenclature_repository import NomenclatureRepository
 from modules.service.base.abstract_logic import AbstractLogic
+from modules.service.data_loader.abstract_loader import AbstractDataLoader
 
 
-class RecipeLoader(AbstractLogic):
-
-    def set_exception(self, ex: Exception):
-        pass
+class RecipeLoader(AbstractDataLoader):
 
     @staticmethod
-    def load_recipe_from_file(file_path: str) -> Recipe:
+    def load_from_json_file(file_path: str) -> Recipe:
         with open(file_path) as f:
             md_content = f.read()
             title_match = re.search(r'# (.+)', md_content)

@@ -1,8 +1,9 @@
+from modules.repository.data_repository import AbstractRepository
 from modules.service.data_loader.recipe_loader import RecipeLoader
 from modules.validation.data_validator import DataValidator
 
 
-class RecipeRepository:
+class RecipeRepository(AbstractRepository):
     __recipes = {}
 
     @staticmethod
@@ -14,7 +15,7 @@ class RecipeRepository:
 
     @staticmethod
     def load_recipe_from_file(file_path):
-        recipe = RecipeLoader.load_recipe_from_file(file_path)
+        recipe = RecipeLoader.load_from_json_file(file_path)
         if recipe.name not in RecipeRepository.__recipes.keys():
             RecipeRepository.__recipes[recipe.name] = recipe
         return recipe

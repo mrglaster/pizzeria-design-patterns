@@ -1,10 +1,12 @@
+from modules.domain.base.abstract_reference import AbstractReference
 from modules.domain.nomenclature.nomenclature_model import Nomenclature
 from modules.domain.measures.measurment_unit_model import MeasurementUnit
 from modules.validation.data_validator import DataValidator
 
 
-class Ingredient:
+class Ingredient(AbstractReference):
     def __init__(self, nomenclature: Nomenclature, measurement_unit: MeasurementUnit, amount: float):
+        super().__init__()
         DataValidator.validate_field_type(nomenclature, Nomenclature)
         DataValidator.validate_field_type(measurement_unit, MeasurementUnit)
         DataValidator.validate_field_type(amount, float)

@@ -1,9 +1,10 @@
-import json
 from modules.domain.measures.measurment_unit_model import MeasurementUnit
+from modules.repository.data_repository import AbstractRepository
+from modules.service.data_loader.measurement_units_loader import MeasurementUnitsLoader
 from modules.validation.data_validator import DataValidator
 
 
-class MeasurementUnitRepository:
+class MeasurementUnitRepository(AbstractRepository):
     __units = {}
 
     @staticmethod
@@ -36,22 +37,16 @@ class MeasurementUnitRepository:
 
     @staticmethod
     def load_units_from_json(json_file: str):
-        try:
-            with open(json_file, 'r') as f:
-                json_data = json.load(f)["units"]
-                for unit_data in json_data.values():
-                    unit_name = unit_data["name"]
-                    MeasurementUnitRepository.create_new_measurement_unit(name=unit_name)
-
-                for unit_data in json_data.values():
-                    related_unit_name = unit_data["related_unit"]
-                    if related_unit_name != "NONE":
-                        current_unit = MeasurementUnitRepository.get_unit_by_name(unit_data["name"])
-                        current_unit.base_measure_unit = MeasurementUnitRepository.get_unit_by_name(related_unit_name)
-                        current_unit.unit = unit_data["conversion_factor"]
-
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Error reading JSON file: {e}")
+        json_data = MeasurementUnitsLoader.load_from_json_file(json_file)
+        for unit_data in json_data.values():
+            unit_name = unit_data["name"]
+            MeasurementUnitRepository.create_new_measurement_unit(name=unit_name)
+        for unit_data in json_data.values():
+            related_unit_name = unit_data["related_unit"]
+            if related_unit_name != "NONE":
+                current_unit = MeasurementUnitRepository.get_unit_by_name(unit_data["name"])
+                current_unit.base_measure_unit = MeasurementUnitRepository.get_unit_by_name(related_unit_name)
+                current_unit.unit = unit_data["conversion_factor"]
 
     @staticmethod
     def get_all():

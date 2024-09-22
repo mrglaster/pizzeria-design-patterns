@@ -1,10 +1,11 @@
 from modules.domain.measures.measurment_unit_model import MeasurementUnit
 from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
 from modules.domain.nomenclature.nomenclature_model import Nomenclature
+from modules.repository.data_repository import AbstractRepository
 from modules.validation.data_validator import DataValidator
 
 
-class NomenclatureRepository:
+class NomenclatureRepository(AbstractRepository):
     __nomenclatures = {}
 
     @staticmethod

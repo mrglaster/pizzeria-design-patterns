@@ -1,8 +1,9 @@
 from modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
+from modules.repository.data_repository import AbstractRepository
 from modules.validation.data_validator import DataValidator
 
 
-class NomenclatureGroupRepository:
+class NomenclatureGroupRepository(AbstractRepository):
     __groups = {}
 
     @staticmethod

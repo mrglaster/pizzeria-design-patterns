@@ -3,31 +3,39 @@ from modules.repository.measurment_unit_repository import MeasurementUnitReposit
 from modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from modules.repository.nomenclature_repository import NomenclatureRepository
 from modules.repository.recipe_repository import RecipeRepository
+from modules.service.managers.settings_manager import SettingsManager
 
 
 class StartService:
-
-    def __create_measurement_units(self):
+    @staticmethod
+    def __create_measurement_units():
         path_base = os.path.join(os.getcwd(), 'data')
         path_base = path_base.replace('test/', '')
         MeasurementUnitRepository.load_units_from_json(os.path.join(path_base, 'units_data.json'))
 
-    def __create_nomenclature_items(self):
+    @staticmethod
+    def __create_nomenclature_items():
         # Create example nomenclature items
         flour_group = NomenclatureGroupRepository.find_group_by_name("ингредиент")
         flour_unit = MeasurementUnitRepository.create_new_measurement_unit("г")
         NomenclatureRepository.create_nomenclature("Пшеничная мука", flour_group, flour_unit)
 
-    def __create_nomenclature_groups(self):
+    @staticmethod
+    def __create_nomenclature_groups():
         NomenclatureGroupRepository.create_new_group("ингредиент")
         NomenclatureGroupRepository.create_new_group("блюдо")
         NomenclatureGroupRepository.create_new_group("рецепт")
 
-    def __create_recipes(self):
-        path_base = os.path.join(os.getcwd(), 'docs')
-        path_base = path_base.replace('test/', '')
-        RecipeRepository.load_recipe_from_file(os.path.join(path_base, 'receipt1.md'))
-        RecipeRepository.load_recipe_from_file(os.path.join(path_base, 'receipt2.md'))
+    @staticmethod
+    def __create_recipes():
+        settings_manager = SettingsManager()
+        file_path = os.path.join(os.getcwd(), "configuration", "settings.json").replace("test/", "")
+        settings_manager.read_settings(file_path)
+        recipes_path = settings_manager.settings.recipes_path
+        recipes_path = os.path.join(os.getcwd(), recipes_path).replace('test/', '')
+        for i in os.listdir(recipes_path):
+            current_path = os.path.join(recipes_path,  i)
+            RecipeRepository.load_recipe_from_file(current_path)
 
     def create(self):
         self.__create_nomenclature_groups()
