@@ -49,3 +49,8 @@ class MeasurementUnit(AbstractReference):
         if isinstance(unit, int):
             unit = float(unit)
         return unit
+
+    def __str__(self):
+        if self.base_measure_unit is not None:
+            return f"{self.name}: ({self.base_measure_unit.name} {self.unit})"
+        return  f"{self.name}: 1"

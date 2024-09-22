@@ -1,15 +1,12 @@
 from modules.service.base.abstract_logic import AbstractLogic
 
 
-class AbstractRepository(AbstractLogic):
+class AbstractDataLoader(AbstractLogic):
 
     def set_exception(self, ex: Exception):
         pass
 
     @staticmethod
-    def clear():
-       pass
-
-    @staticmethod
-    def get_all():
+    def load_from_json_file(file_path):
         pass
+

@@ -37,4 +37,10 @@ class DataValidator:
     def check_class_field(property_name, property_class, property_value, nullable=False):
         DataValidator.validate_field_type(property_value, property_class)
         restrictions = LengthRestrictionsLoader.get_restrictions()
-        DataValidator.validate_length_restriction(property_value, restrictions[property_name])
+        if property_name in restrictions.keys():
+            DataValidator.validate_length_restriction(property_value, restrictions[property_name])
+
+    @staticmethod
+    def validate_list_not_empty(value: list):
+        if not len(value):
+            raise BadArgumentException("The list you provided is empty!")

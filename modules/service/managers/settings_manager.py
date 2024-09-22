@@ -91,4 +91,5 @@ class SettingsManager:
         data.correspondent_account = "0" * 11
         data.property_type = "0" * 5
         data.bik = "0" * 9
+        data.recipes_path = f"{os.getcwd().replace('test/', '')}/docs"
         return data

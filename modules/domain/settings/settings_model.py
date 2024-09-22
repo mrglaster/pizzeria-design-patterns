@@ -28,6 +28,7 @@ class Settings(AbstractReference):
     __correspondent_account = ""
     __bik = ""
     __property_type = ""
+    __recipes_path = ""
 
     @property
     def organization_name(self):
@@ -114,6 +115,15 @@ class Settings(AbstractReference):
             int: The number of properties.
         """
         return len(self.__dict__.keys())
+
+    @property
+    def recipes_path(self):
+        return self.__recipes_path
+
+    @recipes_path.setter
+    def recipes_path(self, value):
+        DataValidator.validate_field_type(value, str)
+        self.__recipes_path = value
 
     def __str__(self):
         """

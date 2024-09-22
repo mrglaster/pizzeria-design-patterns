@@ -1,0 +1,29 @@
+{
+  "units": {
+    "г": {
+      "name": "г",
+      "conversion_factor": 1,
+      "related_unit": "NONE"
+    },
+    "кг": {
+      "name": "кг",
+      "conversion_factor": 1000,
+      "related_unit": "г"
+    },
+    "ц": {
+      "name": "ц",
+      "conversion_factor": 100,
+      "related_unit": "кг"
+    },
+    "т": {
+      "name": "т",
+      "conversion_factor": 10,
+      "related_unit": "ц"
+    },
+    "шт": {
+      "name": "шт",
+      "conversion_factor": 1,
+      "related_unit": "NONE"
+    }
+  }
+}

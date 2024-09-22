@@ -11,7 +11,7 @@ class NomenclatureGroup(AbstractReference):
         return not self == other
 
     @staticmethod
-    def default_group_source():
+    def default_group_():
         item = NomenclatureGroup()
         item.name = "сырьё"
         return item

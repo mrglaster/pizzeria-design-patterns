@@ -5,5 +5,6 @@
   "bank_account": "00000000000",
   "correspondent_account":  "00000000000",
   "bik": "123456789",
-  "property_type": "55555"
+  "property_type": "55555",
+  "recipes_path": "docs"
 }
