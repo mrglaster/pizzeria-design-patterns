@@ -44,3 +44,8 @@ class DataValidator:
     def validate_list_not_empty(value: list):
         if not len(value):
             raise BadArgumentException("The list you provided is empty!")
+
+    @staticmethod
+    def validate_str_not_empty(value: str):
+        if not len(value):
+            raise BadArgumentException("Empty string provided!")
