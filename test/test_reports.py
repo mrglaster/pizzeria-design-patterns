@@ -86,37 +86,46 @@ class TestUtils(unittest.TestCase):
     def test_save_reports(self):
         repo = NomenclatureRepository()
         data = list(repo.get_all().values())
-
         report = ReportXML()
         report.create(data)
-        report.save('report.xml')
+        assert report.save('report.xml')
 
         report = ReportCSV()
         report.create(data)
-        report.save('report.csv')
+        assert report.save('report.csv')
 
         report = ReportJSON()
         report.create(data)
-        report.save('report.json')
+        assert report.save('report.json')
 
         report = ReportMarkdown()
         report.create(data)
-        report.save('report.md')
+        assert report.save('report.md')
 
-        # Разделяем вызовы методов create и save
         report = ReportRTF()
         report.create(data)
-        report.save('report.rtf')
+        assert report.save('report.rtf')
 
         report = ReportXLSX()
         report.create(data)
-        report.save('report.xlsx')
+        assert report.save('report.xlsx')
 
         report = ReportDOCX()
         report.create(data)
-        report.save('report.docx')
+        assert report.save('report.docx')
 
         sm = SettingsManager()
         path = os.path.join(os.getcwd(), sm.settings.reports_path).replace('test/', '')
 
         assert len(os.listdir(path)) == 7
+
+    def test_invalid_save(self):
+        service = StartService()
+        service.create()
+        repo = NomenclatureRepository()
+        data = list(repo.get_all().values())
+        report = ReportXML()
+        report.create(data)
+        assert not report.save('/home/azazazaza/report.xml')
+        assert report.exception is not None
+        assert isinstance(report.exception, FileNotFoundError)

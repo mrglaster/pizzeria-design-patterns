@@ -1,8 +1,7 @@
-from modules.domain.report.report.base.abstract_report import  PlainTextReport
+from modules.domain.report.report.base.abstract_report import PlainTextReport
 from modules.domain.report.report_format.report_format import ReportFormat
 from modules.exception.bad_argument_exception import BadArgumentException
 from modules.validation.data_validator import DataValidator
-
 
 class ReportMarkdown(PlainTextReport):
 

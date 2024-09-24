@@ -36,16 +36,19 @@ class ReportDOCX(ComplexReport):
                 value = getattr(row, field)
                 row_cells[idx].text = str(value)
 
-    def save(self, file_name: str):
-        DataValidator.validate_field_type(file_name, str)
-        DataValidator.validate_str_not_empty(file_name)
-        if self._document is None:
-            raise ValueError("No data to save. Please create the report first.")
-        save_path = file_name
-        if os.path.basename(file_name) == file_name:
-            sm = SettingsManager()
-            sm.read_settings()
-            reps = os.path.join(os.getcwd().replace('test/', ''), sm.settings.reports_path)
-            save_path = os.path.join(reps, file_name)
-            save_path = save_path.replace('test/', '')
-        self._document.save(save_path)
+    def save(self, file_name: str) -> bool:
+        try:
+            DataValidator.validate_field_type(file_name, str)
+            DataValidator.validate_str_not_empty(file_name)
+            if self._document is None:
+                raise ValueError("No data to save. Please create the report first.")
+            save_path = file_name
+            if os.path.basename(file_name) == file_name:
+                sm = SettingsManager()
+                sm.read_settings()
+                save_path = os.path.join(sm.settings.reports_path, file_name)
+            self._document.save(save_path)
+            return True
+        except Exception as e:
+            self.exception = e
+            return False

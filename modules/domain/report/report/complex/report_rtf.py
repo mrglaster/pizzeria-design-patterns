@@ -42,16 +42,19 @@ class ReportRTF(ComplexReport):
         self._document = doc
 
     def save(self, file_name: str):
-        renderer = Renderer()
-        save_path = file_name
-        if os.path.basename(file_name) == file_name:
-            sm = SettingsManager()
-            sm.read_settings()
-            reps = os.path.join(os.getcwd().replace('test/', ''), sm.settings.reports_path)
-            save_path = os.path.join(reps, file_name)
-            save_path = save_path.replace('test/', '')
-        with open(save_path, 'w') as f:
-            renderer.Write(self._document, f)
+        try:
+            renderer = Renderer()
+            save_path = file_name
+            if os.path.basename(file_name) == file_name:
+                sm = SettingsManager()
+                sm.read_settings()
+                save_path = os.path.join(sm.settings.reports_path, file_name)
+            with open(save_path, 'w') as f:
+                renderer.Write(self._document, f)
+            return True
+        except Exception as e:
+            self.exception = e
+            return False
 
 
 
