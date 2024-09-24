@@ -17,7 +17,7 @@ class NomenclatureGroupRepository(AbstractRepository):
         return NomenclatureGroupRepository.__groups[name]
 
     @staticmethod
-    def find_group_by_name(name: str):
+    def find_by_name(name: str):
         DataValidator.validate_field_type(name, str, False)
         try:
             return NomenclatureGroupRepository.__groups[name]

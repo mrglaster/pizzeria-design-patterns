@@ -7,6 +7,10 @@ class AbstractRepository(AbstractLogic):
         pass
 
     @staticmethod
+    def find_by_name(name: str):
+        pass
+
+    @staticmethod
     def clear():
        pass
 

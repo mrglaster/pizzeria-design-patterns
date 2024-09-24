@@ -7,7 +7,7 @@ class RecipeRepository(AbstractRepository):
     __recipes = {}
 
     @staticmethod
-    def find_recipe_by_name(name: str):
+    def find_by_name(name: str):
         DataValidator.validate_field_type(name, str, False)
         if name in RecipeRepository.__recipes.keys():
             return RecipeRepository.__recipes[name]

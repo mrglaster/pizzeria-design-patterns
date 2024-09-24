@@ -16,7 +16,7 @@ class StartService:
     @staticmethod
     def __create_nomenclature_items():
         # Create example nomenclature items
-        flour_group = NomenclatureGroupRepository.find_group_by_name("ингредиент")
+        flour_group = NomenclatureGroupRepository.find_by_name("ингредиент")
         flour_unit = MeasurementUnitRepository.create_new_measurement_unit("г")
         NomenclatureRepository.create_nomenclature("Пшеничная мука", flour_group, flour_unit)
 

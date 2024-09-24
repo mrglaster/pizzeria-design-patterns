@@ -8,7 +8,7 @@ class MeasurementUnitRepository(AbstractRepository):
     __units = {}
 
     @staticmethod
-    def get_unit_by_name(name: str) -> MeasurementUnit:
+    def find_by_name(name: str) -> MeasurementUnit:
         DataValidator.validate_field_type(name, str)
         if name in MeasurementUnitRepository.__units:
             return MeasurementUnitRepository.__units.get(name)  # More efficient lookup
@@ -27,7 +27,7 @@ class MeasurementUnitRepository(AbstractRepository):
     @staticmethod
     def create_related_unit_by_name(name: str, related_unit_name: str, converted: float):
         if name not in MeasurementUnitRepository.__units:
-            related_unit = MeasurementUnitRepository.get_unit_by_name(related_unit_name)
+            related_unit = MeasurementUnitRepository.find_by_name(related_unit_name)
             if related_unit:
                 MeasurementUnitRepository.create_new_measurement_unit(name, related_unit, converted)
 
@@ -44,8 +44,8 @@ class MeasurementUnitRepository(AbstractRepository):
         for unit_data in json_data.values():
             related_unit_name = unit_data["related_unit"]
             if related_unit_name != "NONE":
-                current_unit = MeasurementUnitRepository.get_unit_by_name(unit_data["name"])
-                current_unit.base_measure_unit = MeasurementUnitRepository.get_unit_by_name(related_unit_name)
+                current_unit = MeasurementUnitRepository.find_by_name(unit_data["name"])
+                current_unit.base_measure_unit = MeasurementUnitRepository.find_by_name(related_unit_name)
                 current_unit.unit = unit_data["conversion_factor"]
 
     @staticmethod
