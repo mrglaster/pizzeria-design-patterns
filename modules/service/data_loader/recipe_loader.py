@@ -4,7 +4,6 @@ from modules.domain.recipes.recipe import Recipe
 from modules.repository.measurment_unit_repository import MeasurementUnitRepository
 from modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from modules.repository.nomenclature_repository import NomenclatureRepository
-from modules.service.base.abstract_logic import AbstractLogic
 from modules.service.data_loader.abstract_loader import AbstractDataLoader
 
 
@@ -43,8 +42,6 @@ class RecipeLoader(AbstractDataLoader):
 
             step_pattern = r'\d+\.\s(.*?)\n'
             steps = re.findall(step_pattern, md_content, re.DOTALL)
-            c_step = 1
             for i in steps:
                 recipe.add_step(i)
             return recipe
-

@@ -68,13 +68,15 @@ class Recipe(AbstractReference):
 
     def add_ingredient(self, ingredient: Ingredient):
         DataValidator.validate_field_type(ingredient, Ingredient)
-        self.__ingredients.append(ingredient)
+        if ingredient not in self.__ingredients:
+            self.__ingredients.append(ingredient)
 
     def add_step(self, description: str):
         DataValidator.validate_field_type(description, str)
         new_step = RecipeStep(step_id=self.__step_count + 1, description=description)
-        self.__steps.append(new_step)
-        self.__step_count += 1
+        if new_step not in self.__steps:
+            self.__steps.append(new_step)
+            self.__step_count += 1
 
     def __eq__(self, other):
         try:
@@ -82,7 +84,7 @@ class Recipe(AbstractReference):
             assert self.__name == other.name
             assert self.__ingredients == other.ingredients
             assert self.__portions_count == other.portions_count
-            assert self.__cooking_time == other.cooking_time
+            assert self.__cooking_time_mins == other.cooking_time_mins
         except:
             return False
 

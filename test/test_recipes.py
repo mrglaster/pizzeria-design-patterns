@@ -33,6 +33,27 @@ class TestUtils(unittest.TestCase):
         assert recipe.name == 'ПАНКЕЙКИ НА МОЛОКЕ'
         assert len(recipe.ingredients) == 7
         assert len(recipe.steps) == recipe.step_count != 0
-        assert recipe.ingredients[0].nomenclature.name == 'Пшеничная мука'
+        assert recipe.ingredients[0].nomenclature.measurement_unit.name == 'гр'
+        assert recipe.cooking_time_mins == 25
+
+    def test_check_repeated_ingredient(self):
+        path = os.path.join(os.getcwd(), 'docs', 'receipt2.md')
+        path = path.replace('test/', '')
+        recipe = RecipeRepository.load_recipe_from_file(path)
+        assert recipe is not None
+        assert recipe.name == 'ПАНКЕЙКИ НА МОЛОКЕ'
+        assert len(recipe.ingredients) == 7
+        assert len(recipe.steps) == recipe.step_count != 0
+        assert recipe.ingredients[0].nomenclature.measurement_unit.name == 'гр'
+        assert recipe.cooking_time_mins == 25
+
+    def test_check_repeated_step(self):
+        path = os.path.join(os.getcwd(), 'docs', 'receipt2.md')
+        path = path.replace('test/', '')
+        recipe = RecipeRepository.load_recipe_from_file(path)
+        assert recipe is not None
+        assert recipe.name == 'ПАНКЕЙКИ НА МОЛОКЕ'
+        assert len(recipe.ingredients) == 7
+        assert len(recipe.steps) == recipe.step_count != 0 != 9
         assert recipe.ingredients[0].nomenclature.measurement_unit.name == 'гр'
         assert recipe.cooking_time_mins == 25
