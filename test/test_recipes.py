@@ -54,6 +54,6 @@ class TestUtils(unittest.TestCase):
         assert recipe is not None
         assert recipe.name == 'ПАНКЕЙКИ НА МОЛОКЕ'
         assert len(recipe.ingredients) == 7
-        assert len(recipe.steps) == recipe.step_count != 0 != 9
+        assert len(recipe.steps) == recipe.step_count != 0 != 9 #added one repeated step
         assert recipe.ingredients[0].nomenclature.measurement_unit.name == 'гр'
         assert recipe.cooking_time_mins == 25
