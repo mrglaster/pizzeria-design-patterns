@@ -21,3 +21,6 @@ class NomenclatureGroup(AbstractReference):
         item = NomenclatureGroup()
         item.name = "Заморозка"
         return item
+
+    def __str__(self):
+        return self.name

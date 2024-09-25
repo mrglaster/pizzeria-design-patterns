@@ -1,4 +1,5 @@
 from modules.configuration.length_restricions_configuration import LengthRestrictionsLoader
+from modules.domain.report.report_format.report_format import ReportFormat
 from modules.exception.bad_argument_exception import BadArgumentException
 
 
@@ -44,3 +45,15 @@ class DataValidator:
     def validate_list_not_empty(value: list):
         if not len(value):
             raise BadArgumentException("The list you provided is empty!")
+
+    @staticmethod
+    def validate_str_not_empty(value: str):
+        if not len(value):
+            raise BadArgumentException("Empty string provided!")
+
+    @staticmethod
+    def validate_report_export_type(value: str):
+        try:
+            test = ReportFormat[value]
+        except:
+            raise BadArgumentException(f"Report export format not implemented: {value}")

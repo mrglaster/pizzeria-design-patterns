@@ -8,7 +8,7 @@ from modules.exception.bad_argument_exception import BadArgumentException
 from modules.service.managers.settings_manager import SettingsManager
 
 
-class TestUtils(unittest.TestCase):
+class TestModels(unittest.TestCase):
     def test_nomenclature_diff_uid(self):
         assert NomenclatureGroup("aaaa") != NomenclatureGroup("aaaa")
 

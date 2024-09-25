@@ -29,6 +29,8 @@ class Settings(AbstractReference):
     __bik = ""
     __property_type = ""
     __recipes_path = ""
+    __reports_path = ""
+    __default_convertion_format = ""
 
     @property
     def organization_name(self):
@@ -125,6 +127,25 @@ class Settings(AbstractReference):
         DataValidator.validate_field_type(value, str)
         self.__recipes_path = value
 
+    @property
+    def reports_path(self):
+        return self.__reports_path
+
+    @reports_path.setter
+    def reports_path(self, value):
+        DataValidator.validate_field_type(value, str)
+        self.__reports_path = value
+
+    @property
+    def default_convertion_format(self):
+        return self.__default_convertion_format
+
+    @default_convertion_format.setter
+    def default_convertion_format(self, value: str):
+        DataValidator.validate_field_type(value, str)
+        DataValidator.validate_report_export_type(value)
+        self.__default_convertion_format = value
+
     def __str__(self):
         """
         Returns a string representation of the Settings object.
@@ -149,6 +170,7 @@ class Settings(AbstractReference):
             assert self.__correspondent_account == other.__correspondent_account
             assert self.__bik == other.__bik
             assert self.__property_type == other.__property_type
+            assert self.__reports_path == other.__reports_path
             return True
         except:
             return False

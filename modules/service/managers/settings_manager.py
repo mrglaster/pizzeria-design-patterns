@@ -1,7 +1,6 @@
 import json
 import os
 import logging
-
 from modules.domain.settings.settings_model import Settings
 
 
@@ -58,6 +57,14 @@ class SettingsManager:
                     if field in data.keys():
                         self.__settings.__setattr__(field, data[field])
                         fields_counter += 1
+                if os.path.sep not in self.__settings.reports_path:
+                    project_path = os.getcwd()
+                    project_path = project_path.replace('/test', '/')
+                    self.__settings.reports_path = os.path.join(project_path, self.__settings.reports_path)
+
+                if not os.path.exists(self.__settings.reports_path):
+                    self.__logger.error("Provided reports path does not exist!")
+                    return False
                 if fields_counter != self.__settings.get_prop_count():
                     self.__logger.error("Not all the expected settings fields have been loaded!")
                     return False
@@ -92,4 +99,6 @@ class SettingsManager:
         data.property_type = "0" * 5
         data.bik = "0" * 9
         data.recipes_path = f"{os.getcwd().replace('test/', '')}/docs"
+        data.reports_path = f"{os.getcwd().replace('test/', '')}/reports"
+        data.default_convertion_format = "FORMAT_CSV"
         return data
