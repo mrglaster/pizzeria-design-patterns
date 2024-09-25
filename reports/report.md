@@ -1,12 +1,12 @@
 |full_name|measurement_unit|name|nomenclature_group|uid|
 |---------|----------------|----|------------------|---|
-|nomenclature_full_name|г: 1|Пшеничная мука|ингредиент|3182b4a2-304d-435b-96ba-b0d1a1fc08d8|
-|nomenclature_full_name|гр: 1|Сахар|ингредиент|3bfaaab4-c2d0-43c4-9a21-c7aebd6b193b|
-|nomenclature_full_name|гр: 1|Сливочное масло|ингредиент|9c73677c-a00e-4220-8b3e-06d0844c53cd|
-|nomenclature_full_name|шт: 1|Яйца|ингредиент|08ebb696-a850-49bd-90bc-068b0066bb89|
-|nomenclature_full_name|мл: 1|Молоко|ингредиент|8b6611e4-fa63-41f4-9be6-bdcd7e44e2f4|
-|nomenclature_full_name|гр: 1|Разрыхлитель теста|ингредиент|225f14b8-6bff-45cd-82af-286ab1aa88a6|
-|nomenclature_full_name|гр: 1|Соль (щепотка)|ингредиент|80ca678b-ab8b-4120-805c-a21379dae64f|
-|nomenclature_full_name|гр: 1|Ванилин(щепотка)|ингредиент|6881619b-9b49-480c-b733-fbf8eea392b1|
-|nomenclature_full_name|кг: (г 1000.0)|Терпение|ингредиент|cef83ff8-6645-4a95-b6f3-d2c7af6fad42|
-|nomenclature_full_name|ц: (кг 100.0)|Самообладание|ингредиент|8cbe2956-b294-45d8-b91a-d870a78bc709|
+|nomenclature_full_name|г: 1|Пшеничная мука|ингредиент|38b2854f-b4d1-4dae-af16-0d2ac548ebf2|
+|nomenclature_full_name|гр: 1|Сахар|ингредиент|a59af5f6-03fb-46b1-a813-1326658f8e19|
+|nomenclature_full_name|гр: 1|Сливочное масло|ингредиент|c6ea95e1-d179-4791-b8ed-41ae3f4a46d2|
+|nomenclature_full_name|шт: 1|Яйца|ингредиент|e9418ac7-266d-4a0c-a92e-7af749974f1f|
+|nomenclature_full_name|мл: 1|Молоко|ингредиент|d67d80b6-5fee-4c2b-b151-c3255e75ce0c|
+|nomenclature_full_name|гр: 1|Разрыхлитель теста|ингредиент|eacce186-851f-4b08-a976-31c844973d91|
+|nomenclature_full_name|гр: 1|Соль (щепотка)|ингредиент|5893564e-f090-4ae5-a2a7-888c2985d523|
+|nomenclature_full_name|гр: 1|Ванилин(щепотка)|ингредиент|eaab7cfd-2184-4c61-91ee-f0d111c572df|
+|nomenclature_full_name|кг: (г 1000.0)|Терпение|ингредиент|b399e2b2-3f70-4b1a-9844-b2700655c983|
+|nomenclature_full_name|ц: (кг 100.0)|Самообладание|ингредиент|064bd731-9710-4886-867b-aaaa7eceae03|

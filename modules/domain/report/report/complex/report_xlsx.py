@@ -37,7 +37,7 @@ class ReportXLSX(ComplexReport):
                 value = getattr(row, field)
                 sheet.cell(row=row_idx, column=col_idx, value=str(value))
 
-    def save(self, file_name: str = 'report.xls') -> bool:
+    def save(self, file_name: str = 'report.xlsx') -> bool:
         try:
             DataValidator.validate_field_type(file_name, str)
             DataValidator.validate_str_not_empty(file_name)
