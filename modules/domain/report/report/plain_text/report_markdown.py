@@ -3,10 +3,11 @@ from modules.domain.report.report_format.report_format import ReportFormat
 from modules.exception.bad_argument_exception import BadArgumentException
 from modules.validation.data_validator import DataValidator
 
-class ReportMarkdown(PlainTextReport):
 
-    def __init__(self):
-        super().__init__()
+class ReportMD(PlainTextReport):
+
+    def __init__(self, settings_path=""):
+        super().__init__(settings_path=settings_path)
         self.format = ReportFormat.FORMAT_MARKDOWN
 
     def create(self, data: list):

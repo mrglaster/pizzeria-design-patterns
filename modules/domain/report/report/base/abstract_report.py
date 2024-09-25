@@ -1,7 +1,7 @@
 import os
 from abc import ABC, abstractmethod
-
 from modules.domain.report.report_format.report_format import ReportFormat
+from modules.factory.convertion_factory.convertion_factory import ConverterFactory
 from modules.service.managers.settings_manager import SettingsManager
 from modules.validation.data_validator import DataValidator
 
@@ -9,13 +9,19 @@ from modules.validation.data_validator import DataValidator
 class AbstractReport(ABC):
     __format: ReportFormat = ReportFormat.FORMAT_ABSTRACT
     _exception: Exception = None
+    _converter_factory = ConverterFactory()
+    _settings_manager = None
+
+    def __init__(self, settings_path=""):
+        self._settings_manager = SettingsManager()
+        self._settings_manager.read_settings(settings_path)
 
     @abstractmethod
     def create(self, data: list):
         pass
 
     @abstractmethod
-    def save(self, file_name: str) -> bool:
+    def save(self, file_name: str = "") -> bool:
         pass
 
     @abstractmethod
@@ -29,6 +35,10 @@ class AbstractReport(ABC):
     @property
     def exception(self):
         return self._exception
+
+    @property
+    def settings_manager(self):
+        return self._settings_manager
 
     @exception.setter
     def exception(self, e: Exception):
@@ -56,13 +66,14 @@ class PlainTextReport(AbstractReport, ABC):
     def get_result(self):
         return self._result
 
-    def save(self, file_name: str) -> bool:
+    def save(self, file_name: str = "") -> bool:
+        if not file_name or not len(file_name):
+            extension = self.__class__.__name__.replace('Report', '').lower()
+            file_name = f"report.{extension}"
         try:
             save_path = file_name
             if os.path.basename(file_name) == file_name:
-                sm = SettingsManager()
-                sm.read_settings()
-                reps = sm.settings.reports_path
+                reps = self.settings_manager.settings.reports_path
                 save_path = os.path.join(reps, file_name)
             with open(save_path, 'w') as f:
                 f.write(self._result)

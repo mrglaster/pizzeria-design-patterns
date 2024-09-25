@@ -9,8 +9,8 @@ from docx import Document
 
 
 class ReportDOCX(ComplexReport):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, settings_file=""):
+        super().__init__(settings_file)
         self.format = ReportFormat.FORMAT_DOCX
         self._document = None
 
@@ -36,7 +36,7 @@ class ReportDOCX(ComplexReport):
                 value = getattr(row, field)
                 row_cells[idx].text = str(value)
 
-    def save(self, file_name: str) -> bool:
+    def save(self, file_name: str = 'report.docx') -> bool:
         try:
             DataValidator.validate_field_type(file_name, str)
             DataValidator.validate_str_not_empty(file_name)
@@ -44,9 +44,7 @@ class ReportDOCX(ComplexReport):
                 raise ValueError("No data to save. Please create the report first.")
             save_path = file_name
             if os.path.basename(file_name) == file_name:
-                sm = SettingsManager()
-                sm.read_settings()
-                save_path = os.path.join(sm.settings.reports_path, file_name)
+                save_path = os.path.join(self.settings_manager.settings.reports_path, file_name)
             self._document.save(save_path)
             return True
         except Exception as e:

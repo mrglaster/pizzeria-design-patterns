@@ -30,6 +30,7 @@ class Settings(AbstractReference):
     __property_type = ""
     __recipes_path = ""
     __reports_path = ""
+    __default_convertion_format = ""
 
     @property
     def organization_name(self):
@@ -135,6 +136,15 @@ class Settings(AbstractReference):
         DataValidator.validate_field_type(value, str)
         self.__reports_path = value
 
+    @property
+    def default_convertion_format(self):
+        return self.__default_convertion_format
+
+    @default_convertion_format.setter
+    def default_convertion_format(self, value: str):
+        DataValidator.validate_field_type(value, str)
+        DataValidator.validate_report_export_type(value)
+        self.__default_convertion_format = value
 
     def __str__(self):
         """

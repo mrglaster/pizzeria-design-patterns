@@ -5,7 +5,7 @@ from modules.domain.report.report.complex.report_rtf import ReportRTF
 from modules.domain.report.report.complex.report_xlsx import ReportXLSX
 from modules.domain.report.report.plain_text.report_csv import ReportCSV
 from modules.domain.report.report.plain_text.report_json import ReportJSON
-from modules.domain.report.report.plain_text.report_markdown import ReportMarkdown
+from modules.domain.report.report.plain_text.report_markdown import ReportMD
 from modules.domain.report.report.plain_text.report_xml import ReportXML
 from modules.domain.report.report_format.report_format import ReportFormat
 from modules.exception.bad_argument_exception import BadArgumentException
@@ -16,7 +16,7 @@ from modules.service.init_service.start_service import StartService
 from modules.service.managers.settings_manager import SettingsManager
 
 
-class TestUtils(unittest.TestCase):
+class TestReports(unittest.TestCase):
     def test_report_csv_create(self):
         service = StartService()
         service.create()
@@ -53,7 +53,7 @@ class TestUtils(unittest.TestCase):
 
     def test_report_markdown(self):
         repo = NomenclatureRepository()
-        report = ReportMarkdown()
+        report = ReportMD()
         report.create(list(repo.get_all().values()))
         assert report.get_result() is not None
         assert 'nomenclature' in report.get_result()
@@ -63,7 +63,7 @@ class TestUtils(unittest.TestCase):
         report = ReportXML()
         report.create(list(repo.get_all().values()))
         assert report.get_result() is not None
-        assert 'Nomenclatures' in report.get_result()
+        assert 'Nomenclature' in report.get_result()
 
     def test_report_docx(self):
         repo = NomenclatureRepository()
@@ -86,37 +86,14 @@ class TestUtils(unittest.TestCase):
     def test_save_reports(self):
         repo = NomenclatureRepository()
         data = list(repo.get_all().values())
-        report = ReportXML()
-        report.create(data)
-        assert report.save('report.xml')
-
-        report = ReportCSV()
-        report.create(data)
-        assert report.save('report.csv')
-
-        report = ReportJSON()
-        report.create(data)
-        assert report.save('report.json')
-
-        report = ReportMarkdown()
-        report.create(data)
-        assert report.save('report.md')
-
-        report = ReportRTF()
-        report.create(data)
-        assert report.save('report.rtf')
-
-        report = ReportXLSX()
-        report.create(data)
-        assert report.save('report.xlsx')
-
-        report = ReportDOCX()
-        report.create(data)
-        assert report.save('report.docx')
-
+        factory = ReportFactory()
+        for rep_type in ReportFormat:
+            if rep_type != ReportFormat.FORMAT_ABSTRACT:
+                report = factory.get_report_class_instance(rep_type)
+                report.create(data)
+                assert report.save()
         sm = SettingsManager()
         path = os.path.join(os.getcwd(), sm.settings.reports_path).replace('test/', '')
-
         assert len(os.listdir(path)) == 7
 
     def test_invalid_save(self):

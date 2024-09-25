@@ -4,7 +4,7 @@ from modules.configuration.length_restricions_configuration import LengthRestric
 from modules.exception.conf_file_not_found import ConfigurationFileNotFound
 
 
-class TestUtils(unittest.TestCase):
+class TestRestrictionsLoader(unittest.TestCase):
     def test_restrictions_loader(self):
         data = LengthRestrictionsLoader.get_restrictions()
         assert data is not None

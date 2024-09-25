@@ -1,7 +1,6 @@
 import json
 import os
 import logging
-
 from modules.domain.settings.settings_model import Settings
 
 
@@ -101,4 +100,5 @@ class SettingsManager:
         data.bik = "0" * 9
         data.recipes_path = f"{os.getcwd().replace('test/', '')}/docs"
         data.reports_path = f"{os.getcwd().replace('test/', '')}/reports"
+        data.default_convertion_format = "FORMAT_CSV"
         return data

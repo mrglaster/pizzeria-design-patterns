@@ -16,12 +16,5 @@ class ReportJSON(PlainTextReport):
             raise BadArgumentException("Empty data list provided!")
         used_model = data[0]
         class_name = type(used_model).__name__
-        result = {class_name: []}
-        fields = self.get_class_fields(used_model)
-        for row in data:
-            current_json = {}
-            for field in fields:
-                value = getattr(row, field)
-                current_json[field] = str(value)
-            result[class_name].append(current_json)
-        self._result = str(result)
+        result = {class_name: data}
+        self._result = self._converter_factory.convert(result, 'json')

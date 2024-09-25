@@ -7,5 +7,6 @@
   "bik": "123456789",
   "property_type": "55555",
   "recipes_path": "docs",
-  "reports_path": "reports"
+  "reports_path": "reports",
+  "default_convertion_format": "FORMAT_CSV"
 }

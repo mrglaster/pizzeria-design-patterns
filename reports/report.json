@@ -1,1 +1,169 @@
-{'Nomenclature': [{'full_name': 'nomenclature_full_name', 'measurement_unit': 'г: 1', 'name': 'Пшеничная мука', 'nomenclature_group': 'ингредиент', 'uid': '005afe06-e40f-4bc7-8354-978434ea0ec7'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'гр: 1', 'name': 'Сахар', 'nomenclature_group': 'ингредиент', 'uid': '8946a530-8fcf-4f8e-b5f8-c69fd11545fd'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'гр: 1', 'name': 'Сливочное масло', 'nomenclature_group': 'ингредиент', 'uid': '7e91cf25-221f-46c9-8662-d30cd1c79ee8'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'шт: 1', 'name': 'Яйца', 'nomenclature_group': 'ингредиент', 'uid': 'f3b67b35-7b16-4260-9563-526f8b17d2b3'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'мл: 1', 'name': 'Молоко', 'nomenclature_group': 'ингредиент', 'uid': '97809a06-cf35-484b-b2cc-d73ec6bcbb7d'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'гр: 1', 'name': 'Разрыхлитель теста', 'nomenclature_group': 'ингредиент', 'uid': 'ce059007-ea78-4ee0-baca-c1f469e0291c'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'гр: 1', 'name': 'Соль (щепотка)', 'nomenclature_group': 'ингредиент', 'uid': 'ae422992-f301-4497-a9af-287aae0d68a1'}, {'full_name': 'nomenclature_full_name', 'measurement_unit': 'гр: 1', 'name': 'Ванилин(щепотка)', 'nomenclature_group': 'ингредиент', 'uid': '1c130e70-026f-4077-8177-aaf5ab3e874d'}]}
+{
+    "Nomenclature": [
+        {
+            "name": "Пшеничная мука",
+            "uid": "3182b4a2-304d-435b-96ba-b0d1a1fc08d8",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "г",
+                "uid": "a628256f-9f0b-4bcd-9d89-938a1d712add",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Сахар",
+            "uid": "3bfaaab4-c2d0-43c4-9a21-c7aebd6b193b",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "гр",
+                "uid": "8a30170f-84a5-40e6-bbc4-58f9aaaeb54b",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Сливочное масло",
+            "uid": "9c73677c-a00e-4220-8b3e-06d0844c53cd",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "гр",
+                "uid": "8a30170f-84a5-40e6-bbc4-58f9aaaeb54b",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Яйца",
+            "uid": "08ebb696-a850-49bd-90bc-068b0066bb89",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "шт",
+                "uid": "7f1659d1-cdf6-4f49-b8e5-e74b600b2d53",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Молоко",
+            "uid": "8b6611e4-fa63-41f4-9be6-bdcd7e44e2f4",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "мл",
+                "uid": "97d79133-8865-4082-8c6d-081a4235fe20",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Разрыхлитель теста",
+            "uid": "225f14b8-6bff-45cd-82af-286ab1aa88a6",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "гр",
+                "uid": "8a30170f-84a5-40e6-bbc4-58f9aaaeb54b",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Соль (щепотка)",
+            "uid": "80ca678b-ab8b-4120-805c-a21379dae64f",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "гр",
+                "uid": "8a30170f-84a5-40e6-bbc4-58f9aaaeb54b",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Ванилин(щепотка)",
+            "uid": "6881619b-9b49-480c-b733-fbf8eea392b1",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "гр",
+                "uid": "8a30170f-84a5-40e6-bbc4-58f9aaaeb54b",
+                "unit": 1.0,
+                "base_measure_unit": null
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Терпение",
+            "uid": "cef83ff8-6645-4a95-b6f3-d2c7af6fad42",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "кг",
+                "uid": "6507e016-871e-4f23-aacb-6ce8c138c2f2",
+                "unit": 1000.0,
+                "base_measure_unit": {
+                    "name": "г",
+                    "uid": "a628256f-9f0b-4bcd-9d89-938a1d712add",
+                    "unit": 1.0,
+                    "base_measure_unit": null
+                }
+            },
+            "full_name": "nomenclature_full_name"
+        },
+        {
+            "name": "Самообладание",
+            "uid": "8cbe2956-b294-45d8-b91a-d870a78bc709",
+            "nomenclature_group": {
+                "name": "ингредиент",
+                "uid": "5edbf611-8327-4b66-838c-4156c99e7793"
+            },
+            "measurement_unit": {
+                "name": "ц",
+                "uid": "63de8f2a-3df8-4701-b338-a8515e2a9f20",
+                "unit": 100.0,
+                "base_measure_unit": {
+                    "name": "кг",
+                    "uid": "6507e016-871e-4f23-aacb-6ce8c138c2f2",
+                    "unit": 1000.0,
+                    "base_measure_unit": {
+                        "name": "г",
+                        "uid": "a628256f-9f0b-4bcd-9d89-938a1d712add",
+                        "unit": 1.0,
+                        "base_measure_unit": null
+                    }
+                }
+            },
+            "full_name": "nomenclature_full_name"
+        }
+    ]
+}

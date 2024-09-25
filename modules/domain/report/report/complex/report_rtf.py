@@ -11,8 +11,8 @@ from modules.validation.data_validator import DataValidator
 
 
 class ReportRTF(ComplexReport):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, settings_file=""):
+        super().__init__(settings_file)
         self.format = ReportFormat.FORMAT_RTF
 
     def create(self, data: list):
@@ -41,14 +41,12 @@ class ReportRTF(ComplexReport):
         section.append(table)
         self._document = doc
 
-    def save(self, file_name: str):
+    def save(self, file_name: str = 'report.rtf'):
         try:
             renderer = Renderer()
             save_path = file_name
             if os.path.basename(file_name) == file_name:
-                sm = SettingsManager()
-                sm.read_settings()
-                save_path = os.path.join(sm.settings.reports_path, file_name)
+                save_path = os.path.join(self.settings_manager.settings.reports_path, file_name)
             with open(save_path, 'w') as f:
                 renderer.Write(self._document, f)
             return True

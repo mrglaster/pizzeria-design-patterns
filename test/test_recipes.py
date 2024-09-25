@@ -7,7 +7,7 @@ from modules.repository.recipe_repository import RecipeRepository
 from modules.service.init_service.start_service import StartService
 
 
-class TestUtils(unittest.TestCase):
+class TestRecipes(unittest.TestCase):
 
     def test_data_create(self):
         service = StartService()

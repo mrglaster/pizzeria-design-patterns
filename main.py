@@ -1,5 +1,8 @@
-from modules.domain.nomenclature.nomenclature_model import Nomenclature
-from modules.repository.recipe_repository import RecipeRepository
-from modules.service.init_service.start_service import StartService
+import json
 
-print(str(Nomenclature.__name__))
+from modules.convertion.encoder.json_encoder import JsonEncoder
+from modules.convertion.encoder.xml_encoder import XMLEncoder
+from modules.domain.report.report_format.report_format import ReportFormat
+from modules.factory.convertion_factory.convertion_factory import ConverterFactory
+
+

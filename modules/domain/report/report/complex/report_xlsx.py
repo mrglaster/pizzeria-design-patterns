@@ -11,8 +11,8 @@ from openpyxl.styles import Font
 
 class ReportXLSX(ComplexReport):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, settings_path=""):
+        super().__init__(settings_path=settings_path)
         self.format = ReportFormat.FORMAT_XLSX
 
     def create(self, data: list):
@@ -37,7 +37,7 @@ class ReportXLSX(ComplexReport):
                 value = getattr(row, field)
                 sheet.cell(row=row_idx, column=col_idx, value=str(value))
 
-    def save(self, file_name: str) -> bool:
+    def save(self, file_name: str = 'report.xls') -> bool:
         try:
             DataValidator.validate_field_type(file_name, str)
             DataValidator.validate_str_not_empty(file_name)
@@ -45,9 +45,7 @@ class ReportXLSX(ComplexReport):
                 raise ValueError("No data to save. Please create the report first.")
             save_path = file_name
             if os.path.basename(file_name) == file_name:
-                sm = SettingsManager()
-                sm.read_settings()
-                save_path = os.path.join(sm.settings.reports_path, file_name)
+                save_path = os.path.join(self.settings_manager.settings.reports_path, file_name)
             self._document.save(save_path)
             return True
         except Exception as e:

@@ -6,8 +6,8 @@ from modules.validation.data_validator import DataValidator
 
 class ReportCSV(PlainTextReport):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, settings_path=""):
+        super().__init__(settings_path=settings_path)
         self.format = ReportFormat.FORMAT_CSV
 
     def create(self, data: list):
@@ -16,9 +16,8 @@ class ReportCSV(PlainTextReport):
             raise BadArgumentException("Empty data set provided!")
         used_model = data[0]
         fields = self.get_class_fields(used_model)
-
         for field in fields:
-            self._result += f"{field}"
+            self._result += f"{field};"
         self._result += '\n'
         for row in data:
             for field in fields:
