@@ -1,6 +1,7 @@
 import json
 from src.modules.convertion.converter.abstract_converter import AbstractConverter
 from src.modules.convertion.encoder.json_encoder import JsonEncoder
+from src.modules.validation.data_validator import DataValidator
 
 
 class JSONConverter(AbstractConverter):
@@ -13,9 +14,11 @@ class JSONConverter(AbstractConverter):
 
     @staticmethod
     def deserialize(object_name, data: dict | str):
+        DataValidator.validate_field_type(object_name, str)
+        DataValidator.validate_str_not_empty(object_name)
         if isinstance(data, str):
             data = json.loads(data)
-        result_class = JSONConverter.objects_factory.get_object(object_name)
+        result_class = JSONConverter.objects_factory.create(object_name)
         if hasattr(result_class, 'create') and callable(getattr(result_class, 'create')):
             instance = result_class.create()
         else:

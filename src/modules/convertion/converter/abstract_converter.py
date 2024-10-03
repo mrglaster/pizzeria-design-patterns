@@ -1,11 +1,11 @@
 from abc import ABC
 
-from src.modules.factory.object_factory.object_factory import ObjectFactory
+from src.modules.factory.model_description_factory.model_description_factory import ModelDescriptionFactory
 from src.modules.service.base.abstract_logic import AbstractLogic
 
 
 class AbstractConverter(AbstractLogic):
-    objects_factory = ObjectFactory()
+    objects_factory = ModelDescriptionFactory()
 
     def set_exception(self, ex: Exception):
         pass

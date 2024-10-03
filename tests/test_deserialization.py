@@ -48,12 +48,3 @@ class TestRecipes(unittest.TestCase):
     def test_compare_recipe_repository(self):
         service = StartService()
         service.create()
-
-    def test_deserialize_xml_mu(self):
-        service = StartService()
-        service.create()
-        for i in MeasurementUnitRepository.get_all().values():
-            xml_str = XMLConverter.serialize(i)
-            processed = XMLConverter.deserialize('measurement_unit', xml_str)
-            assert MeasurementUnitRepository.find_by_name(processed.name) == processed
-

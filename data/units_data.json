@@ -3,7 +3,7 @@
     "гр": {
       "name": "гр",
       "conversion_factor": 1,
-      "related_unit": "NONE"
+      "related_unit": null
     },
     "кг": {
       "name": "кг",
@@ -23,7 +23,7 @@
     "шт": {
       "name": "шт",
       "conversion_factor": 1,
-      "related_unit": "NONE"
+      "related_unit": null
     }
   }
 }
