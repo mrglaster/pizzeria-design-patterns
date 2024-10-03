@@ -1,5 +1,4 @@
 import re
-
 import xmltodict
 from src.modules.convertion.converter.abstract_converter import AbstractConverter
 from src.modules.convertion.converter.json_converter import JSONConverter
