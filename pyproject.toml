@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pizzeria-design-patterns-project"
+version = "0.1.0"
+description = ""
+authors = ["pristavkaegor03@gmail.com <pristavka_egor>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+connexion = {extras = ["flask"], version = "^3.1.0"}
+pyrtf3 = "^0.47.5"
+python-docx = "^1.1.2"
+openpyxl = "^3.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
