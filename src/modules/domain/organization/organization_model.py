@@ -1,3 +1,4 @@
+from __future__ import annotations
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.domain.settings.settings_model import Settings
 from src.modules.validation.data_validator import DataValidator
@@ -9,12 +10,22 @@ class Organization(AbstractReference):
     __bik = ""
     __property_type = ""
 
-    def __init__(self, settings: Settings):
-        super().__init__(settings.organization_name, "organization_name")
-        self.__inn = settings.inn
-        self.__bank_account = settings.bank_account
-        self.__bik = settings.bik
-        self.__property_type = settings.property_type
+    def __init__(self, name: str = "DEFAULT"):
+        super().__init__(name, "organization_name")
+
+    @classmethod
+    def create(cls, settings: Settings) -> Organization:
+        DataValidator.check_class_field("inn", str, settings.inn)
+        DataValidator.check_class_field("bank_account", str, settings.bank_account)
+        DataValidator.check_class_field("bik", str, settings.bik)
+        DataValidator.check_class_field("property_type", str, settings.property_type)
+
+        instance = cls(settings.organization_name)
+        instance.__inn = settings.inn
+        instance.__bank_account = settings.bank_account
+        instance.__bik = settings.bik
+        instance.__property_type = settings.property_type
+        return instance
 
     @property
     def inn(self):

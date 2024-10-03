@@ -1,12 +1,18 @@
+from __future__ import annotations
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.validation.data_validator import DataValidator
 
 
 class RecipeStep(AbstractReference):
-    def __init__(self, step_id: int = 0, description: str = ""):
+    def __init__(self):
         super().__init__()
-        self.__step_id = step_id
-        self.__step_description = description
+
+    @classmethod
+    def create(cls, step_id, description: str = "") -> RecipeStep:
+        instance = cls()
+        instance.step_id = step_id
+        instance.step_description = description
+        return instance
 
     @property
     def step_id(self):

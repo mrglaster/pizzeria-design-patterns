@@ -18,7 +18,7 @@ class MeasurementUnitRepository(AbstractRepository):
     def create_new_measurement_unit(name: str, connected_unit: MeasurementUnit = None, converted: float = 1.0):
         if name not in MeasurementUnitRepository.__units:
             DataValidator.validate_field_type(connected_unit, MeasurementUnit, True)
-            new_unit = MeasurementUnit(name=name, unit=converted, base_measure_unit=connected_unit)
+            new_unit = MeasurementUnit.create(name=name, unit=converted, base_measure_unit=connected_unit)
             MeasurementUnitRepository.__units[name] = new_unit
             if connected_unit and connected_unit.name not in MeasurementUnitRepository.__units:
                 MeasurementUnitRepository.__units[connected_unit.name] = connected_unit

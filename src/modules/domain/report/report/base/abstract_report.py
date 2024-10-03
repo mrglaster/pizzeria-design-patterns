@@ -1,7 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 from src.modules.domain.report.report_format.report_format import ReportFormat
-from src.modules.factory.convertion_factory.convertion_factory import ConverterFactory
+from src.modules.factory.convertion_factory.converter_factory import ConverterFactory
 from src.modules.service.managers.settings_manager import SettingsManager
 from src.modules.validation.data_validator import DataValidator
 

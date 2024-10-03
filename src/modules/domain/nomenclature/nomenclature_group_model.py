@@ -1,4 +1,5 @@
 from src.modules.domain.base.abstract_reference import AbstractReference
+from src.modules.validation.data_validator import DataValidator
 
 
 class NomenclatureGroup(AbstractReference):
@@ -10,17 +11,11 @@ class NomenclatureGroup(AbstractReference):
     def __ne__(self, other):
         return not self == other
 
-    @staticmethod
-    def default_group_():
-        item = NomenclatureGroup()
-        item.name = "сырьё"
-        return item
-
-    @staticmethod
-    def default_group_production(self):
-        item = NomenclatureGroup()
-        item.name = "Заморозка"
-        return item
+    @classmethod
+    def create(cls, name: str = "DEFAULT_NAME"):
+        DataValidator.validate_field_type(name, str)
+        DataValidator.validate_str_not_empty(name)
+        return cls(name)
 
     def __str__(self):
         return self.name

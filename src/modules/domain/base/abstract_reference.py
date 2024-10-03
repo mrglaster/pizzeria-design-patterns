@@ -16,6 +16,8 @@ class AbstractReference(ABC):
         else:
             self.__uid = str(uuid.uuid4())
 
+
+
     @property
     def uid(self) -> str:
         return self.__uid
@@ -28,6 +30,11 @@ class AbstractReference(ABC):
     def name(self, value: str):
         DataValidator.check_class_field("abstract_name", str, value)
         self._name = value
+
+    @uid.setter
+    def uid(self, value: str):
+        DataValidator.check_class_field("uid", str, value)
+        self.__uid = value
 
     @abstractmethod
     def __eq__(self, other):

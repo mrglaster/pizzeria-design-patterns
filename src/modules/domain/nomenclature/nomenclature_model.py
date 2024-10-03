@@ -1,3 +1,4 @@
+from __future__ import annotations
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.domain.measures.measurment_unit_model import MeasurementUnit
 from src.modules.domain.nomenclature.nomenclature_group_model import NomenclatureGroup
@@ -10,17 +11,23 @@ class Nomenclature(AbstractReference):
     __measurement_unit: MeasurementUnit = None
     __full_name_property_name = "nomenclature_full_name"
 
-    def __init__(self, name: str, nomenclature_group: NomenclatureGroup, measurement_unit: MeasurementUnit,
-                 full_name: str = None):
+    def __init__(self, name: str = "DEFAULT"):
         super().__init__(name, self.__full_name_property_name)
+
+    @classmethod
+    def create(cls, name: str = "DEFAULT", nomenclature_group: NomenclatureGroup = NomenclatureGroup(),
+               measurement_unit: MeasurementUnit = MeasurementUnit(), full_name: str = None) -> Nomenclature:
         DataValidator.validate_field_type(nomenclature_group, NomenclatureGroup)
         DataValidator.validate_field_type(measurement_unit, MeasurementUnit)
+
         if full_name is None:
-            full_name = self.__full_name_property_name
-        DataValidator.check_class_field(self.__full_name_property_name, str, full_name)
-        self.__nomenclature_group = nomenclature_group
-        self.__measurement_unit = measurement_unit
-        self.__full_name = full_name
+            full_name = cls.__full_name_property_name
+        DataValidator.check_class_field(cls.__full_name_property_name, str, full_name)
+        instance = cls(name)
+        instance.__nomenclature_group = nomenclature_group
+        instance.__measurement_unit = measurement_unit
+        instance.__full_name = full_name
+        return instance
 
     @property
     def full_name(self):

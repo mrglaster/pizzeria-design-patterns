@@ -5,14 +5,19 @@ from src.modules.validation.data_validator import DataValidator
 
 
 class Recipe(AbstractReference):
-    def __init__(self, name: str, portions_count: int = 1, cooking_time_mins: int = None):
+    def __init__(self, name: str):
         super().__init__(name)
-        self.__name = name
-        self.__ingredients = []
-        self.__portions_count = portions_count
-        self.__cooking_time_mins = cooking_time_mins
-        self.__steps = []
         self.__step_count = 0
+        self.__ingredients = []
+        self.__steps = []
+
+    @classmethod
+    def create(cls, name: str = "DEFAULT_RECIPE_NAME", portions_count: int = 1, cooking_time_mins: int = 0):
+        instance = cls(name)
+        instance.name = name
+        instance.portions_count = portions_count
+        instance.cooking_time_mins = cooking_time_mins
+        return instance
 
     @property
     def name(self):
@@ -47,7 +52,7 @@ class Recipe(AbstractReference):
 
     @cooking_time_mins.setter
     def cooking_time_mins(self, value: int):
-        DataValidator.validate_field_type(value, int)
+        DataValidator.validate_field_type(value, int, nullable=True)
         self.__cooking_time_mins = value
 
     @property
@@ -72,7 +77,7 @@ class Recipe(AbstractReference):
 
     def add_step(self, description: str):
         DataValidator.validate_field_type(description, str)
-        new_step = RecipeStep(step_id=self.__step_count + 1, description=description)
+        new_step = RecipeStep.create(step_id=self.__step_count + 1, description=description)
         if new_step not in self.__steps:
             self.__steps.append(new_step)
             self.__step_count += 1

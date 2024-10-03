@@ -1,6 +1,12 @@
+import json
+
 import connexion
 
+from src.modules.convertion.converter.json_converter import JSONConverter
 from src.modules.domain.report.report_format.report_format import ReportFormat
+from src.modules.factory.object_factory.object_factory import ObjectFactory
+from src.modules.factory.report_factory.report_factory import ReportFactory
+from src.modules.repository.measurment_unit_repository import MeasurementUnitRepository
 
 app = connexion.FlaskApp(__name__)
 
@@ -15,10 +21,6 @@ def get_formats():
         cntr += 1
     return response
 
-
-@app.route("/api/reports/range/<format>", methods=['GET'])
-def get_report_range():
-    pass
 
 if __name__ == '__main__':
     app.add_api("swagger.yml")

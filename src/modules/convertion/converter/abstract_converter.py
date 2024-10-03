@@ -1,13 +1,19 @@
 from abc import ABC
 
+from src.modules.factory.object_factory.object_factory import ObjectFactory
 from src.modules.service.base.abstract_logic import AbstractLogic
 
 
 class AbstractConverter(AbstractLogic):
+    objects_factory = ObjectFactory()
 
     def set_exception(self, ex: Exception):
         pass
 
     @staticmethod
-    def convert(obj: object) -> str:
+    def serialize(obj: object) -> str:
+        pass
+
+    @staticmethod
+    def deserialize(object_name: str, data: dict|str) -> object:
         pass

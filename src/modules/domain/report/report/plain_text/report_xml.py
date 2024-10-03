@@ -17,4 +17,4 @@ class ReportXML(PlainTextReport):
         used_model = data[0]
         class_name = type(used_model).__name__
         data_d = {class_name: data}
-        self._result = self._converter_factory.convert(data_d, 'xml')
+        self._result = self._converter_factory.serialize(data_d, 'xml')

@@ -17,7 +17,8 @@ class RecipeLoader(AbstractDataLoader):
             recipe_name = title_match.group(1) if title_match else "Без названия"
             portions_match = re.search(r'#### `(\d+) порций`', md_content)
             portions_count = int(portions_match.group(1)) if portions_match else 1
-            recipe = Recipe(name=recipe_name, portions_count=portions_count)
+
+            recipe = Recipe.create(name=recipe_name, portions_count=portions_count)
             for line in md_content.split('\n'):
                 if '|' in line and 'ингредиенты' not in line.lower() and 'граммовка' not in line.lower() and '-|' not in line:
                     current_row = line.lstrip().split('|')[1:][:-1]
@@ -31,7 +32,7 @@ class RecipeLoader(AbstractDataLoader):
                     nomenclature = NomenclatureRepository.create_nomenclature(ingredient_name, ing_category,
                                                                               measurement_unit)
                     if nomenclature and measurement_unit:
-                        ingredient = Ingredient(nomenclature=nomenclature, measurement_unit=measurement_unit,
+                        ingredient = Ingredient.create(nomenclature=nomenclature, measurement_unit=measurement_unit,
                                                 amount=amount)
                         recipe.add_ingredient(ingredient)
                 if "время приготовления:" in line.lower():
