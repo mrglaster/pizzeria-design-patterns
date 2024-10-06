@@ -27,3 +27,11 @@ class ReportDataProvider:
         DataValidator.validate_field_type(format_type, str)
         DataValidator.validate_str_not_empty(format_type)
         return format_type in ReportDataProvider.repository_factory.repositories
+
+    @staticmethod
+    def is_valid_format(report_format: str):
+        try:
+            a = FormatProvider.get_format(format_data=report_format)
+            return True
+        except:
+            return False

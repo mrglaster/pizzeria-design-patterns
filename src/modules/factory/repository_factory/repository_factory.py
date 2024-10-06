@@ -19,7 +19,6 @@ class RepositoryFactory(AbstractLogic):
             class_name = cls.__name__
             formatted_name = re.sub(r'(?<!^)(?=[A-Z])', '_', class_name).lower().replace("_repository", "")
             self.__repositories[formatted_name] = cls
-            print(formatted_name)
 
     def get_by_name(self, name):
         DataValidator.validate_field_type(name, str, False)
