@@ -19,9 +19,10 @@ class ConverterFactory(AbstractLogic):
             format_name = i.__name__.replace('Converter', '').lower()
             self.__converters[format_name] = i
 
-    def convert(self, obj: object, convertion_type: str) -> str:
+    def serialize(self, obj: object, convertion_type: str) -> str:
         DataValidator.validate_field_type(convertion_type, str)
         if convertion_type not in self.__converters:
             raise BadArgumentException(f"Convertion type not implemented: {convertion_type}")
-        return self.__converters[convertion_type].convert(obj)
+        return self.__converters[convertion_type].serialize(obj)
+    
 

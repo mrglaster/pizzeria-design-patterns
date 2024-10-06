@@ -11,7 +11,7 @@ class NomenclatureRepository(AbstractRepository):
     @staticmethod
     def create_nomenclature(name: str, group: NomenclatureGroup, m_unit: MeasurementUnit):
         if name not in NomenclatureRepository.__nomenclatures.keys():
-            nom = Nomenclature(name, group, m_unit)
+            nom = Nomenclature.create(name, group, m_unit)
             NomenclatureRepository.__nomenclatures[name] = nom
             return nom
         return NomenclatureRepository.__nomenclatures[name]

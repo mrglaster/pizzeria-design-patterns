@@ -17,4 +17,4 @@ class ReportJSON(PlainTextReport):
         used_model = data[0]
         class_name = type(used_model).__name__
         result = {class_name: data}
-        self._result = self._converter_factory.convert(result, 'json')
+        self._result = self._converter_factory.serialize(result, 'json')

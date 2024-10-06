@@ -1,3 +1,4 @@
+from __future__ import annotations
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.domain.nomenclature.nomenclature_model import Nomenclature
 from src.modules.domain.measures.measurment_unit_model import MeasurementUnit
@@ -5,13 +6,18 @@ from src.modules.validation.data_validator import DataValidator
 
 
 class Ingredient(AbstractReference):
-    def __init__(self, nomenclature: Nomenclature, measurement_unit: MeasurementUnit, amount: float):
+    def __init__(self):
         super().__init__()
+
+    @classmethod
+    def create(cls, nomenclature: Nomenclature, measurement_unit: MeasurementUnit, amount: float) -> Ingredient:
+        instance = cls()
         DataValidator.validate_field_type(nomenclature, Nomenclature)
         DataValidator.validate_field_type(measurement_unit, MeasurementUnit)
         DataValidator.validate_field_type(amount, float)
-        self.__nomenclature = nomenclature
-        self.__amount = amount
+        instance.nomenclature = nomenclature
+        instance.amount = amount
+        return instance
 
     @property
     def nomenclature(self):

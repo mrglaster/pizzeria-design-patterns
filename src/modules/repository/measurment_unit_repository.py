@@ -18,7 +18,7 @@ class MeasurementUnitRepository(AbstractRepository):
     def create_new_measurement_unit(name: str, connected_unit: MeasurementUnit = None, converted: float = 1.0):
         if name not in MeasurementUnitRepository.__units:
             DataValidator.validate_field_type(connected_unit, MeasurementUnit, True)
-            new_unit = MeasurementUnit(name=name, unit=converted, base_measure_unit=connected_unit)
+            new_unit = MeasurementUnit.create(name=name, unit=converted, base_measure_unit=connected_unit)
             MeasurementUnitRepository.__units[name] = new_unit
             if connected_unit and connected_unit.name not in MeasurementUnitRepository.__units:
                 MeasurementUnitRepository.__units[connected_unit.name] = connected_unit
@@ -43,7 +43,7 @@ class MeasurementUnitRepository(AbstractRepository):
             MeasurementUnitRepository.create_new_measurement_unit(name=unit_name)
         for unit_data in json_data.values():
             related_unit_name = unit_data["related_unit"]
-            if related_unit_name != "NONE":
+            if related_unit_name is not None:
                 current_unit = MeasurementUnitRepository.find_by_name(unit_data["name"])
                 current_unit.base_measure_unit = MeasurementUnitRepository.find_by_name(related_unit_name)
                 current_unit.unit = unit_data["conversion_factor"]

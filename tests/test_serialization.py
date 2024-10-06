@@ -1,6 +1,6 @@
 import json
 from unittest import TestCase
-from src.modules.factory.convertion_factory.convertion_factory import ConverterFactory
+from src.modules.factory.convertion_factory.converter_factory import ConverterFactory
 
 
 class TestConverters(TestCase):
@@ -31,7 +31,7 @@ class TestConverters(TestCase):
         person = self.Person("Alice", diploma)
         a = {"a": [person]}
         factory = ConverterFactory()
-        result = factory.convert(a, 'json')
+        result = factory.serialize(a, 'json')
         expected= """{"a": [{"name": "Alice","diploma": {"id": "D-12345","given_date": "2023-05-01","stamp": {"organization": {"name": "University"},"id": 123}}}]}"""
         assert json.loads(expected) == json.loads(result)
 
@@ -42,7 +42,7 @@ class TestConverters(TestCase):
         person = self.Person("Alice", diploma)
         a = {"a": [person]}
         factory = ConverterFactory()
-        result = factory.convert(a, 'xml')
+        result = factory.serialize(a, 'xml')
         expected = """<?xml version="1.0" ?>
 <dict>
   <a>
