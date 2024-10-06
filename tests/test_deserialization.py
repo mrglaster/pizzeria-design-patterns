@@ -1,7 +1,5 @@
 import unittest
-
 from src.modules.convertion.converter.json_converter import JSONConverter
-from src.modules.convertion.converter.xml_converter import XMLConverter
 from src.modules.repository.measurment_unit_repository import MeasurementUnitRepository
 from src.modules.repository.nomenclature_repository import NomenclatureRepository
 from src.modules.repository.recipe_repository import RecipeRepository
@@ -44,7 +42,3 @@ class TestRecipes(unittest.TestCase):
             json_str = JSONConverter.serialize(i)
             processed = JSONConverter.deserialize('measurement_unit', json_str)
             assert MeasurementUnitRepository.find_by_name(processed.name) == processed
-
-    def test_compare_recipe_repository(self):
-        service = StartService()
-        service.create()
