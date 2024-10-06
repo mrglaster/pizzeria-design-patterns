@@ -16,6 +16,7 @@ class ReportFormat(Enum):
     @staticmethod
     def get_by_ordinal(ordinal: int):
         if 0 <= ordinal <= 6:
-            return ReportFormat[ReportFormat.__members__.keys()[ordinal]]
+            report_format = list(ReportFormat.__members__.keys())[ordinal]
+            return ReportFormat[report_format]
         raise BadArgumentException(f"Unsupported ordinal: {ordinal}")
 
