@@ -3,14 +3,14 @@
   <Nomenclature>
     <item>
       <name>Пшеничная мука</name>
-      <uid>5fdca92a-f187-41e3-af1f-265571aaa096</uid>
+      <uid>1980581b-0134-4d7d-8f69-2aadf712b969</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>г</name>
-        <uid>4a0fcbba-d881-477b-a07f-e98e4f55f2cf</uid>
+        <uid>2bdf5fd5-ca17-49fa-a865-540a16e6b103</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -18,14 +18,14 @@
     </item>
     <item>
       <name>Сахар</name>
-      <uid>91595076-978e-4d04-903d-89151a7ec38b</uid>
+      <uid>f6c539cc-89da-46a1-b505-f61ba44a953c</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>гр</name>
-        <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+        <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -33,14 +33,14 @@
     </item>
     <item>
       <name>Сливочное масло</name>
-      <uid>28e9320b-af72-47fe-b2c6-fe6fd2f677bf</uid>
+      <uid>0cabc833-94d8-4239-89d4-cbe91c0a5d25</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>гр</name>
-        <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+        <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -48,14 +48,14 @@
     </item>
     <item>
       <name>Яйца</name>
-      <uid>1f0b8d0d-6ea8-4a6d-a4b9-6ffbff4c09f4</uid>
+      <uid>6c04bc2b-d9f7-425b-bd5c-522d44756179</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>шт</name>
-        <uid>a47d7e79-9943-4397-9e20-34c2b1bb8ee6</uid>
+        <uid>4df45eae-7d11-4129-a532-dc357c18e40a</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -63,14 +63,14 @@
     </item>
     <item>
       <name>Молоко</name>
-      <uid>0655ccf2-4716-458f-943a-bc3f8080a139</uid>
+      <uid>0fa36ce1-7e31-412a-a11f-6980abf6781c</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>мл</name>
-        <uid>8bfa4610-af37-4921-851d-19ca89295b43</uid>
+        <uid>1b37ae92-a814-47d9-a2db-9d8cc108038a</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -78,14 +78,14 @@
     </item>
     <item>
       <name>Разрыхлитель теста</name>
-      <uid>2ab29181-d7eb-4795-8bc9-6c3d130d9c0a</uid>
+      <uid>f7c1abfb-496a-4aee-a32f-c6d9f0469dbf</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>гр</name>
-        <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+        <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -93,14 +93,14 @@
     </item>
     <item>
       <name>Соль (щепотка)</name>
-      <uid>171072dc-be63-4e31-8fec-15f54531b3c6</uid>
+      <uid>e10758a3-f640-46d1-a1eb-c62c4d972bcd</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>гр</name>
-        <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+        <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -108,14 +108,14 @@
     </item>
     <item>
       <name>Ванилин(щепотка)</name>
-      <uid>70ec6b70-b67f-4090-b435-ba05a2e3546a</uid>
+      <uid>c62811a2-ca85-4fa3-912f-1a06a2e55861</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>гр</name>
-        <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+        <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
         <unit>1.0</unit>
         <base_measurement_unit>None</base_measurement_unit>
       </measurement_unit>
@@ -123,18 +123,18 @@
     </item>
     <item>
       <name>Терпение</name>
-      <uid>9ce3e660-d71c-455e-b7ea-3fd182540752</uid>
+      <uid>7907aed0-a6e6-4e85-943f-25337216c6ae</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>кг</name>
-        <uid>de3b2566-4852-4aa2-8e01-dbcd6c8f66cc</uid>
+        <uid>f7eaeafa-44df-4d26-ba07-b1a0ab6bd133</uid>
         <unit>1000.0</unit>
         <base_measurement_unit>
           <name>гр</name>
-          <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+          <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
           <unit>1.0</unit>
           <base_measurement_unit>None</base_measurement_unit>
         </base_measurement_unit>
@@ -143,22 +143,22 @@
     </item>
     <item>
       <name>Самообладание</name>
-      <uid>cc580d3d-3ba7-4ddc-960f-54c50ff7adb6</uid>
+      <uid>1164f664-048b-4187-a0f5-7b365b0caa95</uid>
       <nomenclature_group>
         <name>ингредиент</name>
-        <uid>090387eb-494c-4038-bc4f-cf0d044ca6b1</uid>
+        <uid>0e3e3fbe-6fbf-4418-a6f0-e8551f3cdbee</uid>
       </nomenclature_group>
       <measurement_unit>
         <name>ц</name>
-        <uid>400d4c12-02da-4151-b3fb-11b7b3fd8045</uid>
+        <uid>bed70a83-75ef-4e30-8902-98b2a02ae473</uid>
         <unit>100.0</unit>
         <base_measurement_unit>
           <name>кг</name>
-          <uid>de3b2566-4852-4aa2-8e01-dbcd6c8f66cc</uid>
+          <uid>f7eaeafa-44df-4d26-ba07-b1a0ab6bd133</uid>
           <unit>1000.0</unit>
           <base_measurement_unit>
             <name>гр</name>
-            <uid>05eacbf1-3bef-4611-9116-565441dd33b7</uid>
+            <uid>57cf9464-44da-4889-9816-79ca557d2d7c</uid>
             <unit>1.0</unit>
             <base_measurement_unit>None</base_measurement_unit>
           </base_measurement_unit>
