@@ -103,6 +103,6 @@ class TestReports(unittest.TestCase):
         data = list(repo.get_all().values())
         report = ReportXML()
         report.create(data)
-        assert not report.save('/home/azazazaza/report.xml')
+        assert not report.save('/home/azazazaza/report_data.xml')
         assert report.exception is not None
         assert isinstance(report.exception, FileNotFoundError)

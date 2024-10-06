@@ -1,26 +1,128 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  description: Bunch of services for Romashka company
+  title: Report Generation API
+  description: API for generating reports in various formats for recipes, nomenclatures, nomenclature groups, and measurement units.
   version: "1.0.0"
-  title: RestAPI
-produces:
-  - application/json
-  - application/xml
-  - text/plain
-basePath: "/api"
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
 paths:
-  /reports/formats:
+  /api/reports/formats:
     get:
-      summary: Returns a list of supported report formats
-      operationId: main.get_formats
-      produces:
-        - application/json
+      summary: Get available report formats
+      description: Returns a list of all supported report formats.
+      tags:
+        - Reports
       responses:
-        200:
-          description: OK
+        '200':
+          description: A list of report formats.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_formats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Name of the report format.
+                        value:
+                          type: integer
+                          description: Numeric value representing the format.
+        '400':
+          description: Invalid request.
+
+  /api/reports/recipe/{report_format}:
+    get:
+      summary: Generate a recipe report
+      description: Returns a recipe report in the specified format.
+      tags:
+        - Reports
+      parameters:
+        - name: report_format
+          in: path
+          required: true
           schema:
-            type: object
-        500:
-          description: Internal server error
-        default:
-          description: Unexpected error
+            type: string
+          description: The format of the report to generate (e.g., PDF, CSV).
+      responses:
+        '200':
+          description: The generated recipe report.
+        '400':
+          description: Invalid format or error in generating the report.
+
+  /api/reports/nomenclature/{report_format}:
+    get:
+      summary: Generate a nomenclature report
+      description: Returns a nomenclature report in the specified format.
+      tags:
+        - Reports
+      parameters:
+        - name: report_format
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The format of the report to generate (e.g., PDF, CSV).
+      responses:
+        '200':
+          description: The generated nomenclature report.
+        '400':
+          description: Invalid format or error in generating the report.
+
+  /api/reports/nomenclature_group/{report_format}:
+    get:
+      summary: Generate a nomenclature groups report
+      description: Returns a nomenclature groups report in the specified format.
+      tags:
+        - Reports
+      parameters:
+        - name: report_format
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The format of the report to generate (e.g., PDF, CSV).
+      responses:
+        '200':
+          description: The generated nomenclature groups report.
+        '400':
+          description: Invalid format or error in generating the report.
+
+  /api/reports/measurement_unit/{report_format}:
+    get:
+      summary: Generate a measurement unit report
+      description: Returns a measurement unit report in the specified format.
+      tags:
+        - Reports
+      parameters:
+        - name: report_format
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The format of the report to generate (e.g., PDF, CSV).
+      responses:
+        '200':
+          description: The generated measurement unit report.
+        '400':
+          description: Invalid format or error in generating the report.
+
+components:
+  schemas:
+    ReportFormat:
+      type: string
+      description: |
+        The format of the report to generate. Example values include:
+        - FORMAT_CSV 
+        - FORMAT_MARKDOWN
+        - FORMAT_JSON
+        - FORMAT_XML 
+        - FORMAT_DOCX
+        - FORMAT_XLSX
+        - FORMAT_RTF
+      example: FORMAT_JSON

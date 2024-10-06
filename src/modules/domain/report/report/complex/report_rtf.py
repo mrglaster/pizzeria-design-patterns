@@ -1,3 +1,5 @@
+import base64
+import io
 import os
 
 from PyRTF.Elements import Document
@@ -40,7 +42,7 @@ class ReportRTF(ComplexReport):
         section.append(table)
         self._document = doc
 
-    def save(self, file_name: str = 'report.rtf'):
+    def save(self, file_name: str = 'report_data.rtf'):
         try:
             renderer = Renderer()
             save_path = file_name
@@ -52,6 +54,17 @@ class ReportRTF(ComplexReport):
         except Exception as e:
             self.exception = e
             return False
+
+    def get_result_b64(self) -> str:
+        if self._document is None:
+            raise ValueError("No data to convert. Please create the report_data first.")
+        buffer = io.StringIO()
+        renderer = Renderer()
+        renderer.Write(self._document, buffer)
+        buffer.seek(0)
+        b64_result = base64.b64encode(buffer.getvalue().encode('utf-8')).decode('utf-8')
+        buffer.close()
+        return b64_result
 
 
 

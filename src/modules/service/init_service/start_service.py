@@ -9,7 +9,7 @@ from src.modules.service.managers.settings_manager import SettingsManager
 class StartService:
     @staticmethod
     def __create_measurement_units():
-        path_base = os.path.join(os.getcwd(), 'data')
+        path_base = os.path.join(os.getcwd(), 'data').replace("src/", "")
         path_base = path_base.replace('tests/', '')
         MeasurementUnitRepository.load_units_from_json(os.path.join(path_base, 'units_data.json'))
 
@@ -29,10 +29,10 @@ class StartService:
     @staticmethod
     def __create_recipes():
         settings_manager = SettingsManager()
-        file_path = os.path.join(os.getcwd(), "configuration", "settings.json").replace("test/", "")
+        file_path = os.path.join(os.getcwd(), "configuration", "settings.json").replace("test/", "").replace('src/','')
         settings_manager.read_settings(file_path)
         recipes_path = settings_manager.settings.recipes_path
-        recipes_path = os.path.join(os.getcwd(), recipes_path).replace('tests/', '')
+        recipes_path = os.path.join(os.getcwd(), recipes_path).replace('tests/', '').replace('src/','')
         for i in os.listdir(recipes_path):
             current_path = os.path.join(recipes_path,  i)
             RecipeRepository.load_recipe_from_file(current_path)

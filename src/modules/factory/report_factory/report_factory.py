@@ -1,9 +1,16 @@
-from src.modules.domain.report.report.base.abstract_report import AbstractReport, PlainTextReport, ComplexReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
+from src.modules.domain.report.report.base.abstract_report import AbstractReport, PlainTextReport, ComplexReport
 from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.service.base.abstract_logic import AbstractLogic
 from src.modules.service.managers.settings_manager import SettingsManager
 from src.modules.validation.data_validator import DataValidator
+from src.modules.domain.report.report.plain_text.report_json import ReportJSON
+from src.modules.domain.report.report.plain_text.report_xml import ReportXML
+from src.modules.domain.report.report.plain_text.report_csv import ReportCSV
+from src.modules.domain.report.report.plain_text.report_markdown import ReportMD
+from src.modules.domain.report.report.complex.report_rtf import ReportRTF
+from src.modules.domain.report.report.complex.report_xlsx import ReportXLSX
+from src.modules.domain.report.report.complex.report_docx import ReportDOCX
 
 
 class ReportFactory(AbstractLogic):

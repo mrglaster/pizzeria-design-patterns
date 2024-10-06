@@ -1,3 +1,5 @@
+import base64
+import io
 import os
 
 from src.modules.domain.report.report.base.abstract_report import ComplexReport
@@ -35,12 +37,12 @@ class ReportDOCX(ComplexReport):
                 value = getattr(row, field)
                 row_cells[idx].text = str(value)
 
-    def save(self, file_name: str = 'report.docx') -> bool:
+    def save(self, file_name: str = 'report_data.docx') -> bool:
         try:
             DataValidator.validate_field_type(file_name, str)
             DataValidator.validate_str_not_empty(file_name)
             if self._document is None:
-                raise ValueError("No data to save. Please create the report first.")
+                raise ValueError("No data to save. Please create the report_data first.")
             save_path = file_name
             if os.path.basename(file_name) == file_name:
                 save_path = os.path.join(self.settings_manager.settings.reports_path, file_name)
@@ -49,3 +51,13 @@ class ReportDOCX(ComplexReport):
         except Exception as e:
             self.exception = e
             return False
+
+    def get_result_b64(self) -> str:
+        if self._document is None:
+            raise ValueError("No data to convert. Please create the report_data first.")
+        buffer = io.BytesIO()
+        self._document.save(buffer)
+        buffer.seek(0)
+        b64_result = base64.b64encode(buffer.read()).decode('utf-8')
+        buffer.close()
+        return b64_result

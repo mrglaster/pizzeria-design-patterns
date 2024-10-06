@@ -53,13 +53,13 @@ class TestModels(unittest.TestCase):
     def test_nomenclature_model(self):
         g_unit = MeasurementUnit.create("грамм", 1)
         kg_unit = MeasurementUnit.create("килограмм", 1000, g_unit)
-        ingridients = NomenclatureGroup.create("Ингридиенты")
+        ingredients = NomenclatureGroup.create("Ингридиенты")
         equipments = NomenclatureGroup.create("Оборудование")
 
-        sausage = Nomenclature.create("Колбаса", ingridients, kg_unit, "a"*100)
+        sausage = Nomenclature.create("Колбаса", ingredients, kg_unit, "a" * 100)
         cooker = Nomenclature.create("Плита", equipments, kg_unit, "b"*100)
 
-        assert sausage.nomenclature_group == ingridients
+        assert sausage.nomenclature_group == ingredients
         assert sausage.measurement_unit == kg_unit
         assert cooker.nomenclature_group == equipments
         assert cooker.measurement_unit == kg_unit

@@ -69,7 +69,7 @@ class PlainTextReport(AbstractReport, ABC):
     def save(self, file_name: str = "") -> bool:
         if not file_name or not len(file_name):
             extension = self.__class__.__name__.replace('Report', '').lower()
-            file_name = f"report.{extension}"
+            file_name = f"report_data.{extension}"
         try:
             save_path = file_name
             if os.path.basename(file_name) == file_name:
@@ -88,3 +88,6 @@ class ComplexReport(AbstractReport, ABC):
 
     def get_result(self):
         return self._document
+
+    def get_result_b64(self):
+        pass
