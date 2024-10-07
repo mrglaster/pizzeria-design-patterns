@@ -1,5 +1,7 @@
 from enum import Enum
 
+from src.modules.exception.bad_argument_exception import BadArgumentException
+
 
 class ReportFormat(Enum):
     FORMAT_CSV = 0,
@@ -9,6 +11,12 @@ class ReportFormat(Enum):
     FORMAT_DOCX = 4,
     FORMAT_XLSX = 5,
     FORMAT_RTF = 6,
-    FORMAT_ABSTRACT = 7,
+    FORMAT_ABSTRACT = 7
 
+    @staticmethod
+    def get_by_ordinal(ordinal: int):
+        if 0 <= ordinal <= 6:
+            report_format = list(ReportFormat.__members__.keys())[ordinal]
+            return ReportFormat[report_format]
+        raise BadArgumentException(f"Unsupported ordinal: {ordinal}")
 

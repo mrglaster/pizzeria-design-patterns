@@ -48,7 +48,7 @@ class SettingsManager:
         if file_name != "":
             self.__file_name = file_name
         try:
-            full_name = os.path.join(os.curdir, self.__file_name)
+            full_name = os.path.join(os.getcwd(), 'configuration', self.__file_name).replace('test/', '').replace('tests/', '').replace('src/', '')
             fields_counter = 0
             with open(full_name) as json_data:
                 data = json.load(json_data)
@@ -60,13 +60,14 @@ class SettingsManager:
                 if os.path.sep not in self.__settings.reports_path:
                     project_path = os.getcwd()
                     project_path = project_path.replace('tests/', '').replace('test/', '')
-                    reports_path = self.__settings.reports_path.replace('tests/', '').replace('test/', '').replace('tests/', '').replace('test/', '')
+                    reports_path = self.__settings.reports_path
+                    reports_path = os.path.join(project_path, reports_path).replace('tests/', '').replace('test/', '').replace('tests/', '').replace('test/', '').replace('src/','')
                     self.__settings.reports_path = os.path.join(project_path, reports_path)
 
                 if not os.path.exists(self.__settings.reports_path):
                     self.__logger.error("Provided reports path does not exist!")
                     return False
-                if fields_counter != self.__settings.get_prop_count():
+                if fields_counter != self.__settings.get_prop_count() - 2:
                     self.__logger.error("Not all the expected settings fields have been loaded!")
                     return False
                 return True
@@ -99,7 +100,7 @@ class SettingsManager:
         data.correspondent_account = "0" * 11
         data.property_type = "0" * 5
         data.bik = "0" * 9
-        data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '')}/docs"
-        data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '')}/reports"
+        data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/docs"
+        data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/reports"
         data.default_convertion_format = "FORMAT_CSV"
         return data
