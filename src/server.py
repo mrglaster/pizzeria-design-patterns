@@ -1,8 +1,16 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+
+from src.modules.domain.enum.filter_types import FilterType
+from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
+from src.modules.dto.filter_dto import FilterDTO
+from src.modules.factory.repository_factory.repository_factory import RepositoryFactory
+from src.modules.prototype.domain_prototype import DomainPrototype
+from src.modules.provider.format.format_provider import FormatProvider
 from src.modules.provider.report_data.report_data_provider import ReportDataProvider
+from src.modules.repository.measurment_unit_repository import MeasurementUnitRepository
 from src.modules.service.init_service.start_service import StartService
 
 app = FastAPI()
@@ -32,6 +40,25 @@ async def get_report(report_type: str, report_format: str):
         return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error generating report: {e}")
+
+
+@app.get("/api/filtration/{domain_type}/{report_format}")
+async def get_filtered_data(domain_type: str, report_format: str, filter_dto: FilterDTO) :
+    if not ReportDataProvider.is_valid_type(domain_type) or filter_dto is None or not ReportDataProvider.is_valid_format(report_format):
+        raise HTTPException(status_code=400, detail=f"Unknown domain {domain_type}")
+    prototype = DomainPrototype()
+    prototype.repo_query(domain_type)
+    for filtration_option in filter_dto.filters:
+        prototype.filter_by(field_name=filtration_option.field_name,
+                            filter_type=FilterType(filtration_option.filter_type),
+                            value=filtration_option.field_value)
+    report = ReportDataProvider.report_factory.get_report_class_instance(FormatProvider.get_format(format_data=report_format))
+    report.create(prototype.get_data())
+    if issubclass(report.__class__, PlainTextReport):
+        result = report.get_result()
+        return result
+    return report.get_result_b64()
+
 
 
 def main():
