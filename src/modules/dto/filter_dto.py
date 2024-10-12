@@ -1,0 +1,19 @@
+class FilterDTO:
+    __name: str = ""
+    __id: str = ""
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        self.__name = value
+
+    @property
+    def id(self) -> str:
+        return self.__name
+
+    @id.setter
+    def id(self, value: str):
+        self.__id = value
