@@ -18,9 +18,9 @@ class JSONConverter(AbstractConverter):
         DataValidator.validate_str_not_empty(object_name)
         if isinstance(data, str):
             data = json.loads(data)
-        result_class = JSONConverter.objects_factory.create(object_name)
+        result_class = JSONConverter.objects_factory.create(object_name, )
         if hasattr(result_class, 'create') and callable(getattr(result_class, 'create')):
-            instance = result_class.create()
+            instance = result_class.create(,
         else:
             instance = result_class()
         for key, value in data.items():
