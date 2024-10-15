@@ -40,12 +40,13 @@ class TestPrototype(unittest.TestCase):
         StartService().create()
         prototype = DomainPrototype().create_from_repository('nomenclature')
         prototypes = [prototype]
-        lens = [10, 3, 3, 1, 1, 1]
-        print()
+        lens = [len(prototype.get_data())]
         for i in 'масло':
             prototype = prototype.filter_by("name", value=i, filter_type=FilterType.LIKE)
             prototypes.append(prototype)
+            lens.append(len(prototype.get_data()))
         result = prototype.get_data()
+        assert len(list(set(lens))) > 2
         assert result
         for i in range(len(prototypes)):
             assert prototypes[i].get_data()
