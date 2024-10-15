@@ -1,19 +1,16 @@
+from dataclasses import dataclass
+
+from src.modules.domain.enum.filter_types import FilterType
+from src.modules.exception.bad_argument_exception import BadArgumentException
+from src.modules.validation.data_validator import DataValidator
+
+
+@dataclass
+class SingleFilter:
+    field_name: str = ""
+    field_value: object = None
+    filter_type: FilterType = FilterType.LIKE
+
+@dataclass
 class FilterDTO:
-    __name: str = ""
-    __id: str = ""
-
-    @property
-    def name(self) -> str:
-        return self.__name
-
-    @name.setter
-    def name(self, value: str):
-        self.__name = value
-
-    @property
-    def id(self) -> str:
-        return self.__name
-
-    @id.setter
-    def id(self, value: str):
-        self.__id = value
+    filters: list[SingleFilter]

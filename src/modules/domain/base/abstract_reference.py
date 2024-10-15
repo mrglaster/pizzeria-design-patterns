@@ -1,3 +1,4 @@
+import inspect
 import uuid
 from abc import abstractmethod, ABC
 from src.modules.validation.data_validator import DataValidator
@@ -16,7 +17,12 @@ class AbstractReference(ABC):
         else:
             self.__uid = str(uuid.uuid4())
 
-
+    def get_properties(self):
+        properties = []
+        for name, obj in inspect.getmembers(self):
+            if not callable(obj) and not name.startswith('_'):
+                properties.append(name)
+        return properties
 
     @property
     def uid(self) -> str:
