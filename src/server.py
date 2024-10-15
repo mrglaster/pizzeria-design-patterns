@@ -45,7 +45,7 @@ async def get_filtered_data(domain_type: str, report_format: str, filter_dto: Fi
             domain_type) or filter_dto is None or not ReportDataProvider.is_valid_format(report_format):
         raise HTTPException(status_code=400, detail=f"Unknown domain {domain_type}")
     prototype = DomainPrototype()
-    prototype.repo_query(domain_type)
+    prototype.create_from_repository(domain_type)
     for filtration_option in filter_dto.filters:
         prototype.filter_by(field_name=filtration_option.field_name,
                             filter_type=FilterType(filtration_option.filter_type),

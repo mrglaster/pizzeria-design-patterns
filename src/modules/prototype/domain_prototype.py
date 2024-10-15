@@ -9,7 +9,7 @@ class DomainPrototype:
     __data = []
     __nested_field = ""
 
-    def initialize(self, data: list):
+    def create(self, data: list):
         self.__data = data
         if self.__data:
             for i in self.__data:
@@ -38,7 +38,7 @@ class DomainPrototype:
             return True
         return self.__check_nested_fields(nested_object, property_name, value, filter_type)
 
-    def repo_query(self, objects_name):
+    def create_from_repository(self, objects_name):
         repository_object = self.__repository_factory.get_by_name(objects_name)()
         self.__data = list(repository_object.get_all().values())
         if self.__data:
@@ -70,10 +70,10 @@ class DomainPrototype:
         new_proto = DomainPrototype()
         if field_name in properties:
             if filter_type == FilterType.LIKE:
-                new_proto.initialize(self.__filter_like(field_name, value))
+                new_proto.create(self.__filter_like(field_name, value))
                 return new_proto
             elif filter_type == FilterType.EQUALS:
-                new_proto.initialize(self.__filter_equals(field_name, value))
+                new_proto.create(self.__filter_equals(field_name, value))
                 return new_proto
             return new_proto
         raise BadArgumentException(f"Unknown attribute {field_name} for class {type(self.__data[0])}")
