@@ -11,7 +11,7 @@ class DomainPrototype:
 
     def initialize(self, data: list):
         self.__data = data
-        if  self.__data:
+        if self.__data:
             for i in self.__data:
                 if self.__init_nested_field(i):
                     break
@@ -67,12 +67,15 @@ class DomainPrototype:
         if not len(self.__data):
             return self
         properties = self.__data[0].get_properties()
+        new_proto = DomainPrototype()
         if field_name in properties:
             if filter_type == FilterType.LIKE:
-                self.__data = self.__filter_like(field_name, value)
+                new_proto.initialize(self.__filter_like(field_name, value))
+                return new_proto
             elif filter_type == FilterType.EQUALS:
-                self.__data = self.__filter_equals(field_name, value)
-            return self
+                new_proto.initialize(self.__filter_equals(field_name, value))
+                return new_proto
+            return new_proto
         raise BadArgumentException(f"Unknown attribute {field_name} for class {type(self.__data[0])}")
 
     def get_data(self):

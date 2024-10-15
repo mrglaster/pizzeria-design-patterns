@@ -35,3 +35,17 @@ class TestPrototype(unittest.TestCase):
         result = prototype.get_data()
         assert result
         assert len(result) == 3  # Кг, Ц, Т
+
+    def test_prototype_chain_store(self):
+        StartService().create()
+        prototype = DomainPrototype().repo_query('nomenclature')
+        prototypes = [prototype]
+        lens = [10, 3, 3, 1, 1, 1]
+        for i in 'масло':
+            prototype = prototype.filter_by("name", value=i, filter_type=FilterType.LIKE)
+            prototypes.append(prototype)
+        result = prototype.get_data()
+        assert result
+        for i in range(len(prototypes)):
+            assert prototypes[i].get_data()
+            assert len(prototypes[i].get_data()) == lens[i]
