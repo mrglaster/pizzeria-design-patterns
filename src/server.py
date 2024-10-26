@@ -5,6 +5,9 @@ from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
 from src.modules.dto.filter_dto import FilterDTO
+from src.modules.dto.transactions_filter_dto import TransactionsFilterDTO
+from src.modules.dto.turnovers_dto import TurnoversDTO
+from src.modules.factory.process_factory.process_factory import ProcessFactory
 from src.modules.prototype.domain_prototype import DomainPrototype
 from src.modules.provider.format.format_provider import FormatProvider
 from src.modules.provider.report_data.report_data_provider import ReportDataProvider
@@ -59,10 +62,76 @@ async def get_filtered_data(domain_type: str, report_format: str, filter_dto: Fi
     return report.get_result_b64()
 
 
+@app.post("/api/warehouse/transactions/{report_format}")
+async def get_transactions(report_format: str, filter_dto: TransactionsFilterDTO):
+    if not ReportDataProvider.is_valid_format(report_format):
+        raise HTTPException(status_code=400, detail=f"Unknown report format {report_format}")
+    prototype = DomainPrototype().create_from_repository('storage_transaction')
+    report = ReportDataProvider.report_factory.get_report_class_instance(
+        FormatProvider.get_format(format_data=report_format))
+
+    if not filter_dto or (not filter_dto.storage and not filter_dto.nomenclature):
+        report.create(prototype.get_data())
+        if issubclass(report.__class__, PlainTextReport):
+            result = report.get_result()
+            return result
+        return report.get_result_b64()
+    try:
+        if filter_dto.storage:
+            for i in filter_dto.storage.keys():
+                ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                prototype = prototype.filter_by(field_name=f'storage|{i}', field_value=filter_dto.storage[i],
+                                                filter_type=ft)
+        if filter_dto.nomenclature:
+            for i in filter_dto.storage.keys():
+                ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                prototype = prototype.filter_by(field_name=f'nomenclature|{i}', field_value=filter_dto.storage[i],
+                                                filter_type=ft)
+        report.create(prototype.get_data())
+        if issubclass(report.__class__, PlainTextReport):
+            result = report.get_result()
+            return result
+        return report.get_result_b64()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'bad request: {e}')
+
+
+@app.post("/api/warehouse/turnovers/{report_format}")
+def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
+    if not ReportDataProvider.is_valid_format(report_format):
+        raise HTTPException(status_code=400, detail=f"Unknown report format {report_format}")
+    try:
+        prototype = DomainPrototype().create_from_repository('storage_transaction')
+        prototype = prototype.filter_by(field_name='transaction_time', filter_type=FilterType.LESS_THAN,
+                                        value=request_dto.end_date).filter_by(field_name='transaction_time',
+                                                                              filter_type=FilterType.GREATER_THAN,
+                                                                              value=request_dto.begin_date)
+        if request_dto.storage:
+            for i in request_dto.storage.keys():
+                ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                prototype = prototype.filter_by(field_name=f'storage|{i}', field_value=request_dto.storage[i],
+                                                filter_type=ft)
+        if request_dto.nomenclature:
+            for i in request_dto.storage.keys():
+                ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                prototype = prototype.filter_by(field_name=f'nomenclature|{i}', field_value=request_dto.storage[i],
+                                                filter_type=ft)
+        process_factory = ProcessFactory()
+        turns = process_factory.execute_process("storage_turnover", list(prototype.get_data()))
+        report = ReportDataProvider.report_factory.get_report_class_instance(
+            FormatProvider.get_format(format_data=report_format))
+        report.create(turns)
+        if issubclass(report.__class__, PlainTextReport):
+            result = report.get_result()
+            return result
+        return report.get_result_b64()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'bad request: {e}')
+
+
 def main():
     start_service.create()
     uvicorn.run(app, host="0.0.0.0", port=8080)
-
 
 if __name__ == '__main__':
     main()

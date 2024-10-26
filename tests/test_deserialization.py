@@ -2,7 +2,6 @@ import unittest
 from src.modules.convertion.converter.json_converter import JSONConverter
 from src.modules.repository.measurment_unit_repository import MeasurementUnitRepository
 from src.modules.repository.nomenclature_repository import NomenclatureRepository
-from src.modules.repository.recipe_repository import RecipeRepository
 from src.modules.service.init_service.start_service import StartService
 
 

@@ -1,0 +1,60 @@
+{
+  "addresses": [
+    {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Moscow",
+      "street": "Arbat",
+      "building_number": "13"
+    },
+    {
+      "country": "Russia",
+      "region": "Saint Petersburg",
+      "city": "Saint Petersburg",
+      "street": "Nevsky Prospekt",
+      "building_number": "47"
+    },
+    {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Moscow",
+      "street": "Tverskaya",
+      "building_number": "21"
+    },
+    {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Khimki",
+      "street": "Leningradskaya",
+      "building_number": "8"
+    },
+    {
+      "country": "Russia",
+      "region": "Novosibirsk oblast",
+      "city": "Novosibirsk",
+      "street": "Lenina",
+      "building_number": "15"
+    },
+    {
+      "country": "Russia",
+      "region": "Krasnodar Krai",
+      "city": "Sochi",
+      "street": "Kurortny Prospekt",
+      "building_number": "89"
+    },
+    {
+      "country": "Russia",
+      "region": "Sverdlovsk oblast",
+      "city": "Yekaterinburg",
+      "street": "Malysheva",
+      "building_number": "52"
+    },
+    {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Moscow",
+      "street": "Bolshaya Nikitskaya",
+      "building_number": "10"
+    }
+  ]
+}
