@@ -14,7 +14,7 @@ class StorageTransaction(AbstractReference):
     __amount: float = 0.0
     __transaction_type: TransactionType = TransactionType.OUTGOING
     __measurement_unit: MeasurementUnit = None
-    __transaction_time: str = None
+    __transaction_time: datetime = None
 
     @classmethod
     def create(cls, storage: Storage=None, nomenclature: Nomenclature=None, amount: float=0.0, transaction_type: TransactionType=TransactionType.OUTGOING, measurement_unit: MeasurementUnit=None, time: datetime = None):
@@ -23,7 +23,7 @@ class StorageTransaction(AbstractReference):
         instance.__nomenclature = nomenclature
         instance.__transaction_type = transaction_type
         instance.__measurement_unit = measurement_unit
-        instance.__transaction_time = str(time)
+        instance.__transaction_time = time
         instance.__amount = amount
         return instance
 
@@ -68,11 +68,11 @@ class StorageTransaction(AbstractReference):
         self.__measurement_unit = value
 
     @property
-    def time(self) -> datetime:
+    def transaction_time(self) -> datetime:
         return self.__transaction_time
 
-    @time.setter
-    def time(self, value: datetime):
+    @transaction_time.setter
+    def transaction_time(self, value: datetime):
         self.__transaction_time = value
 
     def __eq__(self, other: object) -> bool:

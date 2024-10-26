@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
@@ -79,14 +81,16 @@ async def get_transactions(report_format: str, filter_dto: TransactionsFilterDTO
     try:
         if filter_dto.storage:
             for i in filter_dto.storage.keys():
-                ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
-                prototype = prototype.filter_by(field_name=f'storage|{i}', field_value=filter_dto.storage[i],
-                                                filter_type=ft)
+                if not i.endswith("_ft"):
+                    ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                    prototype = prototype.filter_by(field_name=f'storage|{i}', value=filter_dto.storage[i],
+                                                    filter_type=ft)
         if filter_dto.nomenclature:
             for i in filter_dto.storage.keys():
-                ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
-                prototype = prototype.filter_by(field_name=f'nomenclature|{i}', field_value=filter_dto.storage[i],
-                                                filter_type=ft)
+                if not i.endswith("_ft"):
+                    ft = FilterType(filter_dto.storage[f'{i}_ft']) if filter_dto.storage[f'{i}_ft'] else FilterType.LIKE
+                    prototype = prototype.filter_by(field_name=f'nomenclature|{i}', value=filter_dto.storage[i],
+                                                    filter_type=ft)
         report.create(prototype.get_data())
         if issubclass(report.__class__, PlainTextReport):
             result = report.get_result()
@@ -101,23 +105,32 @@ def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
     if not ReportDataProvider.is_valid_format(report_format):
         raise HTTPException(status_code=400, detail=f"Unknown report format {report_format}")
     try:
+        begin_date = datetime.strptime(str(request_dto.begin_date), "%Y-%m-%d %H:%M:%S.%f")
+        end_date = datetime.strptime(str(request_dto.end_date), "%Y-%m-%d %H:%M:%S.%f")
         prototype = DomainPrototype().create_from_repository('storage_transaction')
         prototype = prototype.filter_by(field_name='transaction_time', filter_type=FilterType.LESS_THAN,
-                                        value=request_dto.end_date).filter_by(field_name='transaction_time',
+                                        value=end_date).filter_by(field_name='transaction_time',
                                                                               filter_type=FilterType.GREATER_THAN,
-                                                                              value=request_dto.begin_date)
+                                                                              value=begin_date)
         if request_dto.storage:
             for i in request_dto.storage.keys():
-                ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[f'{i}_ft'] else FilterType.LIKE
-                prototype = prototype.filter_by(field_name=f'storage|{i}', field_value=request_dto.storage[i],
-                                                filter_type=ft)
+                if not i.endswith("_ft"):
+                    ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[
+                        f'{i}_ft'] else FilterType.LIKE
+                    prototype = prototype.filter_by(field_name=f'storage|{i}', value=request_dto.storage[i],
+                                                    filter_type=ft)
         if request_dto.nomenclature:
             for i in request_dto.storage.keys():
-                ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[f'{i}_ft'] else FilterType.LIKE
-                prototype = prototype.filter_by(field_name=f'nomenclature|{i}', field_value=request_dto.storage[i],
-                                                filter_type=ft)
+                if not i.endswith('_ft'):
+                    ft = FilterType(request_dto.storage[f'{i}_ft']) if request_dto.storage[
+                        f'{i}_ft'] else FilterType.LIKE
+                    prototype = prototype.filter_by(field_name=f'nomenclature|{i}', value=request_dto.storage[i],
+                                                    filter_type=ft)
         process_factory = ProcessFactory()
-        turns = process_factory.execute_process("storage_turnover", list(prototype.get_data()))
+        data =  list(prototype.get_data())
+        if not data:
+            return {}
+        turns = process_factory.execute_process("storage_turnover", data)
         report = ReportDataProvider.report_factory.get_report_class_instance(
             FormatProvider.get_format(format_data=report_format))
         report.create(turns)

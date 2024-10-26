@@ -30,7 +30,7 @@ class StorageTransactionRepository(AbstractRepository):
 
     @staticmethod
     def add_transaction(transaction_obj: StorageTransaction):
-        key = f"{transaction_obj.nomenclature.name}_{transaction_obj.amount}_{transaction_obj.transaction_type}_{transaction_obj.time}"
+        key = f"{transaction_obj.nomenclature.name}_{transaction_obj.amount}_{transaction_obj.transaction_type}_{transaction_obj.transaction_time}"
         if key not in StorageTransactionRepository.__storage_transactions:
             StorageTransactionRepository.__storage_transactions[key] = transaction_obj
 

@@ -1,3 +1,5 @@
+import datetime
+
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.exception.bad_argument_exception import BadArgumentException
@@ -87,6 +89,9 @@ class DomainPrototype:
         new_data = []
         for i in self.__data:
             attribute_value = self.__get_nested_attribute(i, field_name)
+            if attribute_value is not None and isinstance(value, datetime.datetime):
+                attribute_value = datetime.datetime.strptime(attribute_value, "%Y-%m-%d %H:%M:%S.%f")
+
             if attribute_value is not None and (
                     self.__filter_single(value, attribute_value, FilterType.LESS_THAN)
                     or self.__check_nested_fields(i, field_name, value, FilterType.LESS_THAN)
@@ -98,6 +103,10 @@ class DomainPrototype:
         new_data = []
         for i in self.__data:
             attribute_value = self.__get_nested_attribute(i, field_name)
+
+            if attribute_value is not None and isinstance(value, datetime.datetime):
+                attribute_value = datetime.datetime.strptime(attribute_value, "%Y-%m-%d %H:%M:%S.%f")
+
             if attribute_value is not None and (
                     self.__filter_single(value, attribute_value, FilterType.GREATER_THAN)
                     or self.__check_nested_fields(i, field_name, value, FilterType.GREATER_THAN)
