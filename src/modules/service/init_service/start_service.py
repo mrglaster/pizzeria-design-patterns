@@ -3,6 +3,8 @@ from src.modules.repository.measurment_unit_repository import MeasurementUnitRep
 from src.modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from src.modules.repository.nomenclature_repository import NomenclatureRepository
 from src.modules.repository.recipe_repository import RecipeRepository
+from src.modules.repository.storage_repository import StorageRepository
+from src.modules.repository.storage_transaction_repository import StorageTransactionRepository
 from src.modules.service.managers.settings_manager import SettingsManager
 
 
@@ -37,11 +39,19 @@ class StartService:
             current_path = os.path.join(recipes_path,  i)
             RecipeRepository.load_recipe_from_file(current_path)
 
+    @staticmethod
+    def __create_storage_transaction():
+        path_base = os.path.join(os.getcwd(), 'data').replace("src/", "")
+        path_base = path_base.replace('tests/', '')
+        StorageTransactionRepository.load_from_json_file(os.path.join(path_base, 'storage_transactions.json'))
+
+
     def create(self):
         self.__create_nomenclature_groups()
         self.__create_measurement_units()
         self.__create_nomenclature_items()
         self.__create_recipes()
+        self.__create_storage_transaction()
 
     def clear(self):
         MeasurementUnitRepository.clear()

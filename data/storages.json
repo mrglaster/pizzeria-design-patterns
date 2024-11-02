@@ -1,0 +1,34 @@
+{
+  "storages": [
+    {
+      "name": "storage-name-1",
+      "address": {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Moscow",
+      "street": "Arbat",
+      "building_number": "13"
+    }
+    },
+    {
+      "name": "storage-name-2",
+      "address": {
+      "country": "Russia",
+      "region": "Moscow oblast",
+      "city": "Khimki",
+      "street": "Leningradskaya",
+      "building_number": "8"
+    }
+    },
+    {
+      "name": "storage-name-3",
+      "address":  {
+      "country": "Russia",
+      "region": "Novosibirsk oblast",
+      "city": "Novosibirsk",
+      "street": "Lenina",
+      "building_number": "15"
+    }
+    }
+  ]
+}
