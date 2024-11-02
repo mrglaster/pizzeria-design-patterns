@@ -15,7 +15,7 @@ class TestTurnoversPayload(unittest.TestCase):
     def test_payload(self):
         start_transactions = 250
         step = 250
-        finish_transactions = 10000
+        finish_transactions = 5000
         current_transactions = start_transactions
         dates = [datetime(2000, 1, 1), datetime(2010, 1, 1), datetime(2020, 1, 1)]
         sm = SettingsManager()
@@ -49,7 +49,14 @@ class TestTurnoversPayload(unittest.TestCase):
 
         assert len(x_axis)
         assert len(y_values[0]) == len(y_values[1]) == len(y_values[2])
-        plt.plot(x_axis, y_values[0])
-        plt.plot(x_axis, y_values[1])
-        plt.plot(x_axis, y_values[2])
+
+        plt.plot(x_axis, y_values[2], label="Дата 2000-01-01")
+        plt.plot(x_axis, y_values[1], label="Дата 2010-01-01")
+        plt.plot(x_axis, y_values[0], label="Дата 2020-01-01")
+
+        plt.title("Измерение производительности")
+        plt.xlabel("Количество транзакций")
+        plt.ylabel("Время выполнения (секунды)")
+        plt.legend()
+
         plt.show()
