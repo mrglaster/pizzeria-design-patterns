@@ -48,7 +48,7 @@
           }
         }
       },
-      "transaction_time": "2024-10-26 19:12:24.538308",
+      "transaction_time": "1991-10-26 19:12:24.538308",
       "amount": 56.66
     },
     {
@@ -99,7 +99,7 @@
           }
         }
       },
-      "transaction_time": "2024-10-26 19:12:24.538308",
+      "transaction_time": "1991-10-26 19:12:24.538308",
       "amount": 108.28
     },
     {
@@ -150,8 +150,59 @@
           }
         }
       },
-      "transaction_time": "2024-10-26 19:09:54.538412",
+      "transaction_time": "1991-10-26 19:09:54.538412",
       "amount": 25.79
+    },
+     {
+      "name": "Приход муки",
+      "uid": "160817e5-08ad-4f0f-9f61-d2b113b79fc6",
+      "storage": {
+        "name": "storage-name-1",
+        "uid": "a424fc93-b229-4c14-91c0-c3d6488b043b",
+        "address": {
+          "name": "DEFAULT_NAME",
+          "uid": "2ae5b2be-740a-4dcd-9b8c-9a9611f2e85e",
+          "country": "Russia",
+          "region": "Moscow oblast",
+          "city": "Moscow",
+          "street": "Arbat",
+          "building_number": "13"
+        }
+      },
+      "nomenclature": {
+        "name": "Пшеничная мука",
+        "uid": "ee389318-17c9-4559-9d7a-0f71e8eea4d6",
+        "nomenclature_group": {
+          "name": "ингредиент",
+          "uid": "1bba2a22-7345-4c71-9630-9cfced7187a4"
+        },
+        "measurement_unit": {
+          "name": "г",
+          "uid": "e5bb6dcf-9dd7-4819-b211-46fbede3878c",
+          "unit": 1,
+          "base_measurement_unit": null
+        },
+        "full_name": "nomenclature_full_name"
+      },
+      "transaction_type": 0,
+      "measurement_unit": {
+        "name": "ц",
+        "uid": "ebebae03-1855-46e6-b7b1-24cdbd78d392",
+        "unit": 100,
+        "base_measurement_unit": {
+          "name": "кг",
+          "uid": "419e9314-137d-4c37-9f06-2840c5611c89",
+          "unit": 1000,
+          "base_measurement_unit": {
+            "name": "гр",
+            "uid": "02553676-7049-4524-b023-4ee55527587e",
+            "unit": 1,
+            "base_measurement_unit": null
+          }
+        }
+      },
+      "transaction_time": "2024-10-26 19:12:24.538308",
+      "amount": 13.66
     }
   ]
 }

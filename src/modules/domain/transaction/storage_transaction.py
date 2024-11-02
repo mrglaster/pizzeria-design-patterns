@@ -17,7 +17,7 @@ class StorageTransaction(AbstractReference):
     __transaction_time: datetime = None
 
     @classmethod
-    def create(cls, storage: Storage=None, nomenclature: Nomenclature=None, amount: float=0.0, transaction_type: TransactionType=TransactionType.OUTGOING, measurement_unit: MeasurementUnit=None, time: datetime = None):
+    def create(cls, storage: Storage=None, nomenclature: Nomenclature=None, amount: float=0.0, transaction_type: TransactionType=TransactionType.OUTGOING, measurement_unit: MeasurementUnit=None, time: datetime = None, name=""):
         instance = cls()
         instance.__storage = storage
         instance.__nomenclature = nomenclature
@@ -25,6 +25,8 @@ class StorageTransaction(AbstractReference):
         instance.__measurement_unit = measurement_unit
         instance.__transaction_time = time
         instance.__amount = amount
+        if name != "":
+            instance.name = name
         return instance
 
     @property

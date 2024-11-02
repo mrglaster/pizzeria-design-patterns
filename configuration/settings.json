@@ -8,5 +8,6 @@
   "property_type": "55555",
   "recipes_path": "docs",
   "reports_path": "reports",
-  "default_convertion_format": "FORMAT_CSV"
+  "default_convertion_format": "FORMAT_CSV",
+  "blocking_date": "2020-09-01 00:00:00.0"
 }

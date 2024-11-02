@@ -1,7 +1,9 @@
 import re
 from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.service.process.abstract import AbstractProcess
-from src.modules.service.process.storage_turnover_process import StorageTurnoverProcess
+from src.modules.service.process.storage_turnover_all_process import StorageTurnoverProcess
+from src.modules.service.process.storage_turnover_til_blocking_process import StorageTurnoverTilBlockingDate
+from src.modules.service.process.storage_turnover_til_higher_date_process import StorageTurnoverTilHigherDateProcess
 
 
 class ProcessFactory:
@@ -15,7 +17,7 @@ class ProcessFactory:
             self.__processes[formatted_name] = cls
 
     @staticmethod
-    def execute_process(process_name, data: list):
+    def execute_process(process_name, data: list, add_to_repository: bool = False, *kwargs):
         if process_name in ProcessFactory.__processes:
-            return ProcessFactory.__processes[process_name].calculate(transactions=data)
+            return ProcessFactory.__processes[process_name].calculate(data, *kwargs)
         raise BadArgumentException(f"Unknown process name: {process_name}")

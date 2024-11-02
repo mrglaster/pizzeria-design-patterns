@@ -1,8 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class AbstractProcess(ABC):
 
     @staticmethod
-    def calculate(transactions: list) -> list:
+    def calculate(data: list, add_to_repository: bool = False, *kwargs):
         pass

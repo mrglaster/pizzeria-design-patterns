@@ -31,8 +31,12 @@ class DomainPrototype:
         elif filter_type == FilterType.LIKE:
             return str(value_filter) in str(value_source)
         elif filter_type == FilterType.LESS_THAN:
+            if value_filter is not None and isinstance(value_filter, datetime.datetime) and not isinstance(value_source, datetime.datetime):
+                value_source = datetime.datetime.strptime(value_source, "%Y-%m-%d %H:%M:%S.%f")
             return value_source < value_filter
         elif filter_type == FilterType.GREATER_THAN:
+            if value_filter is not None and isinstance(value_filter, datetime.datetime) and not isinstance(value_source, datetime.datetime):
+                value_source = datetime.datetime.strptime(value_source, "%Y-%m-%d %H:%M:%S.%f")
             return value_source > value_filter
         return False
 
@@ -90,7 +94,7 @@ class DomainPrototype:
         for i in self.__data:
             attribute_value = self.__get_nested_attribute(i, field_name)
             if attribute_value is not None and isinstance(value, datetime.datetime):
-                attribute_value = datetime.datetime.strptime(attribute_value, "%Y-%m-%d %H:%M:%S.%f")
+                attribute_value = datetime.datetime.strptime(str(attribute_value), "%Y-%m-%d %H:%M:%S.%f")
 
             if attribute_value is not None and (
                     self.__filter_single(value, attribute_value, FilterType.LESS_THAN)

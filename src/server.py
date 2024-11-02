@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
+from src.modules.dto.date_dto import SetDateDTO, GetDateDTO, SetDateResponseDTO
 from src.modules.dto.filter_dto import FilterDTO
 from src.modules.dto.transactions_filter_dto import TransactionsFilterDTO
 from src.modules.dto.turnovers_dto import TurnoversDTO
@@ -14,6 +15,7 @@ from src.modules.prototype.domain_prototype import DomainPrototype
 from src.modules.provider.format.format_provider import FormatProvider
 from src.modules.provider.report_data.report_data_provider import ReportDataProvider
 from src.modules.service.init_service.start_service import StartService
+from src.modules.service.managers.settings_manager import SettingsManager
 
 app = FastAPI()
 start_service = StartService()
@@ -100,7 +102,7 @@ async def get_transactions(report_format: str, filter_dto: TransactionsFilterDTO
         raise HTTPException(status_code=400, detail=f'bad request: {e}')
 
 
-@app.post("/api/warehouse/turnovers/{report_format}")
+@app.post("/api/warehouse/turnovers/inrange/{report_format}")
 def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
     if not ReportDataProvider.is_valid_format(report_format):
         raise HTTPException(status_code=400, detail=f"Unknown report format {report_format}")
@@ -110,8 +112,8 @@ def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
         prototype = DomainPrototype().create_from_repository('storage_transaction')
         prototype = prototype.filter_by(field_name='transaction_time', filter_type=FilterType.LESS_THAN,
                                         value=end_date).filter_by(field_name='transaction_time',
-                                                                              filter_type=FilterType.GREATER_THAN,
-                                                                              value=begin_date)
+                                                                  filter_type=FilterType.GREATER_THAN,
+                                                                  value=begin_date)
         if request_dto.storage:
             for i in request_dto.storage.keys():
                 if not i.endswith("_ft"):
@@ -127,7 +129,7 @@ def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
                     prototype = prototype.filter_by(field_name=f'nomenclature|{i}', value=request_dto.storage[i],
                                                     filter_type=ft)
         process_factory = ProcessFactory()
-        data =  list(prototype.get_data())
+        data = list(prototype.get_data())
         if not data:
             return {}
         turns = process_factory.execute_process("storage_turnover", data)
@@ -142,9 +144,28 @@ def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
         raise HTTPException(status_code=400, detail=f'bad request: {e}')
 
 
+@app.get("/api/configuration/blocking/date/get")
+async def get_blocking_date():
+    settings_manager = SettingsManager()
+    settings = settings_manager.settings
+    date = settings.blocking_date
+    response_dto = GetDateDTO(date)
+    return response_dto
+
+
+@app.post("/api/configuration/blocking/date/set")
+async def set_blocking_date(set_date_dto: SetDateDTO):
+    if set_date_dto is None or set_date_dto.blocking_date is None:
+        raise HTTPException(status_code=400, detail='Invalid date or date not provided')
+    settings_manager = SettingsManager()
+    settings_manager.settings.blocking_date = set_date_dto.blocking_date
+    return SetDateResponseDTO("The blocking date has been set")
+
+
 def main():
     start_service.create()
     uvicorn.run(app, host="0.0.0.0", port=8080)
+
 
 if __name__ == '__main__':
     main()
