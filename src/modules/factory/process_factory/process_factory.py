@@ -19,5 +19,5 @@ class ProcessFactory:
     @staticmethod
     def execute_process(process_name, data: list, add_to_repository: bool = False, *kwargs):
         if process_name in ProcessFactory.__processes:
-            return ProcessFactory.__processes[process_name].calculate(data, *kwargs)
+            return ProcessFactory.__processes[process_name].calculate(data, add_to_repository, *kwargs)
         raise BadArgumentException(f"Unknown process name: {process_name}")

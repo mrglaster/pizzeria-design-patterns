@@ -19,7 +19,7 @@ class TestTurnoversPayload(unittest.TestCase):
         dates = [datetime(2000, 1, 1), datetime(2010, 1, 1), datetime(2020, 1, 1)]
         sm = SettingsManager()
         StartService().create()
-        transactions_all = TransactionsGenerator.create_storage_transactions(current_transactions, False)
+        transactions_all = TransactionsGenerator.create_storage_transactions(current_transactions, True)
         x_axis = []
         y_values = [[], [], []]
 
@@ -28,13 +28,12 @@ class TestTurnoversPayload(unittest.TestCase):
         def process_transactions(sm, trs, date):
             sm.settings.blocking_date = date
             existing_turns = process_factory.execute_process("storage_turnover_til_blocking_date", trs, True)
+            StorageTurnoverRepository.__latest_blocking_date = date
             start_time = time.time()
             result = process_factory.execute_process("storage_turnover_til_higher_date", existing_turns, False,
                                                      datetime.utcnow())
             end_time = time.time()
             assert len(result)
-            StorageTurnoverRepository.clear()
-            StorageTransactionRepository.clear()
             elapsed_time = end_time - start_time
             return elapsed_time
 
@@ -45,6 +44,7 @@ class TestTurnoversPayload(unittest.TestCase):
                 time_spent = process_transactions(sm, current_transactions_list, dates[i])
                 y_values[i].append(time_spent)
             current_transactions += step
+            #torageTurnoverRepository.clear()
 
         assert len(x_axis)
         assert len(y_values[0]) == len(y_values[1]) == len(y_values[2])

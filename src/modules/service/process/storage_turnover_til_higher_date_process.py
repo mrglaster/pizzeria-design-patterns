@@ -12,7 +12,7 @@ from src.modules.service.process.storage_turnover_all_process import StorageTurn
 
 class StorageTurnoverTilHigherDateProcess(AbstractProcess):
     @staticmethod
-    def calculate(existing_turnovers, *kwargs):
+    def calculate(existing_turnovers, add_to_repository=False, *kwargs):
         date = kwargs[0]
         all_transactions = list(StorageTransactionRepository.get_all().values())
         proto = DomainPrototype()
