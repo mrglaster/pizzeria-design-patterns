@@ -17,3 +17,15 @@ class AbstractRepository(AbstractLogic):
     @staticmethod
     def get_all():
         pass
+
+    @staticmethod
+    def add(obj):
+        pass
+
+    @staticmethod
+    def delete(obj):
+        pass
+
+    @staticmethod
+    def update(old_object, new_object):
+        pass
