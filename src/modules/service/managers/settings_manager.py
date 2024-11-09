@@ -1,6 +1,8 @@
 import json
 import os
 import logging
+from datetime import datetime
+
 from src.modules.domain.settings.settings_model import Settings
 
 
@@ -103,4 +105,5 @@ class SettingsManager:
         data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/docs"
         data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/reports"
         data.default_convertion_format = "FORMAT_CSV"
+        data.blocking_date = datetime.strptime("2007-09-01", "%Y-%m-%d %Y-%m-%d %H:%M:%S.%f")
         return data

@@ -1,5 +1,9 @@
 from __future__ import annotations
+
+import datetime
+
 from src.modules.domain.base.abstract_reference import AbstractReference
+from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.validation.data_validator import DataValidator
 
 
@@ -31,6 +35,7 @@ class Settings(AbstractReference):
     __recipes_path = ""
     __reports_path = ""
     __default_convertion_format = ""
+    __blocking_date: datetime.datetime = None
 
     @property
     def organization_name(self):
@@ -145,6 +150,22 @@ class Settings(AbstractReference):
         DataValidator.validate_field_type(value, str)
         DataValidator.validate_report_export_type(value)
         self.__default_convertion_format = value
+
+    @property
+    def blocking_date(self):
+        return self.__blocking_date
+
+    @blocking_date.setter
+    def blocking_date(self, other: str | datetime.datetime):
+        if other is not None:
+            if isinstance(other, str):
+                DataValidator.validate_str_not_empty(other)
+                new_date = datetime.datetime.strptime(other, "%Y-%m-%d %H:%M:%S.%f")
+                self.__blocking_date = new_date
+            elif isinstance(other, datetime.datetime):
+                self.__blocking_date = other
+            return
+        raise BadArgumentException(f"Bad date provided: {other}")
 
     def __str__(self):
         """

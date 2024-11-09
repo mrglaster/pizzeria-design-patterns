@@ -3,6 +3,8 @@ from src.modules.repository.measurment_unit_repository import MeasurementUnitRep
 from src.modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from src.modules.repository.nomenclature_repository import NomenclatureRepository
 from src.modules.repository.recipe_repository import RecipeRepository
+from src.modules.repository.storage_repository import StorageRepository
+from src.modules.repository.storage_transaction_repository import StorageTransactionRepository
 from src.modules.service.managers.settings_manager import SettingsManager
 
 
@@ -29,22 +31,31 @@ class StartService:
     @staticmethod
     def __create_recipes():
         settings_manager = SettingsManager()
-        file_path = os.path.join(os.getcwd(), "configuration", "settings.json").replace("test/", "").replace('src/','')
+        file_path = os.path.join(os.getcwd(), "configuration", "settings.json").replace("test/", "").replace('src/', '')
         settings_manager.read_settings(file_path)
         recipes_path = settings_manager.settings.recipes_path
-        recipes_path = os.path.join(os.getcwd(), recipes_path).replace('tests/', '').replace('src/','')
+        recipes_path = os.path.join(os.getcwd(), recipes_path).replace('tests/', '').replace('src/', '')
         for i in os.listdir(recipes_path):
-            current_path = os.path.join(recipes_path,  i)
+            current_path = os.path.join(recipes_path, i)
             RecipeRepository.load_recipe_from_file(current_path)
+
+    @staticmethod
+    def __create_storage_transaction():
+        path_base = os.path.join(os.getcwd(), 'data').replace("src/", "")
+        path_base = path_base.replace('tests/', '')
+        StorageTransactionRepository.load_from_json_file(os.path.join(path_base, 'storage_transactions.json'))
 
     def create(self):
         self.__create_nomenclature_groups()
         self.__create_measurement_units()
         self.__create_nomenclature_items()
         self.__create_recipes()
+        self.__create_storage_transaction()
 
     def clear(self):
         MeasurementUnitRepository.clear()
         NomenclatureGroupRepository.clear()
         NomenclatureRepository.clear()
         RecipeRepository.clear()
+        StorageTransactionRepository.clear()
+        StorageRepository.clear()

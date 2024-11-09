@@ -51,3 +51,24 @@ class TestPrototype(unittest.TestCase):
         for i in range(len(prototypes)):
             assert prototypes[i].get_data()
             assert len(prototypes[i].get_data()) == lens[i]
+
+    def test_internal_fields_search(self):
+        StartService().create()
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='storage|address|building_number', value="8", filter_type=FilterType.EQUALS).get_data()) == 1
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='storage|address|building_number', value="13", filter_type=FilterType.EQUALS).get_data()) == 2
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='storage|address|building_number', value="1", filter_type=FilterType.LIKE).get_data()) == 2
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='storage|address|building_number', value="228", filter_type=FilterType.EQUALS).get_data()) == 0
+
+    def test_less_than(self):
+        StartService().create()
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='amount', filter_type=FilterType.LESS_THAN,  value=30.0).get_data()) == 1
+
+    def test_greater_than(self):
+        StartService().create()
+        assert len(DomainPrototype().create_from_repository("storage_transaction").filter_by(
+            field_name='amount', filter_type=FilterType.GREATER_THAN,  value=30.0).get_data()) == 2

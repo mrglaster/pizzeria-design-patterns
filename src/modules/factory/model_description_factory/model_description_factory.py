@@ -7,6 +7,9 @@ from src.modules.domain.organization.organization_model import Organization
 from src.modules.domain.recipes.ingredient import Ingredient
 from src.modules.domain.recipes.recipe import Recipe
 from src.modules.domain.recipes.recipe_step import RecipeStep
+from src.modules.domain.storage.storage_address import Address
+from src.modules.domain.storage.storage_model import Storage
+from src.modules.domain.transaction.storage_transaction import StorageTransaction
 from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.validation.data_validator import DataValidator
 
