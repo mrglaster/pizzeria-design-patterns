@@ -1,3 +1,5 @@
+import re
+
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.factory.repository_factory.repository_factory import RepositoryFactory
@@ -9,7 +11,7 @@ class PostProcessor:
     @staticmethod
     def get_formatted_name(object):
         class_name = object.__class__.__name__
-        formatted_name = object.sub(r'(?<!^)(?=[A-Z])', '_', class_name).lower()
+        formatted_name = re.sub(r'(?<!^)(?=[A-Z])', '_', class_name).lower()
         return formatted_name
 
     @staticmethod
