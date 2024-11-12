@@ -36,3 +36,19 @@ class NomenclatureRepository(AbstractRepository):
     @staticmethod
     def clear():
         NomenclatureRepository.__nomenclatures = {}
+
+    @staticmethod
+    def add(nomenclature: Nomenclature):
+        if nomenclature.name not in NomenclatureRepository.__nomenclatures:
+            NomenclatureRepository.__nomenclatures[nomenclature.name] = nomenclature
+
+    @staticmethod
+    def delete(obj: Nomenclature):
+        if obj.name in NomenclatureRepository.__nomenclatures:
+            NomenclatureRepository.__nomenclatures.pop(obj.name)
+
+    @staticmethod
+    def update(old_object, new_object):
+        if old_object.name in NomenclatureRepository.__nomenclatures:
+            NomenclatureRepository.__nomenclatures.pop(obj.name)
+

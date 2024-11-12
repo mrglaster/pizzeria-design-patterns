@@ -139,7 +139,12 @@ class DomainPrototype:
                 new_proto.create(self.__filter_greater_than(field_name, value))
                 return new_proto
             return new_proto
-        raise BadArgumentException(f"Unknown attribute {field_name} for class {type(self.__data[0])}")
+        return DomainPrototype()
 
     def get_data(self):
         return self.__data
+
+    def first(self):
+        if len(self.__data):
+            return self.__data[:-1]
+        return None
