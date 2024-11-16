@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class AbstractObserver(ABC):
+class AbstractObserverHandler(ABC):
 
     @abstractmethod
     def notify(self, obj, *args) -> bool:

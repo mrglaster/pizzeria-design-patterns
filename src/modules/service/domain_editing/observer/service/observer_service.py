@@ -1,13 +1,13 @@
 from src.modules.service.domain_editing.domain_editing_service.crud_service import AbstractCrudService
-from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserver
+from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserverHandler
 
 
 class ObserverService:
     observers = []
 
     @staticmethod
-    def register_observer(service: AbstractObserver):
-        if service is None or not isinstance(service, AbstractObserver):
+    def register_observer(service: AbstractObserverHandler):
+        if service is None or not isinstance(service, AbstractObserverHandler):
             return
         items = list(map(lambda x: type(x).__name__, ObserverService.observers))
         found = type(service).__name__ in items

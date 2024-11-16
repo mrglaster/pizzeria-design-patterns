@@ -3,8 +3,8 @@ import unittest
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.domain.nomenclature.nomenclature_model import Nomenclature
 from src.modules.repository.recipe_repository import RecipeRepository
-from src.modules.service.domain_editing.observer.observer.delete_observer import DeleteObserver
-from src.modules.service.domain_editing.observer.observer.update_observer import UpdateObserver
+from src.modules.service.domain_editing.observer.observer.delete_observer import DeleteObserverHandler
+from src.modules.service.domain_editing.observer.observer.update_observer import UpdateObserverHandler
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.domain_editing.observer.service.observers_initializer import ObserverInitializer
 from src.modules.service.init_service.start_service import StartService
@@ -16,16 +16,14 @@ class TestObserver(unittest.TestCase):
         ss = StartService()
         ss.create()
         test_nom = list(RecipeRepository.get_all().values())[0].ingredients[0].nomenclature
-        validator = DeleteObserver()
+        validator = DeleteObserverHandler()
         assert not validator.notify(test_nom)
 
     def test_observer_not_in_use(self):
         ss = StartService()
         ss.create()
-
-        test_nom = list(RecipeRepository.get_all().values())[0].ingredients[0].nomenclature
-        test_nom.name = "biba"
-        validator = DeleteObserver()
+        test_nom = Nomenclature.create(name="biba")
+        validator = DeleteObserverHandler()
         assert validator.notify(test_nom)
 
     def test_observers_initializer(self):

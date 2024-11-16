@@ -28,6 +28,12 @@ class ModelDescriptionFactory:
     def create(self, object_name: str):
         DataValidator.validate_field_type(object_name, str)
         DataValidator.validate_str_not_empty(object_name)
-        if object_name not in ModelDescriptionFactory.__objects:
+        shorter_name = object_name[:-1]
+        if object_name not in ModelDescriptionFactory.__objects and shorter_name not in ModelDescriptionFactory.__objects:
             raise BadArgumentException(f"Unknown object name: {object_name}")
-        return self.__objects[object_name]
+        try:
+            result = self.__objects[object_name]
+            return result
+        except:
+            result = self.__objects[shorter_name]
+            return result

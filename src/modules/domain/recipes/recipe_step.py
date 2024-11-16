@@ -8,7 +8,7 @@ class RecipeStep(AbstractReference):
         super().__init__()
 
     @classmethod
-    def create(cls, step_id, description: str = "") -> RecipeStep:
+    def create(cls, step_id = 0, description: str = "") -> RecipeStep:
         instance = cls()
         instance.step_id = step_id
         instance.step_description = description

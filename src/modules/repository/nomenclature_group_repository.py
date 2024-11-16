@@ -36,3 +36,9 @@ class NomenclatureGroupRepository(AbstractRepository):
     @staticmethod
     def clear():
         NomenclatureGroupRepository.__groups = {}
+
+    @staticmethod
+    def add(obj):
+        DataValidator.validate_field_type(obj, NomenclatureGroup, False)
+        if obj.name not in NomenclatureGroupRepository.__groups:
+            NomenclatureGroupRepository.__groups[obj.name] = obj

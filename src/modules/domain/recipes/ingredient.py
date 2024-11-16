@@ -10,7 +10,7 @@ class Ingredient(AbstractReference):
         super().__init__()
 
     @classmethod
-    def create(cls, nomenclature: Nomenclature, measurement_unit: MeasurementUnit, amount: float) -> Ingredient:
+    def create(cls, nomenclature: Nomenclature=Nomenclature(), measurement_unit: MeasurementUnit=MeasurementUnit(), amount: float=0.1) -> Ingredient:
         instance = cls()
         DataValidator.validate_field_type(nomenclature, Nomenclature)
         DataValidator.validate_field_type(measurement_unit, MeasurementUnit)

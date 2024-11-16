@@ -8,7 +8,7 @@ class StorageTurnoverRepository(AbstractRepository):
     __latest_blocking_date = SettingsManager().settings.blocking_date
 
     @staticmethod
-    def add_turnover(turnover_obj: StorageTurnover):
+    def add(turnover_obj: StorageTurnover):
         key = f"{turnover_obj.uid}"
         StorageTurnoverRepository.__data[key] = turnover_obj
 
@@ -20,7 +20,7 @@ class StorageTurnoverRepository(AbstractRepository):
     def create_turnover(storage, turnover, nomenclature, measurement_unit):
         obj = StorageTurnover.create(storage=storage, turnover=turnover, nomenclature=nomenclature,
                                      measurement_unit=measurement_unit)
-        StorageTurnoverRepository.add_turnover(obj)
+        StorageTurnoverRepository.add(obj)
         return obj
 
     @staticmethod

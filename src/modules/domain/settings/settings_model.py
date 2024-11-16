@@ -34,8 +34,10 @@ class Settings(AbstractReference):
     __property_type = ""
     __recipes_path = ""
     __reports_path = ""
+    __dumps_path = ""
     __default_convertion_format = ""
     __blocking_date: datetime.datetime = None
+    __first_run = True
 
     @property
     def organization_name(self):
@@ -166,6 +168,25 @@ class Settings(AbstractReference):
                 self.__blocking_date = other
             return
         raise BadArgumentException(f"Bad date provided: {other}")
+
+    @property
+    def dumps_path(self):
+        return self.__dumps_path
+
+    @dumps_path.setter
+    def dumps_path(self, path: str):
+        DataValidator.validate_field_type(path, str, False)
+        DataValidator.validate_str_not_empty(path)
+        self.__dumps_path = path
+
+    @property
+    def first_run(self):
+        return self.__first_run
+
+    @first_run.setter
+    def first_run(self, other: bool):
+        DataValidator.validate_field_type(other, bool)
+        self.__first_run = other
 
     def __str__(self):
         """

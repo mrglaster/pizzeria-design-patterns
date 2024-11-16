@@ -25,6 +25,14 @@ class MeasurementUnitRepository(AbstractRepository):
         return MeasurementUnitRepository.__units[name]
 
     @staticmethod
+    def add(obj: MeasurementUnit):
+        DataValidator.validate_field_type(obj, MeasurementUnit)
+        name = obj.name
+        if name not in MeasurementUnitRepository.__units:
+            MeasurementUnitRepository.__units[name] = obj
+
+
+    @staticmethod
     def create_related_unit_by_name(name: str, related_unit_name: str, converted: float):
         if name not in MeasurementUnitRepository.__units:
             related_unit = MeasurementUnitRepository.find_by_name(related_unit_name)

@@ -1,9 +1,6 @@
 import re
 from src.modules.exception.bad_argument_exception import BadArgumentException
-from src.modules.service.process.abstract import AbstractProcess
-from src.modules.service.process.storage_turnover_all_process import StorageTurnoverProcess
-from src.modules.service.process.storage_turnover_til_blocking_process import StorageTurnoverTilBlockingDate
-from src.modules.service.process.storage_turnover_til_higher_date_process import StorageTurnoverTilHigherDateProcess
+from src.modules.service.process.turnovers.abstract import AbstractProcess
 
 
 class ProcessFactory:

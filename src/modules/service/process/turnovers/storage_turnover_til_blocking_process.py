@@ -1,8 +1,8 @@
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.prototype.domain_prototype import DomainPrototype
 from src.modules.service.managers.settings_manager import SettingsManager
-from src.modules.service.process.abstract import AbstractProcess
-from src.modules.service.process.storage_turnover_all_process import StorageTurnoverProcess
+from src.modules.service.process.turnovers.abstract import AbstractProcess
+from src.modules.service.process.turnovers.storage_turnover_all_process import StorageTurnoverProcess
 
 
 class StorageTurnoverTilBlockingDate(AbstractProcess):
