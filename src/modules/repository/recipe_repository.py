@@ -1,3 +1,4 @@
+from src.modules.domain.recipes.recipe import Recipe
 from src.modules.repository.data_repository import AbstractRepository
 from src.modules.service.data_loader.recipe_loader import RecipeLoader
 from src.modules.validation.data_validator import DataValidator
@@ -32,3 +33,9 @@ class RecipeRepository(AbstractRepository):
     @staticmethod
     def clear():
         RecipeRepository.__recipes = {}
+
+    @staticmethod
+    def add(obj: Recipe):
+        DataValidator.validate_field_type(obj, Recipe)
+        if obj.name not in RecipeRepository.__recipes:
+            RecipeRepository.__recipes[obj.name] = obj

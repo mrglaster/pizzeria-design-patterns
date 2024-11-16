@@ -9,7 +9,7 @@ class Recipe(AbstractReference):
         super().__init__(name)
         self.__step_count = 0
         self.__ingredients = []
-        self.__steps = []
+        self.__recipe_steps = []
 
     @classmethod
     def create(cls, name: str = "DEFAULT_RECIPE_NAME", portions_count: int = 1, cooking_time_mins: int = 0):
@@ -56,19 +56,25 @@ class Recipe(AbstractReference):
         self.__cooking_time_mins = value
 
     @property
-    def steps(self):
-        return self.__steps
+    def recipe_steps(self):
+        return self.__recipe_steps
 
-    @steps.setter
-    def steps(self, value: list):
+    @recipe_steps.setter
+    def recipe_steps(self, value: list):
         DataValidator.validate_field_type(value, list)
         DataValidator.validate_list_not_empty(value)
-        self.__steps = value
+        self.__recipe_steps = value
         self.__step_count = len(value)
 
     @property
     def step_count(self):
         return self.__step_count
+
+    @step_count.setter
+    def step_count(self, value: int):
+        DataValidator.validate_field_type(value, int)
+        assert value > 0
+        self.__step_count = value
 
     def add_ingredient(self, ingredient: Ingredient):
         DataValidator.validate_field_type(ingredient, Ingredient)
@@ -78,8 +84,8 @@ class Recipe(AbstractReference):
     def add_step(self, description: str):
         DataValidator.validate_field_type(description, str)
         new_step = RecipeStep.create(step_id=self.__step_count + 1, description=description)
-        if new_step not in self.__steps:
-            self.__steps.append(new_step)
+        if new_step not in self.__recipe_steps:
+            self.__recipe_steps.append(new_step)
             self.__step_count += 1
 
     def __eq__(self, other):

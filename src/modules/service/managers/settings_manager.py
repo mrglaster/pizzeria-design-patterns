@@ -69,6 +69,14 @@ class SettingsManager:
                 if not os.path.exists(self.__settings.reports_path):
                     self.__logger.error("Provided reports path does not exist!")
                     return False
+
+                if os.path.sep not in self.__settings.dumps_path:
+                    project_path = os.getcwd()
+                    project_path = project_path.replace('tests/', '').replace('test/', '')
+                    dumps_path = self.__settings.dumps_path
+                    dumps_path = os.path.join(project_path, dumps_path).replace('tests/', '').replace('test/', '').replace('tests/', '').replace('test/', '').replace('src/','')
+                    self.__settings.dumps_path = os.path.join(project_path, dumps_path)
+
                 if fields_counter != self.__settings.get_prop_count() - 2:
                     self.__logger.error("Not all the expected settings fields have been loaded!")
                     return False
@@ -85,6 +93,22 @@ class SettingsManager:
     def settings(self):
         """Gets the current settings instance."""
         return self.__settings
+
+    def update_first_run(self):
+        self.settings.first_run = False
+        full_name = os.path.join(os.getcwd(), 'configuration', self.__file_name).replace('test/', '').replace('tests/',
+                                                                                                              '').replace(     'src/', '')
+        if not os.path.exists(full_name):
+            return False
+        with open(full_name, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        if "first_run" in data:
+            data["first_run"] = False
+            with open(full_name, 'w', encoding='utf-8') as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+            return True
+        return False
+
 
     @staticmethod
     def __default_settings():
@@ -104,6 +128,8 @@ class SettingsManager:
         data.bik = "0" * 9
         data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/docs"
         data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/reports"
+        data.dumps_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/dumps"
         data.default_convertion_format = "FORMAT_CSV"
         data.blocking_date = datetime.strptime("2007-09-01", "%Y-%m-%d %Y-%m-%d %H:%M:%S.%f")
+        data.first_run = True
         return data

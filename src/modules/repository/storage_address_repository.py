@@ -18,7 +18,7 @@ class StorageAddressRepository(AbstractRepository):
         return StorageAddressRepository.__addresses[key]
 
     @staticmethod
-    def add_address(addr: Address):
+    def add(addr: Address):
         DataValidator.validate_field_type(addr, Address)
         key = f"{addr.country}_{addr.region}_{addr.city}_{addr.street}_{addr.building_number}"
         StorageAddressRepository.__addresses[key] = addr
@@ -43,7 +43,7 @@ class StorageAddressRepository(AbstractRepository):
     def load_addresses_from_json(json_file: str):
         addresses = StorageAddressesDataLoader.load_from_json_file(json_file)
         for address_data in addresses:
-            StorageAddressRepository.add_address(address_data)
+            StorageAddressRepository.add(address_data)
 
     def __new__(cls):
         if not hasattr(cls, "instance"):

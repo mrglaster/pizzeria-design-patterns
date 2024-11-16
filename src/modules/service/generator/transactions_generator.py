@@ -54,6 +54,6 @@ class TransactionsGenerator:
                 name=transaction_name
             )
             if add_to_repository:
-                StorageTransactionRepository.add_transaction(transaction)
+                StorageTransactionRepository.add(transaction)
             transactions.append(transaction)
         return transactions

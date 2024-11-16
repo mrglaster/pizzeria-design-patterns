@@ -1,14 +1,7 @@
-import datetime
-from collections import defaultdict
-
-from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.enum.storage_types import TransactionType
 from src.modules.domain.turnover.storage_turnover import StorageTurnover
-from src.modules.prototype.domain_prototype import DomainPrototype
-from src.modules.repository.storage_transaction_repository import StorageTransactionRepository
 from src.modules.repository.storage_turnovers_repository import StorageTurnoverRepository
-from src.modules.service.managers.settings_manager import SettingsManager
-from src.modules.service.process.abstract import AbstractProcess
+from src.modules.service.process.turnovers.abstract import AbstractProcess
 
 
 class StorageTurnoverProcess(AbstractProcess):

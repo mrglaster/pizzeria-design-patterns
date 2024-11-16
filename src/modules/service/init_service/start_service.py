@@ -1,10 +1,14 @@
 import os
+
+from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.repository.measurment_unit_repository import MeasurementUnitRepository
 from src.modules.repository.nomenclature_group_repository import NomenclatureGroupRepository
 from src.modules.repository.nomenclature_repository import NomenclatureRepository
 from src.modules.repository.recipe_repository import RecipeRepository
 from src.modules.repository.storage_repository import StorageRepository
 from src.modules.repository.storage_transaction_repository import StorageTransactionRepository
+from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
+from src.modules.service.generator.transactions_generator import TransactionsGenerator
 from src.modules.service.managers.settings_manager import SettingsManager
 
 
@@ -17,7 +21,6 @@ class StartService:
 
     @staticmethod
     def __create_nomenclature_items():
-        # Create example nomenclature items
         flour_group = NomenclatureGroupRepository.find_by_name("ингредиент")
         flour_unit = MeasurementUnitRepository.create_new_measurement_unit("г")
         NomenclatureRepository.create_nomenclature("Пшеничная мука", flour_group, flour_unit)
@@ -40,17 +43,21 @@ class StartService:
             RecipeRepository.load_recipe_from_file(current_path)
 
     @staticmethod
-    def __create_storage_transaction():
+    def __create_storage_transaction(use_generated=False):
         path_base = os.path.join(os.getcwd(), 'data').replace("src/", "")
         path_base = path_base.replace('tests/', '')
         StorageTransactionRepository.load_from_json_file(os.path.join(path_base, 'storage_transactions.json'))
+        TransactionsGenerator.create_storage_transactions(10000, add_to_repository=True)
 
     def create(self):
-        self.__create_nomenclature_groups()
-        self.__create_measurement_units()
-        self.__create_nomenclature_items()
-        self.__create_recipes()
-        self.__create_storage_transaction()
+        if SettingsManager().settings.first_run:
+            self.__create_nomenclature_groups()
+            self.__create_measurement_units()
+            self.__create_nomenclature_items()
+            self.__create_recipes()
+            self.__create_storage_transaction()
+        else:
+            ObserverService.raise_event(ObservableActionType.ACTION_LOAD_DUMP, None)
 
     def clear(self):
         MeasurementUnitRepository.clear()

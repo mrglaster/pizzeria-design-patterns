@@ -1,14 +1,16 @@
 from datetime import datetime
-
 import uvicorn
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from src.modules.domain.enum.filter_types import FilterType
+from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
 from src.modules.dto.date_dto import SetDateDTO, GetDateDTO, SetDateResponseDTO
 from src.modules.dto.filter_dto import FilterDTO
+from src.modules.dto.message_dto import MessageDTO
 from src.modules.dto.nomenclature_dto import PutNomenclatureDTO, UpdateNomenclatureDTO
+from src.modules.dto.tbs import TbsRequestDTO
 from src.modules.dto.transactions_filter_dto import TransactionsFilterDTO
 from src.modules.dto.turnovers_dto import TurnoversDTO
 from src.modules.factory.process_factory.process_factory import ProcessFactory
@@ -19,8 +21,10 @@ from src.modules.provider.report_data.report_data_provider import ReportDataProv
 from src.modules.repository.storage_transaction_repository import StorageTransactionRepository
 from src.modules.repository.storage_turnovers_repository import StorageTurnoverRepository
 from src.modules.service.domain_editing.domain_editing_service.nomenclature_service import NomenclatureService
+from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.init_service.start_service import StartService
 from src.modules.service.managers.settings_manager import SettingsManager
+from src.modules.service.process.tbs.tbs_process import TbsProcess
 
 app = FastAPI()
 start_service = StartService()
@@ -149,7 +153,7 @@ def get_warehouse_turnovers(report_format: str, request_dto: TurnoversDTO):
         raise HTTPException(status_code=400, detail=f'bad request: {e}')
 
 
-@app.get("/api/configuration/blocking/date/get")
+@app.get("/api/configuration/blocking/date/get", response_model=GetDateDTO)
 async def get_blocking_date():
     settings_manager = SettingsManager()
     settings = settings_manager.settings
@@ -158,7 +162,7 @@ async def get_blocking_date():
     return response_dto
 
 
-@app.post("/api/configuration/blocking/date/set")
+@app.post("/api/configuration/blocking/date/set", response_model=SetDateResponseDTO)
 async def set_blocking_date(set_date_dto: SetDateDTO, background_tasks: BackgroundTasks):
     if set_date_dto is None or set_date_dto.blocking_date is None:
         raise HTTPException(status_code=400, detail='Invalid date or date not provided')
@@ -192,34 +196,74 @@ async def get_nomenclature(report_format: str, uid: str):
     return report.get_result_b64()
 
 
-@app.put("/api/nomenclature/put/")
+@app.put("/api/nomenclature/put/", response_model=MessageDTO)
 async def put_nomenclature(request: PutNomenclatureDTO):
     try:
         if NomenclatureService.create(request):
-            return {"status": 200, "detail": "created"}
-        return {"status": 400, "detail": "bad request"}
+            return MessageDTO(status=200, detail="created")
+        raise HTTPException(status_code=400, detail="Bad request")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{e}")
 
 
-@app.patch("/api/nomenclature/update")
+@app.patch("/api/nomenclature/update", response_model=MessageDTO)
 async def update_nomenclature(request: UpdateNomenclatureDTO):
     try:
         if NomenclatureService.update(request.uid, request.nomenclature):
-            return {"status": 200, "detail": "updated"}
+            return MessageDTO(status=200, detail="Updated")
         raise HTTPException(status_code=400, detail='bad request')
     except Exception as e:
         raise HTTPException(status_code=400, detail=f'{e}')
 
 
-@app.delete("/api/nomenclature/delete/{uid}")
+@app.delete("/api/nomenclature/delete/{uid}", response_model=MessageDTO)
 async def delete_nomenclature(uid: str):
     try:
         if NomenclatureService.delete(uid):
-            return {"status": 200, "detail": "removed"}
+            return MessageDTO(status=200, detail='removed')
         raise HTTPException(status_code=400, detail='bad request')
     except Exception as e:
         raise HTTPException(status_code=400, detail=f'{e}')
+
+
+@app.post("/api/configuration/dump/save", response_model=MessageDTO)
+async def create_dump():
+    if ObserverService.raise_event(ObservableActionType.ACTION_DUMP, None):
+        if SettingsManager().update_first_run():
+            return MessageDTO(status=200, detail="Dump created")
+        return MessageDTO(status=500, detail="Configuration change error")
+    raise HTTPException(status_code=500, detail="Dump creation error")
+
+
+@app.post("/api/configuration/dump/load", response_model=MessageDTO)
+async def load_dump():
+    if ObserverService.raise_event(ObservableActionType.ACTION_LOAD_DUMP, None):
+        return MessageDTO(status=200, detail="Status has been loaded")
+    raise HTTPException(status_code=500, detail="Cant load dump")
+
+
+@app.get("/api/tbs/get/{report_format}")
+async def get_tbs(report_format: str, request: TbsRequestDTO):
+    report_format = FormatProvider.get_format(format_data=report_format)
+    transactions_proto = DomainPrototype()
+    transactions_proto.create_from_repository("storage_transaction")
+    transactions_data = (transactions_proto.
+                         filter_by(field_name="transaction_time", filter_type=FilterType.GREATER_THAN,
+                                   value=report_format.start_date).
+                         filter_by(field_name="transaction_time", filter_type=FilterType.LESS_THAN,
+                                   value=report_format.end_date).
+                         filter_by("storage|name", value=report_format.storage_name,
+                                   filter_type=FilterType.EQUALS).get_data())
+    if not transactions_data:
+        raise HTTPException(status_code=404, detail="No data found")
+    result = [TbsProcess.calculate(transactions_data, False, request)]
+    report = ReportDataProvider.report_factory.get_report_class_instance(
+        FormatProvider.get_format(format_data=report_format))
+    report.create(result)
+    if issubclass(report.__class__, PlainTextReport):
+        result = report.get_result()
+        return result
+    return report.get_result_b64()
 
 
 def main():

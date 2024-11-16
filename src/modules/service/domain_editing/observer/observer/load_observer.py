@@ -1,14 +1,15 @@
 from src.modules.domain.enum.observer_enum import ObservableActionType
+from src.modules.factory.repository_factory.repository_factory import RepositoryFactory
 from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserverHandler
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
-from src.modules.service.domain_editing.post_processing.post_processor import PostProcessor
 
 
-class UpdateObserverHandler(AbstractObserverHandler):
-    __event_type = ObservableActionType.ACTION_UPDATE
+class LoadObserverHandler(AbstractObserverHandler):
+    __event_type = ObservableActionType.ACTION_LOAD_DUMP
 
     def __init__(self):
         super().__init__()
+        self.repository_factory = RepositoryFactory()
         ObserverService.register_observer(self)
 
     @property
@@ -17,11 +18,10 @@ class UpdateObserverHandler(AbstractObserverHandler):
 
     def notify(self, obj, *args) -> bool:
         try:
-            new_object = list(args)[0]
-            if not obj or obj.name != new_object.name:
-                return False
-            PostProcessor.update(obj, new_object)
+            repos = self.repository_factory.repositories.values()
+            for i in repos:
+                instance = i()
+                instance.load_dump(clear_repository=True)
             return True
         except:
             return False
-

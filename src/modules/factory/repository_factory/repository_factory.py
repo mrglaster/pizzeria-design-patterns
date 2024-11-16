@@ -34,5 +34,5 @@ class RepositoryFactory(AbstractLogic):
         pass
 
     @property
-    def repositories(self):
+    def repositories(self) -> dict:
         return self.__repositories

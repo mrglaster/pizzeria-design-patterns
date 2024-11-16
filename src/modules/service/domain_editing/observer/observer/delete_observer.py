@@ -4,12 +4,12 @@ from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.factory.repository_factory.repository_factory import RepositoryFactory
 from src.modules.prototype.domain_prototype import DomainPrototype
-from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserver
+from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserverHandler
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.domain_editing.post_processing.post_processor import PostProcessor
 
 
-class DeleteObserver(AbstractObserver):
+class DeleteObserverHandler(AbstractObserverHandler):
     __repository_factory = RepositoryFactory()
 
     __event_type = ObservableActionType.ACTION_DELETE

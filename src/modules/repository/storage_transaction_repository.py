@@ -29,7 +29,7 @@ class StorageTransactionRepository(AbstractRepository):
         return transaction
 
     @staticmethod
-    def add_transaction(transaction_obj: StorageTransaction):
+    def add(transaction_obj: StorageTransaction):
         key = f"{transaction_obj.nomenclature.name}_{transaction_obj.amount}_{transaction_obj.transaction_type}_{transaction_obj.transaction_time}"
         if key not in StorageTransactionRepository.__storage_transactions:
             StorageTransactionRepository.__storage_transactions[key] = transaction_obj
@@ -38,9 +38,13 @@ class StorageTransactionRepository(AbstractRepository):
     def load_from_json_file(json_file: str):
         storage_transactions = StorageTransactionsDataLoader.load_from_json_file(json_file)
         for st in storage_transactions:
-            StorageTransactionRepository.add_transaction(st)
-            StorageRepository.add_storage(st.storage)
+            StorageTransactionRepository.add(st)
+            StorageRepository.add(st.storage)
 
     @staticmethod
     def get_all():
         return StorageTransactionRepository.__storage_transactions
+
+    @staticmethod
+    def clear():
+        StorageTransactionRepository.__storage_transactions = {}

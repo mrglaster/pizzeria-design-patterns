@@ -59,6 +59,7 @@ class DomainPrototype:
         return self.__check_nested_fields(nested_object, property_name, value, filter_type)
 
     def create_from_repository(self, objects_name):
+        self.__data = []
         repository_object = self.__repository_factory.get_by_name(objects_name)()
         self.__data = list(repository_object.get_all().values())
         if self.__data:
@@ -143,6 +144,10 @@ class DomainPrototype:
 
     def get_data(self):
         return self.__data
+
+    def clear(self):
+        self.__data = []
+        return self
 
     def first(self):
         if len(self.__data):

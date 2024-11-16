@@ -33,7 +33,7 @@ class StorageRepository(AbstractRepository):
         return StorageRepository.__storages[name]
 
     @staticmethod
-    def add_storage(storage: Storage):
+    def add(storage: Storage):
         DataValidator.validate_field_type(storage, Storage)
         if storage.name not in StorageRepository.__storages:
             StorageRepository.__storages[storage.name] = storage
@@ -42,6 +42,6 @@ class StorageRepository(AbstractRepository):
     def load_from_json_file(file_path):
         storages = StorageDataLoader.load_from_json_file(file_path)
         for i in storages:
-            StorageRepository.add_storage(i)
-            StorageAddressRepository.add_address(i.address)
+            StorageRepository.add(i)
+            StorageAddressRepository.add(i.address)
             
