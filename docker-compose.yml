@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+    pizzeria-service-1:
+        container_name: pizzeria-1
+        image: pizzeria:latest
+        ports:
+            - 8080:8080
+        volumes:
+            - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+
+    pizzeria-service-2:
+        container_name: pizzeria-2
+        image: pizzeria:latest
+        ports:
+            - 8081:8080
+        volumes:
+            - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+

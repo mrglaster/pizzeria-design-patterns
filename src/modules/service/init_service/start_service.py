@@ -10,6 +10,7 @@ from src.modules.repository.storage_transaction_repository import StorageTransac
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.generator.transactions_generator import TransactionsGenerator
 from src.modules.service.managers.settings_manager import SettingsManager
+from src.modules.service.process.turnovers.storage_turnover_til_blocking_process import StorageTurnoverTilBlockingDate
 
 
 class StartService:
