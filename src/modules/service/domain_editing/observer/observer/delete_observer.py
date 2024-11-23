@@ -1,12 +1,14 @@
 import re
 
 from src.modules.domain.enum.filter_types import FilterType
+from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.factory.repository_factory.repository_factory import RepositoryFactory
 from src.modules.prototype.domain_prototype import DomainPrototype
 from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserverHandler
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.domain_editing.post_processing.post_processor import PostProcessor
+from src.modules.service.logging.logger.service.logger_service import LoggerService
 
 
 class DeleteObserverHandler(AbstractObserverHandler):
@@ -33,6 +35,7 @@ class DeleteObserverHandler(AbstractObserverHandler):
             first = proto.filter_by(field_name=formatted_name, value=obj,
                                     filter_type=FilterType.EQUALS).first()
             if first:
+                LoggerService.send_log(LogLevel.WARNING, f"Unable to delete object {first}: object in use")
                 return False
         PostProcessor.delete(obj)
         return True

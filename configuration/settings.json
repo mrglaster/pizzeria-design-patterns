@@ -11,5 +11,8 @@
   "dumps_path": "dumps",
   "default_convertion_format": "FORMAT_CSV",
   "blocking_date": "2020-09-01 00:00:00.0",
-  "first_run": true
+  "first_run": true,
+  "log_level": 4,
+  "log_writing_mode": "file",
+  "logs_path": "logs"
 }

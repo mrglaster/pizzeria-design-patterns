@@ -1,8 +1,11 @@
+import logging
 from datetime import datetime
 import uvicorn
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
+from src.modules.connection.middleware import ConnectionLoggingMiddleware
 from src.modules.domain.enum.filter_types import FilterType
+from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
@@ -22,7 +25,12 @@ from src.modules.repository.storage_transaction_repository import StorageTransac
 from src.modules.repository.storage_turnovers_repository import StorageTurnoverRepository
 from src.modules.service.domain_editing.domain_editing_service.nomenclature_service import NomenclatureService
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
+from src.modules.service.domain_editing.observer.service.observers_initializer import ObserverInitializer
 from src.modules.service.init_service.start_service import StartService
+from src.modules.service.logging.banner.banner_printer import BannerPrinter
+from src.modules.service.logging.logger.service.logger_disabler import LoggerDisabler
+from src.modules.service.logging.logger.service.logger_initializer import LoggerInitializer
+from src.modules.service.logging.logger.service.logger_service import LoggerService
 from src.modules.service.managers.settings_manager import SettingsManager
 from src.modules.service.process.tbs.tbs_process import TbsProcess
 
@@ -267,8 +275,21 @@ async def get_tbs(report_format: str, request: TbsRequestDTO):
 
 
 def main():
+    BannerPrinter.print_banner()
+    LoggerInitializer.initialize_loggers()
+    LoggerService.send_log(LogLevel.DEBUG, "Disabling default uvicorn logger")
+    LoggerDisabler.disable_uvicorn_logging()
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing data")
     start_service.create()
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing observers")
+    ObserverInitializer.initialize_observers()
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing uvicorn middleware for logging")
+    app.add_middleware(ConnectionLoggingMiddleware)
+    LoggerService.send_log(LogLevel.INFO, "Starting the server")
+    port = 8080
+    host = "0.0.0.0"
+    uvicorn.run(app, host=host, port=port)
+    LoggerService.send_log(LogLevel.INFO, f"The uvicorn server is running on http://0.0.0.0:8080")
 
 
 if __name__ == '__main__':

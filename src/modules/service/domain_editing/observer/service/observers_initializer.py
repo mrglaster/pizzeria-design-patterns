@@ -13,4 +13,3 @@ class ObserverInitializer:
         for i in inh_children:
             instance = i()
             ObserverService.register_observer(instance)
-
