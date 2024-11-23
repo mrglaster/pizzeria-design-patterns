@@ -1,0 +1,18 @@
+[2024-11-23 15:01:32.102309] DEBUG Disabling default uvicorn logger
+[2024-11-23 15:01:32.102532] DEBUG Initializing data
+[2024-11-23 15:01:33.570174] DEBUG Initializing observers
+[2024-11-23 15:01:33.570336] DEBUG Initializing uvicorn middleware for logging
+[2024-11-23 15:01:33.570416] INFO Starting the server
+[2024-11-23 15:01:39.347169] INFO 127.0.0.1 - /api/configuration/dump/save - POST - 200
+[2024-11-23 15:01:45.632175] INFO 127.0.0.1 - /api/configuration/dump/save - POST - 200
+[2024-11-23 15:02:01.869105] INFO 127.0.0.1 - /api/configuration/dump/load - POST - 200
+[2024-11-23 15:02:03.620136] INFO 127.0.0.1 - /api/configuration/dump/load - POST - 200
+[2024-11-23 15:02:16.439287] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:16.584110] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:16.748895] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:16.964335] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:17.132605] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:17.270222] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:17.484628] INFO 127.0.0.1 - /api/reports/formats - GET - 200
+[2024-11-23 15:02:19.846853] INFO 127.0.0.1 - /api/reports/types - GET - 200
+[2024-11-23 15:02:20.013733] INFO 127.0.0.1 - /api/reports/types - GET - 200
