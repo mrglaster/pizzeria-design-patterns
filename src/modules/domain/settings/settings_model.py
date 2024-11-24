@@ -1,7 +1,5 @@
 from __future__ import annotations
-
 import datetime
-
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.validation.data_validator import DataValidator
@@ -38,6 +36,9 @@ class Settings(AbstractReference):
     __default_convertion_format = ""
     __blocking_date: datetime.datetime = None
     __first_run = True
+    __log_level = 4
+    __log_writing_mode = "console"
+    __logs_path = ""
 
     @property
     def organization_name(self):
@@ -116,6 +117,16 @@ class Settings(AbstractReference):
         DataValidator.check_class_field("property_type", str, value)
         self.__property_type = value
 
+    @property
+    def log_level(self):
+        return self.__log_level
+
+    @log_level.setter
+    def log_level(self, other):
+        DataValidator.validate_field_type(other, int)
+        if 1 <= other <= 4:
+            self.__log_level = other
+
     def get_prop_count(self):
         """
         Returns the number of properties (fields) in the Settings class.
@@ -188,6 +199,28 @@ class Settings(AbstractReference):
         DataValidator.validate_field_type(other, bool)
         self.__first_run = other
 
+    @property
+    def log_writing_mode(self):
+        return self.__log_writing_mode
+
+    @log_writing_mode.setter
+    def log_writing_mode(self, other):
+        DataValidator.validate_field_type(other, str)
+        if other in ["console", "file"]:
+            self.__log_writing_mode = other
+
+    @property
+    def logs_path(self):
+        """Gets the path where logs are stored."""
+        return self.__logs_path
+
+    @logs_path.setter
+    def logs_path(self, other):
+        """Sets and validates the logs path."""
+        DataValidator.validate_field_type(other, str)
+        DataValidator.validate_str_not_empty(other)
+        self.__logs_path = other
+
     def __str__(self):
         """
         Returns a string representation of the Settings object.
@@ -213,6 +246,7 @@ class Settings(AbstractReference):
             assert self.__bik == other.__bik
             assert self.__property_type == other.__property_type
             assert self.__reports_path == other.__reports_path
+            assert self.__log_level == other.__log_level
             return True
         except:
             return False
