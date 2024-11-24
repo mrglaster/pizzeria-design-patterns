@@ -217,7 +217,8 @@ async def put_nomenclature(request: PutNomenclatureDTO):
 @app.patch("/api/nomenclature/update", response_model=MessageDTO)
 async def update_nomenclature(request: UpdateNomenclatureDTO):
     try:
-        if NomenclatureService.update(request.uid, request.nomenclature):
+
+        if NomenclatureService.update(request.uid, request):
             return MessageDTO(status=200, detail="Updated")
         raise HTTPException(status_code=400, detail='bad request')
     except Exception as e:
@@ -229,9 +230,12 @@ async def delete_nomenclature(uid: str):
     try:
         if NomenclatureService.delete(uid):
             return MessageDTO(status=200, detail='removed')
-        raise HTTPException(status_code=400, detail='bad request')
+        raise HTTPException(status_code=404, detail='Nomenclature not found')
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f'{e}')
+        sc = 400
+        if '404' in str(e):
+           sc = 404
+        raise HTTPException(status_code=sc, detail=f'{e}')
 
 
 @app.post("/api/configuration/dump/save", response_model=MessageDTO)
@@ -288,8 +292,9 @@ def main():
     LoggerService.send_log(LogLevel.INFO, "Starting the server")
     port = 8080
     host = "0.0.0.0"
+    LoggerService.send_log(LogLevel.INFO, f"The uvicorn server address: http://{host}:{port}")
     uvicorn.run(app, host=host, port=port)
-    LoggerService.send_log(LogLevel.INFO, f"The uvicorn server is running on http://0.0.0.0:8080")
+
 
 
 if __name__ == '__main__':

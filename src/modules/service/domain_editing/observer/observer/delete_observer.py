@@ -1,5 +1,6 @@
 import re
 
+from src.modules.convertion.converter.json_converter import JSONConverter
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
@@ -35,7 +36,7 @@ class DeleteObserverHandler(AbstractObserverHandler):
             first = proto.filter_by(field_name=formatted_name, value=obj,
                                     filter_type=FilterType.EQUALS).first()
             if first:
-                LoggerService.send_log(LogLevel.WARNING, f"Unable to delete object {first}: object in use")
+                LoggerService.send_log(LogLevel.WARNING, f"Unable to delete object {JSONConverter.serialize(first)}: object in use")
                 return False
         PostProcessor.delete(obj)
         return True

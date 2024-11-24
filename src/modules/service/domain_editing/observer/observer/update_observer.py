@@ -1,3 +1,4 @@
+from src.modules.convertion.converter.json_converter import JSONConverter
 from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.service.domain_editing.observer.observer.abstract_observer import AbstractObserverHandler
@@ -19,13 +20,15 @@ class UpdateObserverHandler(AbstractObserverHandler):
 
     def notify(self, obj, *args) -> bool:
         try:
-            new_object = list(args)[0]
-            if not obj or obj.name != new_object.name:
-                LoggerService.send_log(LogLevel.ERROR, f"Unable to update object {obj} to {new_object}!")
+            new_object = list(args)[0][0]
+            if not obj or obj.uid != new_object.uid:
+                LoggerService.send_log(LogLevel.ERROR, f"Unable to update object {JSONConverter.serialize(obj)} to {JSONConverter.serialize(new_object)}!")
                 return False
             PostProcessor.update(obj, new_object)
-            LoggerService.send_log(LogLevel.DEBUG, f"Object {obj} was successfully updated to {new_object}!")
+            LoggerService.send_log(LogLevel.DEBUG, f"Object {JSONConverter.serialize(obj)} was successfully updated to {JSONConverter.serialize(new_object)}!")
             return True
-        except:
+        except Exception as e:
+            LoggerService.send_log(LogLevel.ERROR, str(e))
+            print(f"EXCEPTION HAPPENED!!!!!: {e}")
             return False
 

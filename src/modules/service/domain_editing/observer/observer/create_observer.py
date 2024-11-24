@@ -1,5 +1,6 @@
 import re
 
+from src.modules.convertion.converter.json_converter import JSONConverter
 from src.modules.domain.enum.filter_types import FilterType
 from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
@@ -27,6 +28,6 @@ class CreateObserverHandler(AbstractObserverHandler):
         proto = DomainPrototype().create_from_repository(formatted_name)
         if proto.filter_by(field_name="name", filter_type=FilterType.EQUALS, value=obj.name).first() is None:
             PostProcessor.create(obj)
-            LoggerService.send_log(LogLevel.INFO, f"Creating object: {obj}")
+            LoggerService.send_log(LogLevel.INFO, f"Creating object: {JSONConverter.serialize(obj)}")
             return True
         return False
