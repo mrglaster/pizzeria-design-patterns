@@ -30,7 +30,6 @@ class MigrationService:
             connection.commit()
             LoggerService.send_log(LogLevel.INFO, "Migration processed successfully")
         except Exception as e:
-            print(f"Error: {e}")
             LoggerService.send_log(LogLevel.ERROR, f"Database db_service error: {e}")
         finally:
             if 'cursor' in locals():

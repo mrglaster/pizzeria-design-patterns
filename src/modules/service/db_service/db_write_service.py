@@ -23,5 +23,4 @@ class DatabaseWriteService:
                 connection.commit()
         except Exception as e:
             connection.rollback()
-            print(f"ERROR HAPPENED: {e}")
             LoggerService.send_log(log_level=LogLevel.ERROR, message=f"Error while inserting or updating data: {e}")

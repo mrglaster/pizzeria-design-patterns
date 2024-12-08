@@ -29,6 +29,5 @@ class UpdateObserverHandler(AbstractObserverHandler):
             return True
         except Exception as e:
             LoggerService.send_log(LogLevel.ERROR, str(e))
-            print(f"EXCEPTION HAPPENED!!!!!: {e}")
             return False
 

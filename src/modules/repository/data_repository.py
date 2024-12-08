@@ -68,7 +68,6 @@ class AbstractRepository(AbstractLogic):
                     file.write(output_data)
             return True
         except Exception as e:
-            print(f"ERROR HAPPENED BLYAT: {e}")
             return False
 
     @classmethod
