@@ -1,5 +1,6 @@
 from __future__ import annotations
 import datetime
+import os
 from src.modules.domain.base.abstract_reference import AbstractReference
 from src.modules.exception.bad_argument_exception import BadArgumentException
 from src.modules.validation.data_validator import DataValidator
@@ -39,6 +40,9 @@ class Settings(AbstractReference):
     __log_level = 4
     __log_writing_mode = "console"
     __logs_path = ""
+    __use_db = False
+    __db_url = os.getenv('DATABASE_URL')
+    __migrations_path = ""
 
     @property
     def organization_name(self):
@@ -220,6 +224,34 @@ class Settings(AbstractReference):
         DataValidator.validate_field_type(other, str)
         DataValidator.validate_str_not_empty(other)
         self.__logs_path = other
+
+    @property
+    def use_db(self) -> bool:
+        return self.__use_db
+
+    @use_db.setter
+    def use_db(self, other: bool):
+        self.__use_db = other
+
+    @property
+    def db_url(self):
+        if not self.__db_url:
+            raise ValueError("Database URL is not set. Please configure 'DATABASE_URL'.")
+        return self.__db_url
+
+    @db_url.setter
+    def db_url(self, other):
+        self.__db_url = other
+
+
+    @property
+    def migrations_path(self):
+        return self.__migrations_path
+
+    @migrations_path.setter
+    def migrations_path(self, other: str):
+        DataValidator.validate_field_type(other, str, nullable=False)
+        self.__migrations_path = other
 
     def __str__(self):
         """

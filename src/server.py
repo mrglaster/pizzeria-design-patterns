@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
 import uvicorn
+import subprocess
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from src.modules.connection.middleware import ConnectionLoggingMiddleware
@@ -217,7 +218,6 @@ async def put_nomenclature(request: PutNomenclatureDTO):
 @app.patch("/api/nomenclature/update", response_model=MessageDTO)
 async def update_nomenclature(request: UpdateNomenclatureDTO):
     try:
-
         if NomenclatureService.update(request.uid, request):
             return MessageDTO(status=200, detail="Updated")
         raise HTTPException(status_code=400, detail='bad request')
@@ -234,13 +234,14 @@ async def delete_nomenclature(uid: str):
     except Exception as e:
         sc = 400
         if '404' in str(e):
-           sc = 404
+            sc = 404
         raise HTTPException(status_code=sc, detail=f'{e}')
 
 
 @app.post("/api/configuration/dump/save", response_model=MessageDTO)
 async def create_dump():
-    if ObserverService.raise_event(ObservableActionType.ACTION_DUMP, None):
+    is_dumped = ObserverService.raise_event(ObservableActionType.ACTION_DUMP, None)
+    if is_dumped:
         if SettingsManager().update_first_run():
             return MessageDTO(status=200, detail="Dump created")
         return MessageDTO(status=500, detail="Configuration change error")
@@ -278,9 +279,23 @@ async def get_tbs(report_format: str, request: TbsRequestDTO):
     return report.get_result_b64()
 
 
+def get_container_name():
+    try:
+        result = subprocess.run(
+            ["docker", "inspect", "-f", "{{.Name}}", "self"],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except Exception as e:
+        return f"NOT_CONTAINER"
+
+
 def main():
     BannerPrinter.print_banner()
     LoggerInitializer.initialize_loggers()
+    LoggerService.send_log(LogLevel.INFO, f"Working from container: {get_container_name()}")
     LoggerService.send_log(LogLevel.DEBUG, "Disabling default uvicorn logger")
     LoggerDisabler.disable_uvicorn_logging()
     LoggerService.send_log(LogLevel.DEBUG, "Initializing data")
@@ -296,6 +311,8 @@ def main():
     uvicorn.run(app, host=host, port=port)
 
 
-
 if __name__ == '__main__':
+    from dotenv import load_dotenv
+
+    load_dotenv()
     main()

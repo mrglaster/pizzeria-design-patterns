@@ -1,6 +1,5 @@
 import json
 import os
-import logging
 from datetime import datetime
 
 from src.modules.domain.settings.settings_model import Settings
@@ -88,6 +87,15 @@ class SettingsManager:
                         'tests/', '').replace('test/', '').replace('src/', '')
                     self.__settings.logs_path = os.path.join(logs_path, logs_path)
 
+                if os.path.sep not in self.__settings.migrations_path:
+                    project_path = os.getcwd()
+                    project_path = project_path.replace('tests/', '').replace('test/', '')
+                    migrations_path = self.__settings.migrations_path
+                    migrations_path = os.path.join(project_path, migrations_path).replace('tests/', '').replace('test/',
+                                                                                                    '').replace(
+                        'tests/', '').replace('test/', '').replace('src/', '')
+                    self.__settings.migrations_path = migrations_path
+
                 if fields_counter != self.__settings.get_prop_count() - 2:
                     return False
                 return True
@@ -138,6 +146,8 @@ class SettingsManager:
         data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/reports"
         data.dumps_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/dumps"
         data.logs_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/logs"
+        data.migrations_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/migrations"
+        data.use_db = False
         data.default_convertion_format = "FORMAT_CSV"
         data.blocking_date = datetime.strptime("2007-09-01", "%Y-%m-%d %Y-%m-%d %H:%M:%S.%f")
         data.first_run = True

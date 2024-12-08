@@ -2,6 +2,8 @@ from src.modules.service.domain_editing.observer.observer.abstract_observer impo
 from src.modules.service.domain_editing.observer.observer.create_observer import CreateObserverHandler
 from src.modules.service.domain_editing.observer.observer.delete_observer import DeleteObserverHandler
 from src.modules.service.domain_editing.observer.observer.update_observer import UpdateObserverHandler
+from src.modules.service.domain_editing.observer.observer.dump_observer import DumpObserverHandler
+from src.modules.service.domain_editing.observer.observer.load_observer import LoadObserverHandler
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 
 

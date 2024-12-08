@@ -2,6 +2,7 @@ FROM python:3.10
 WORKDIR /code 
 
 COPY ./configuration /code/configuration
+COPY ./logs /code/logs
 COPY ./data /code/data
 COPY ./docs /code/docs
 COPY ./dumps /code/dumps
