@@ -1,8 +1,12 @@
+import logging
 from datetime import datetime
 import uvicorn
+import subprocess
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
+from src.modules.connection.middleware import ConnectionLoggingMiddleware
 from src.modules.domain.enum.filter_types import FilterType
+from src.modules.domain.enum.log_enums import LogLevel
 from src.modules.domain.enum.observer_enum import ObservableActionType
 from src.modules.domain.report.report.base.abstract_report import PlainTextReport
 from src.modules.domain.report.report_format.report_format import ReportFormat
@@ -22,7 +26,12 @@ from src.modules.repository.storage_transaction_repository import StorageTransac
 from src.modules.repository.storage_turnovers_repository import StorageTurnoverRepository
 from src.modules.service.domain_editing.domain_editing_service.nomenclature_service import NomenclatureService
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
+from src.modules.service.domain_editing.observer.service.observers_initializer import ObserverInitializer
 from src.modules.service.init_service.start_service import StartService
+from src.modules.service.logging.banner.banner_printer import BannerPrinter
+from src.modules.service.logging.logger.service.logger_disabler import LoggerDisabler
+from src.modules.service.logging.logger.service.logger_initializer import LoggerInitializer
+from src.modules.service.logging.logger.service.logger_service import LoggerService
 from src.modules.service.managers.settings_manager import SettingsManager
 from src.modules.service.process.tbs.tbs_process import TbsProcess
 
@@ -209,7 +218,7 @@ async def put_nomenclature(request: PutNomenclatureDTO):
 @app.patch("/api/nomenclature/update", response_model=MessageDTO)
 async def update_nomenclature(request: UpdateNomenclatureDTO):
     try:
-        if NomenclatureService.update(request.uid, request.nomenclature):
+        if NomenclatureService.update(request.uid, request):
             return MessageDTO(status=200, detail="Updated")
         raise HTTPException(status_code=400, detail='bad request')
     except Exception as e:
@@ -221,14 +230,18 @@ async def delete_nomenclature(uid: str):
     try:
         if NomenclatureService.delete(uid):
             return MessageDTO(status=200, detail='removed')
-        raise HTTPException(status_code=400, detail='bad request')
+        raise HTTPException(status_code=404, detail='Nomenclature not found')
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f'{e}')
+        sc = 400
+        if '404' in str(e):
+            sc = 404
+        raise HTTPException(status_code=sc, detail=f'{e}')
 
 
 @app.post("/api/configuration/dump/save", response_model=MessageDTO)
 async def create_dump():
-    if ObserverService.raise_event(ObservableActionType.ACTION_DUMP, None):
+    is_dumped = ObserverService.raise_event(ObservableActionType.ACTION_DUMP, None)
+    if is_dumped:
         if SettingsManager().update_first_run():
             return MessageDTO(status=200, detail="Dump created")
         return MessageDTO(status=500, detail="Configuration change error")
@@ -266,10 +279,40 @@ async def get_tbs(report_format: str, request: TbsRequestDTO):
     return report.get_result_b64()
 
 
+def get_container_name():
+    try:
+        result = subprocess.run(
+            ["docker", "inspect", "-f", "{{.Name}}", "self"],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except Exception as e:
+        return f"NOT_CONTAINER"
+
+
 def main():
+    BannerPrinter.print_banner()
+    LoggerInitializer.initialize_loggers()
+    LoggerService.send_log(LogLevel.INFO, f"Working from container: {get_container_name()}")
+    LoggerService.send_log(LogLevel.DEBUG, "Disabling default uvicorn logger")
+    LoggerDisabler.disable_uvicorn_logging()
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing data")
     start_service.create()
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing observers")
+    ObserverInitializer.initialize_observers()
+    LoggerService.send_log(LogLevel.DEBUG, "Initializing uvicorn middleware for logging")
+    app.add_middleware(ConnectionLoggingMiddleware)
+    LoggerService.send_log(LogLevel.INFO, "Starting the server")
+    port = 8080
+    host = "0.0.0.0"
+    LoggerService.send_log(LogLevel.INFO, f"The uvicorn server address: http://{host}:{port}")
+    uvicorn.run(app, host=host, port=port)
 
 
 if __name__ == '__main__':
+    from dotenv import load_dotenv
+
+    load_dotenv()
     main()

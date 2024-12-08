@@ -10,6 +10,7 @@ from src.modules.repository.storage_transaction_repository import StorageTransac
 from src.modules.service.domain_editing.observer.service.observer_service import ObserverService
 from src.modules.service.generator.transactions_generator import TransactionsGenerator
 from src.modules.service.managers.settings_manager import SettingsManager
+from src.modules.service.db_service.migration_service import MigrationService
 from src.modules.service.process.turnovers.storage_turnover_til_blocking_process import StorageTurnoverTilBlockingDate
 
 
@@ -57,6 +58,8 @@ class StartService:
             self.__create_nomenclature_items()
             self.__create_recipes()
             self.__create_storage_transaction()
+            if SettingsManager().settings.use_db:
+                MigrationService.do_migration()
         else:
             ObserverService.raise_event(ObservableActionType.ACTION_LOAD_DUMP, None)
 

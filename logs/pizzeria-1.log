@@ -1,0 +1,66 @@
+[2024-12-08 15:07:03.944569] INFO Working from container: pizzeria-1
+[2024-12-08 15:07:03.944829] DEBUG Disabling default uvicorn logger
+[2024-12-08 15:07:03.944941] DEBUG Initializing data
+[2024-12-08 15:07:05.955202] INFO Migration processed successfully
+[2024-12-08 15:07:05.955497] DEBUG Initializing observers
+[2024-12-08 15:07:05.955829] DEBUG Initializing uvicorn middleware for logging
+[2024-12-08 15:07:05.955913] INFO Starting the server
+[2024-12-08 15:07:05.955972] INFO The uvicorn server address: http://0.0.0.0:8080
+[2024-12-08 15:09:28.600552] INFO 127.0.0.1 - /api/reports/nomenclature/FORMAT_JSON - GET - 200
+[2024-12-08 15:11:26.456776] INFO 127.0.0.1 - /api/reports/nomenclature/FORMAT_JSON - GET - 200
+[2024-12-08 15:11:57.259031] INFO Creating object: {
+    "name": "DEMO NOM",
+    "uid": "ea091763-8c64-4873-9d70-f1de3d0fa90d",
+    "nomenclature_group": {
+        "name": "ингредиент",
+        "uid": "1dc65ce8-354b-41d2-9648-b86a8f8fd150"
+    },
+    "measurement_unit": {
+        "name": "г",
+        "uid": "935134fb-92df-4817-a1a5-a26db39e4e34",
+        "unit": 1.0,
+        "base_measurement_unit": null
+    },
+    "full_name": "FULL_NAME"
+}
+[2024-12-08 15:11:57.259382] INFO 127.0.0.1 - /api/nomenclature/put/ - PUT - 200
+[2024-12-08 15:12:18.932079] INFO 127.0.0.1 - /api/reports/nomenclature/FORMAT_JSON - GET - 200
+[2024-12-08 15:13:18.858406] DEBUG Object {
+    "name": "DEMO NOM",
+    "uid": "ea091763-8c64-4873-9d70-f1de3d0fa90d",
+    "nomenclature_group": {
+        "name": "ингредиент",
+        "uid": "1dc65ce8-354b-41d2-9648-b86a8f8fd150"
+    },
+    "measurement_unit": {
+        "name": "г",
+        "uid": "935134fb-92df-4817-a1a5-a26db39e4e34",
+        "unit": 1.0,
+        "base_measurement_unit": null
+    },
+    "full_name": "FULL_NAME"
+} was successfully updated to {
+    "name": "DEMO NOM ALT",
+    "uid": "ea091763-8c64-4873-9d70-f1de3d0fa90d",
+    "nomenclature_group": {
+        "name": "ингредиент",
+        "uid": "1dc65ce8-354b-41d2-9648-b86a8f8fd150"
+    },
+    "measurement_unit": {
+        "name": "г",
+        "uid": "935134fb-92df-4817-a1a5-a26db39e4e34",
+        "unit": 1.0,
+        "base_measurement_unit": null
+    },
+    "full_name": "FULL_NAME"
+}!
+[2024-12-08 15:13:18.858878] INFO 127.0.0.1 - /api/nomenclature/update - PATCH - 200
+[2024-12-08 15:13:55.243912] INFO 127.0.0.1 - /api/reports/nomenclature/FORMAT_JSON - GET - 200
+[2024-12-08 15:15:45.400996] INFO 127.0.0.1 - /api/configuration/dump/save - POST - 500
+[2024-12-08 15:36:39.058810] INFO Creating database dump
+[2024-12-08 15:36:39.060286] INFO Writing nomenclature repository content to the database
+[2024-12-08 15:36:39.250097] INFO Writing storage repository content to the database
+[2024-12-08 15:36:39.284202] INFO Writing measurement_unit repository content to the database
+[2024-12-08 15:36:39.395757] INFO Writing nomenclature_group repository content to the database
+[2024-12-08 15:36:40.971151] INFO Writing storage_transaction repository content to the database
+[2024-12-08 15:36:40.971151] INFO Content has been successfully written to the database 

@@ -50,5 +50,6 @@ class NomenclatureRepository(AbstractRepository):
     @staticmethod
     def update(old_object, new_object):
         if old_object.name in NomenclatureRepository.__nomenclatures:
-            NomenclatureRepository.__nomenclatures.pop(obj.name)
+            NomenclatureRepository.__nomenclatures[old_object.name] = new_object
+            NomenclatureRepository.__nomenclatures[new_object.name] = new_object
 

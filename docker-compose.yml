@@ -1,18 +1,83 @@
 version: "3.7"
 services:
-    pizzeria-service-1:
-        container_name: pizzeria-1
-        image: pizzeria:latest
-        ports:
-            - 8080:8080
-        volumes:
-            - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+  pizzeria-service-1:
+    container_name: pizzeria-1
+    image: pizzeria:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+    networks: 
+      - projects-network
+    env_file:
+      - .env
 
-    pizzeria-service-2:
-        container_name: pizzeria-2
-        image: pizzeria:latest
-        ports:
-            - 8081:8080
-        volumes:
-            - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+  pizzeria-service-2:
+    container_name: pizzeria-2
+    image: pizzeria:latest
+    ports:
+      - 8081:8080
+    volumes:
+      - /home/mrglaster/Desktop/pizzeria/pizzeria-design-patterns/configuration:/code/configuration
+    networks: 
+      - projects-network
+    env_file:
+      - .env
+
+  proxy:
+    container_name: proxy
+    image: proxy
+    ports:
+      - 9000:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks: 
+      - projects-network
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpw
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks: 
+      - projects-network
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks: 
+      - projects-network
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks: 
+      - projects-network
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  data:
+  pgadmin:
+
+networks:
+  projects-network:
 

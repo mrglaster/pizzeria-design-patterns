@@ -1,0 +1,20 @@
+[2024-12-08 15:46:33.091395] INFO Working from container: pizzeria-2
+[2024-12-08 15:46:33.091607] DEBUG Disabling default uvicorn logger
+[2024-12-08 15:46:33.091720] DEBUG Initializing data
+[2024-12-08 15:46:34.549171] INFO Migration processed successfully
+[2024-12-08 15:46:34.549389] DEBUG Initializing observers
+[2024-12-08 15:46:34.549642] DEBUG Initializing uvicorn middleware for logging
+[2024-12-08 15:46:34.549728] INFO Starting the server
+[2024-12-08 15:46:34.549798] INFO The uvicorn server address: http://0.0.0.0:8081
+[2024-12-08 15:46:36.939224] INFO Loading database from dump
+[2024-12-08 15:46:36.957608] INFO Reading nomenclature repository data from the database
+[2024-12-08 15:46:36.984719] INFO Reading storage repository data from the database
+[2024-12-08 15:46:37.084186] INFO Reading storage_transaction repository data from the database
+[2024-12-08 15:46:39.516299] INFO Reading storage_address repository data from the database
+[2024-12-08 15:46:39.531224] INFO Reading recipe repository data from the database
+[2024-12-08 15:46:39.546114] INFO Reading measurement_unit repository data from the database
+[2024-12-08 15:46:39.564153] INFO Reading nomenclature_group repository data from the database
+[2024-12-08 15:46:39.579340] INFO Reading storage_turnover repository data from the database
+[2024-12-08 15:46:39.579525] INFO Database has been successfully laoded from the dump
+[2024-12-08 15:46:39.580237] INFO 127.0.0.1 - /api/configuration/dump/load - POST - 200
+[2024-12-08 15:46:54.954809] INFO 127.0.0.1 - /api/reports/nomenclature/FORMAT_JSON - GET - 200
