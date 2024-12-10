@@ -35,7 +35,7 @@ class PostProcessor:
                 continue
             proto = DomainPrototype().create_from_repository(repo)
             using = proto.filter_by(field_name=formatted_name, value=old_object,
-                                    filter_type=FilterType.EQUALS).all()
+                                    filter_type=FilterType.EQUALS).get_data()
             repo_obj = RepositoryFactory().get_by_name(repo)()
             for i in using:
                 current = i

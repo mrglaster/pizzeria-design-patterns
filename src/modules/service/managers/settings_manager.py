@@ -1,6 +1,5 @@
 import json
 import os
-import logging
 from datetime import datetime
 
 from src.modules.domain.settings.settings_model import Settings
@@ -19,7 +18,6 @@ class SettingsManager:
 
     __file_name = "settings.json"
     __settings: Settings = Settings()
-    __logger = logging.getLogger(__name__)
 
     def __new__(cls):
         """
@@ -50,7 +48,8 @@ class SettingsManager:
         if file_name != "":
             self.__file_name = file_name
         try:
-            full_name = os.path.join(os.getcwd(), 'configuration', self.__file_name).replace('test/', '').replace('tests/', '').replace('src/', '')
+            full_name = os.path.join(os.getcwd(), 'configuration', self.__file_name).replace('test/', '').replace(
+                'tests/', '').replace('src/', '')
             fields_counter = 0
             with open(full_name) as json_data:
                 data = json.load(json_data)
@@ -63,27 +62,44 @@ class SettingsManager:
                     project_path = os.getcwd()
                     project_path = project_path.replace('tests/', '').replace('test/', '')
                     reports_path = self.__settings.reports_path
-                    reports_path = os.path.join(project_path, reports_path).replace('tests/', '').replace('test/', '').replace('tests/', '').replace('test/', '').replace('src/','')
+                    reports_path = os.path.join(project_path, reports_path).replace('tests/', '').replace('test/',
+                                                                                                          '').replace(
+                        'tests/', '').replace('test/', '').replace('src/', '')
                     self.__settings.reports_path = os.path.join(project_path, reports_path)
 
                 if not os.path.exists(self.__settings.reports_path):
-                    self.__logger.error("Provided reports path does not exist!")
                     return False
 
                 if os.path.sep not in self.__settings.dumps_path:
                     project_path = os.getcwd()
                     project_path = project_path.replace('tests/', '').replace('test/', '')
                     dumps_path = self.__settings.dumps_path
-                    dumps_path = os.path.join(project_path, dumps_path).replace('tests/', '').replace('test/', '').replace('tests/', '').replace('test/', '').replace('src/','')
+                    dumps_path = os.path.join(project_path, dumps_path).replace('tests/', '').replace('test/',
+                                                                                                      '').replace(
+                        'tests/', '').replace('test/', '').replace('src/', '')
                     self.__settings.dumps_path = os.path.join(project_path, dumps_path)
+                if os.path.sep not in self.__settings.logs_path:
+                    project_path = os.getcwd()
+                    project_path = project_path.replace('tests/', '').replace('test/', '')
+                    logs_path = self.__settings.logs_path
+                    logs_path = os.path.join(project_path, logs_path).replace('tests/', '').replace('test/',
+                                                                                                    '').replace(
+                        'tests/', '').replace('test/', '').replace('src/', '')
+                    self.__settings.logs_path = os.path.join(logs_path, logs_path)
+
+                if os.path.sep not in self.__settings.migrations_path:
+                    project_path = os.getcwd()
+                    project_path = project_path.replace('tests/', '').replace('test/', '')
+                    migrations_path = self.__settings.migrations_path
+                    migrations_path = os.path.join(project_path, migrations_path).replace('tests/', '').replace('test/',
+                                                                                                    '').replace(
+                        'tests/', '').replace('test/', '').replace('src/', '')
+                    self.__settings.migrations_path = migrations_path
 
                 if fields_counter != self.__settings.get_prop_count() - 2:
-                    self.__logger.error("Not all the expected settings fields have been loaded!")
                     return False
                 return True
         except Exception as e:
-            self.__logger.error(f"Exception happened: {e}")
-            self.__logger.warning("Using default values for missing settings fields")
             self.__settings = self.__default_settings()
             return False
         finally:
@@ -96,8 +112,9 @@ class SettingsManager:
 
     def update_first_run(self):
         self.settings.first_run = False
-        full_name = os.path.join(os.getcwd(), 'configuration', self.__file_name).replace('test/', '').replace('tests/',
-                                                                                                              '').replace(     'src/', '')
+        full_name = os.path.join(os.getcwd(), 'configuration', "settings.json").replace('test/', '').replace('tests/',
+                                                                                                              '').replace(
+            'src/', '')
         if not os.path.exists(full_name):
             return False
         with open(full_name, 'r', encoding='utf-8') as file:
@@ -108,7 +125,6 @@ class SettingsManager:
                 json.dump(data, file, ensure_ascii=False, indent=4)
             return True
         return False
-
 
     @staticmethod
     def __default_settings():
@@ -126,9 +142,12 @@ class SettingsManager:
         data.correspondent_account = "0" * 11
         data.property_type = "0" * 5
         data.bik = "0" * 9
-        data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/docs"
-        data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/','')}/reports"
+        data.recipes_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/docs"
+        data.reports_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/reports"
         data.dumps_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/dumps"
+        data.logs_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/logs"
+        data.migrations_path = f"{os.getcwd().replace('/tests', '').replace('/test', '').replace('src/', '')}/migrations"
+        data.use_db = False
         data.default_convertion_format = "FORMAT_CSV"
         data.blocking_date = datetime.strptime("2007-09-01", "%Y-%m-%d %Y-%m-%d %H:%M:%S.%f")
         data.first_run = True
